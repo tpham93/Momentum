@@ -70,16 +70,16 @@ class MainMenu : IGameState
 
     public void Draw(GameTime gameTime, RenderWindow window)
     {
-<<<<<<< HEAD
+
         window.Clear(Color.Red);
 
-=======
+
         window.Clear(Color.Black);
         window.Draw(lvlselection);
         window.Draw(credits);
         window.Draw(end);
-        world.draw(window);
->>>>>>> 6532d97213956cd4b0e17633bb9d98387a61fa91
+
+
     }
 
     public void changeColor()
