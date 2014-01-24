@@ -55,7 +55,7 @@ class TimeFreezeGame : Game
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
-        window.Clear(AcaOrange);
+        
 
         gameState.Draw(gameTime, window);
     }
