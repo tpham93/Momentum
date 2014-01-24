@@ -11,7 +11,7 @@ enum EGameState {None, MainMenu, LevelChooser, Credits, InGame, EGameStateCount 
 interface IGameState
 {
     void Initialize();
-
+    
     void LoadContent(ContentManager manager);
 
     EGameState Update(GameTime gameTime);
