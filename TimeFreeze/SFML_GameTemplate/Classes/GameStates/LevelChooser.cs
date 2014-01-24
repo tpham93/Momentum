@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFML.Window;
 
 
 class LevelChooser : IGameState
 {
     public void Initialize()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void LoadContent(ContentManager manager)
     {
-        throw new NotImplementedException();
+        
     }
 
     public EGameState Update(GameTime gameTime)
     {
-        throw new NotImplementedException();
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
+        return EGameState.LevelChooser;
     }
 
     public void Draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
     {
-        throw new NotImplementedException();
+        
     }
 }
 

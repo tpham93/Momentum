@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +10,24 @@ class Credits : IGameState
 {
     public void Initialize()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void LoadContent(ContentManager manager)
     {
-        throw new NotImplementedException();
+        
     }
 
     public EGameState Update(GameTime gameTime)
     {
-        throw new NotImplementedException();
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
+        return EGameState.Credits;
     }
 
     public void Draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
     {
-        throw new NotImplementedException();
+        
     }
 }
