@@ -36,18 +36,21 @@ class MainMenu : IGameState
 
         if (Input.isClicked(Keyboard.Key.S))
             current = (current + 1) % 3;
+
         if (Input.isClicked(Keyboard.Key.W))
             current = (current + 2) % 3;
 
         if(Input.isClicked(Keyboard.Key.Return))
             switch (current)
             {
-                case 0: return EGameState.LevelChooser;
-                    break;
-                case 1 : return EGameState.Credits;
-                    break;
-                case 2: return EGameState.None;
-                    break;
+                case 0: 
+                    return EGameState.LevelChooser;
+
+                case 1: 
+                    return EGameState.Credits;
+
+                case 2: 
+                    return EGameState.None;
             }
 
         return EGameState.MainMenu;

@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 class InGame : IGameState
 {
-    public InGame(LevelID id)
+
+    public static LevelID levelId = LevelID.LEVEL0;
+
+    public InGame()
     {
 
     }

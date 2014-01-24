@@ -92,7 +92,7 @@ class TimeFreezeGame : Game
                 break;
 
             case EGameState.InGame:
-               // gameState = new InGame();
+                gameState = new InGame();
                 break;
 
             case EGameState.LevelChooser:

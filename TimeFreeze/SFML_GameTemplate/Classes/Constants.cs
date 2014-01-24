@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 public static class Constants
 {
-    public const String WINDOWNAME = "FreezeGame";
+    public const    String WINDOWNAME   = "FreezeGame";
 
-    public const int WINDOWWIDTH = 800;
-    public const int WINDOWHEIGHT = 600;
+    public const    int WINDOWWIDTH     = 800;
+    public const    int WINDOWHEIGHT    = 600;
+
+    public const    String LEVELPATH    = "Content/Level/";
 
 
 }
