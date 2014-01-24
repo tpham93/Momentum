@@ -17,8 +17,9 @@ class LevelChooser : IGameState
     public LevelChooser()
     {
         //lade den Level-Ordner 
-        DirectoryInfo levelInfos = new DirectoryInfo("Content/Level");
+        DirectoryInfo levelInfos = new DirectoryInfo(Constants.LEVELPATH);
         FileInfo[] test = levelInfos.GetFiles();
+
         levelName = new Text[test.Length];
 
         for (int i = 0; i < test.Length; i++)
@@ -43,8 +44,19 @@ class LevelChooser : IGameState
 
     public EGameState Update(GameTime gameTime)
     {
-        if (Input.isClicked(Keyboard.Key.Escape))
-            return EGameState.MainMenu;
+        if (Input.isClicked(Keyboard.Key.S))
+            chooseIndex = (chooseIndex + 1) % levelName.Length;
+
+        else if (Input.isClicked(Keyboard.Key.W))
+            chooseIndex = (chooseIndex + (levelName.Length - 1)) % levelName.Length;
+
+        if (Input.isClicked(Keyboard.Key.Return))
+        {
+            String test = levelName[chooseIndex].DisplayedString.Replace("map", "").Replace(".png", "").Trim();
+            InGame.levelId = (LevelID)int.Parse(test);
+            
+            return EGameState.InGame;
+        }
 
         return EGameState.LevelChooser;
     }

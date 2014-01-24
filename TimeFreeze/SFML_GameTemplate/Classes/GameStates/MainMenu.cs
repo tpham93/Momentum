@@ -57,12 +57,14 @@ class MainMenu : IGameState
         if(Input.isClicked(Keyboard.Key.Return))
             switch (current)
             {
-                case 0: return EGameState.LevelChooser;
-                    break;
-                case 1 : return EGameState.Credits;
-                    break;
-                case 2: return EGameState.None;
-                    break;
+                case 0: 
+                    return EGameState.LevelChooser;
+
+                case 1: 
+                    return EGameState.Credits;
+
+                case 2: 
+                    return EGameState.None;
             }
 
         return EGameState.MainMenu;
