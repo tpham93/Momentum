@@ -10,6 +10,7 @@ namespace TimeFreeze
     {
         static void Main(string[] args)
         {
+            System.Console.Write("Test");
         }
     }
 }

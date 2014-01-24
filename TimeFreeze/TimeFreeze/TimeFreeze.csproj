@@ -53,13 +53,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
-      <HintPath>..\..\..\..\..\..\Desktop\TimeFreeze\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2">
-      <HintPath>..\..\..\..\..\..\Desktop\TimeFreeze\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2">
-      <HintPath>..\..\..\..\..\..\Desktop\TimeFreeze\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,17 +77,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Desktop\TimeFreeze\SFML_GameTemplate\SFML_GameTemplate\SFML_GameTemplate.csproj">
-      <Project>{3ef771f3-b485-4b0c-a699-8ff52619b56c}</Project>
-      <Name>SFML_GameTemplate</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="csfml-audio-2.dll" />
     <Content Include="csfml-graphics-2.dll" />
     <Content Include="csfml-window-2.dll" />
     <Content Include="libsndfile-1.dll" />
     <Content Include="openal32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SFML_GameTemplate\SFML_GameTemplate\SFML_GameTemplate.csproj">
+      <Project>{3ef771f3-b485-4b0c-a699-8ff52619b56c}</Project>
+      <Name>SFML_GameTemplate</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

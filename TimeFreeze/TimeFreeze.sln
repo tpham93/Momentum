@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeFreeze", "TimeFreeze\Ti
 		{3EF771F3-B485-4B0C-A699-8FF52619B56C} = {3EF771F3-B485-4B0C-A699-8FF52619B56C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_GameTemplate", "..\..\..\..\..\Desktop\TimeFreeze\SFML_GameTemplate\SFML_GameTemplate\SFML_GameTemplate.csproj", "{3EF771F3-B485-4B0C-A699-8FF52619B56C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_GameTemplate", "..\SFML_GameTemplate\SFML_GameTemplate\SFML_GameTemplate.csproj", "{3EF771F3-B485-4B0C-A699-8FF52619B56C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
