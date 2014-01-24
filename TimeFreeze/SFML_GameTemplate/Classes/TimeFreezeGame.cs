@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class TimeFreezeGame : Game
 {
 
-    EGameState currentGameState = EGameState.MainMenu;
+    EGameState currentGameState = EGameState.LevelChooser;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -93,6 +93,10 @@ class TimeFreezeGame : Game
 
             case EGameState.InGame:
                // gameState = new InGame();
+                break;
+
+            case EGameState.LevelChooser:
+                gameState = new LevelChooser();
                 break;
         }
 

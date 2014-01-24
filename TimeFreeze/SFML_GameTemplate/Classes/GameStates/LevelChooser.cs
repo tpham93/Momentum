@@ -1,6 +1,7 @@
 ﻿using SFML.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,17 @@ using System.Threading.Tasks;
 
 class LevelChooser : IGameState
 {
-    
+
+    String[] names;
+    FileInfo[] infos;
+
+    public LevelChooser()
+    {
+        DirectoryInfo levelInfos = new DirectoryInfo("Content/Level/");
+
+        foreach (FileInfo i in levelInfos.GetFiles())
+            System.Console.WriteLine(i.ToString());
+    }
 
     public void Initialize()
     {
