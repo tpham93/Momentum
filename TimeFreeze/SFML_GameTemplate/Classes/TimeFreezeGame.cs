@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class TimeFreezeGame : Game
 {
 
-    EGameState currentGameState = EGameState.LevelChooser;
+    EGameState currentGameState = EGameState.InGame;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -37,6 +37,7 @@ class TimeFreezeGame : Game
         Input.init(keys);
 
         Assets.font = new Font("Content/Font/PRIMELEC.ttf");
+        Objects.loadContent();
 
         handleNewGameState();
     }
@@ -73,6 +74,9 @@ class TimeFreezeGame : Game
     public override void loadContent(ContentManager content)
     {
         infoText = new Text("", Assets.font);
+
+        
+        
     }
 
 
@@ -92,7 +96,7 @@ class TimeFreezeGame : Game
                 break;
 
             case EGameState.InGame:
-                gameState = new InGame();
+                gameState = new InGame(LevelID.LEVEL0);
                 break;
 
             case EGameState.LevelChooser:

@@ -9,7 +9,7 @@ using SFML.Window;
 
     abstract class Objects
     {
-
+        public static Texture[] objektTextures;
         
         private Vector2f position;
 
@@ -31,7 +31,13 @@ using SFML.Window;
 
         public abstract void draw(RenderWindow window);
 
-        public abstract void loadContent(ContentManager content);
+        public static void loadContent()
+        {
+            objektTextures = new Texture[2];
+            objektTextures[0] = new Texture("Content/Block/floor.png");
+            objektTextures[1] = new Texture("Content/Block/wall.png");
+
+        }
 
         public abstract void initialize();
 
