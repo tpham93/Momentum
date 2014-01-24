@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 class LevelChooser : IGameState
 {
 
-    String[] names;
-    FileInfo[] infos;
 
     public LevelChooser()
     {
-        DirectoryInfo levelInfos = new DirectoryInfo("Content/Level/");
+        //lade den Level-Ordner 
+        DirectoryInfo levelInfos = new DirectoryInfo("Content/Level");
+        FileInfo[] test = levelInfos.GetFiles();
 
-        foreach (FileInfo i in levelInfos.GetFiles())
-            System.Console.WriteLine(i.ToString());
+        for (int i = 0; i < test.Length; i++)
+            Console.WriteLine(test[i].ToString());
     }
 
     public void Initialize()

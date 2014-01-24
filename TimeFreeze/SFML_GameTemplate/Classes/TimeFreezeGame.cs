@@ -95,9 +95,6 @@ class TimeFreezeGame : Game
                // gameState = new InGame();
                 break;
 
-            case EGameState.LevelChooser:
-                gameState = new LevelChooser();
-                break;
         }
 
         gameState.LoadContent(contentManager);
