@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 class TimeFreezeGame : Game
 {
+
+    EGameState currentGameState = EGameState.MainMenu;
+    EGameState prevGameState;
+
+    IGameState gameState;
+
     public TimeFreezeGame()
         : base(800, 600, "name")
     {
@@ -20,12 +26,12 @@ class TimeFreezeGame : Game
 
     public override void update(GameTime gameTime)
     {
-
+        currentGameState = gameState.Update(gameTime);
     }
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
-       
+        gameState.Draw(gameTime, window);
     }
 
     public override void loadContent(ContentManager content)
@@ -33,4 +39,11 @@ class TimeFreezeGame : Game
        
     }
 
+
+    private void handleNewGameState()
+    {
+
+
+
+    }
 }
