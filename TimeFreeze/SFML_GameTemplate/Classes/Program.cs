@@ -9,7 +9,8 @@ class Program
 
     public static void Main(String[] args)
     {
-        Console.Write("Test");
+        Game game = new TimeFreezeGame();
+        game.run();
     }
 }
 

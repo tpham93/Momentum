@@ -8,3 +8,4 @@ C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Deb
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.exe
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.pdb
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\SFML_GameTemplate.pdb
+C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\TimeFreeze.csprojResolveAssemblyReference.cache

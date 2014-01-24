@@ -75,6 +75,7 @@
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="Classes\TimeFreezeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
