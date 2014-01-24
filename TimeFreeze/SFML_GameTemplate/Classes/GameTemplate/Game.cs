@@ -12,7 +12,8 @@ public abstract class Game
     public GameTime         gameTime; 
     public ContentManager   contentManager;
 
-    public static readonly Color     CornflowerBlue = new Color(101, 156, 239);
+    public static readonly Color    CornflowerBlue = new Color(101, 156, 239);
+    public static readonly Color    AcaOrange = new Color(255,144,1);
 
     static int wheelDelta;
 
