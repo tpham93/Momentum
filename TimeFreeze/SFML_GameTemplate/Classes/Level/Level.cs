@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
+using SFML.Window;
 
 
     class Level
@@ -12,14 +13,18 @@ using SFML.Graphics;
         {
             List<Object> baseLevel = new List<Object>();
 
-            Image baseLevelImage = new Image("Content/Level/map"+id+".png");
+
+            Image baseLevelImage = new Image("Content/Level/map"+(int)id+".png");
 
             for (uint x = 0; x < baseLevelImage.Size.X; x++)
             {
                 for (uint y = 0; y < baseLevelImage.Size.Y; y++)
                 {
-                   //if((Assets.ColorFloor).Equals(baseLevelImage.GetPixel(x,y)))
-                        //baseLevel.Add(new WallBlock(
+                    if ((Assets.colorWall).Equals(baseLevelImage.GetPixel(x, y)))
+                        baseLevel.Add(new WallBlock(new Vector2f(Assets.worldOffSet.X+(x*Assets.baseBlockSize.X),Assets.worldOffSet.Y+( y*Assets.baseBlockSize.Y))));
+
+
+                    
                 }
             }
 
@@ -28,11 +33,17 @@ using SFML.Graphics;
 
         }
 
+        public void update(GameTime time)
+        {
+            //TODO
+        }
+
 
     }
 
     public enum LevelID
     {
+        LEVEL0,
         LEVEL1,
         LEVEL2,
         LEVEL3,

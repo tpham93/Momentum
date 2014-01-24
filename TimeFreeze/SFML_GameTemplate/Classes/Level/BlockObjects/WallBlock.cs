@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
-using SFML_GameTemplate.Classes.Level.BlockObjects;
 
 
     class WallBlock : Objects
@@ -20,9 +19,9 @@ using SFML_GameTemplate.Classes.Level.BlockObjects;
             throw new NotImplementedException();
         }
 
-        public override void draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
+        public override void draw( SFML.Graphics.RenderWindow window)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("male male kuchen");
         }
 
         public override void loadContent(ContentManager content)

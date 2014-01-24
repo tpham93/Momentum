@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.Window;
 
-namespace SFML_GameTemplate.Classes.Level.BlockObjects
-{
+
     abstract class Objects
     {
 
@@ -30,11 +29,11 @@ namespace SFML_GameTemplate.Classes.Level.BlockObjects
 
         public abstract void update(GameTime gameTime);
 
-        public abstract void draw(GameTime gameTime, RenderWindow window);
+        public abstract void draw(RenderWindow window);
 
         public abstract void loadContent(ContentManager content);
 
         public abstract void initialize();
 
-    }
+    
 }

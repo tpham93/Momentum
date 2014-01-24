@@ -10,15 +10,17 @@ class MainMenu : IGameState
 {
     int current = 0;
     
+    //zum testen
+    private World world;
 
     public MainMenu()
     {
-        
+        world = new World();
     }
 
     public void Initialize()
     {
-
+        
      
     }
 
@@ -29,6 +31,9 @@ class MainMenu : IGameState
 
     public EGameState Update(GameTime gameTime)
     {
+        world.update(gameTime);
+
+
         if (Input.isClicked(Keyboard.Key.S))
             current = (current + 1) % 3;
         if (Input.isClicked(Keyboard.Key.W))
@@ -51,5 +56,6 @@ class MainMenu : IGameState
     public void Draw(GameTime gameTime, RenderWindow window)
     {
         window.Clear(Color.Red);
+        world.draw(window);
     }
 }
