@@ -10,6 +10,8 @@ namespace SFML_GameTemplate.Classes.Level.BlockObjects
 {
     abstract class Objects
     {
+
+        
         private Vector2f position;
 
         public Vector2f Position
@@ -26,25 +28,13 @@ namespace SFML_GameTemplate.Classes.Level.BlockObjects
         }
 
 
-        public override void update(GameTime gameTime)
-        {
+        public abstract void update(GameTime gameTime);
 
-        }
+        public abstract void draw(GameTime gameTime, RenderWindow window);
 
-        public override void draw(GameTime gameTime, RenderWindow window)
-        {
+        public abstract void loadContent(ContentManager content);
 
-        }
-
-        public override void loadContent(ContentManager content)
-        {
-
-        }
-
-        public override void initialize()
-        {
-
-        }
+        public abstract void initialize();
 
     }
 }

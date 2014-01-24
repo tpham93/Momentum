@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 
-namespace SFML_GameTemplate.Classes.Level
-{
+
     class World
     {
 
+        List<Object> world;
 
         public World()
         {
+            world = new List<object>();
 
         }
         public void update(GameTime gameTime)
@@ -27,4 +28,8 @@ namespace SFML_GameTemplate.Classes.Level
 
     }
     public enum Block
-}
+    {
+
+    }
+
+
