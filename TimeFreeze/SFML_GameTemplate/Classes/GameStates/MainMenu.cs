@@ -13,10 +13,12 @@ class MainMenu : IGameState
     Text end = new Text("Ende", Assets.font);
     int current = 0;
     
+    //zum testen
+    private World world;
 
     public MainMenu()
     {
-
+        world = new World();
     }
 
     public void Initialize()
@@ -39,6 +41,9 @@ class MainMenu : IGameState
 
     public EGameState Update(GameTime gameTime)
     {
+        world.update(gameTime);
+
+
         if (Input.isClicked(Keyboard.Key.S))
         {
             current = (current + 1) % 3;
@@ -69,6 +74,7 @@ class MainMenu : IGameState
         window.Draw(lvlselection);
         window.Draw(credits);
         window.Draw(end);
+        world.draw(window);
     }
 
     public void changeColor()

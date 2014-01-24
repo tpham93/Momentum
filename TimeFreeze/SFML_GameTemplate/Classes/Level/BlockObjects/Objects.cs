@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.Window;
 
-namespace SFML_GameTemplate.Classes.Level.BlockObjects
-{
+
     abstract class Objects
     {
+
+        
         private Vector2f position;
 
         public Vector2f Position
@@ -26,25 +27,13 @@ namespace SFML_GameTemplate.Classes.Level.BlockObjects
         }
 
 
-        public override void update(GameTime gameTime)
-        {
+        public abstract void update(GameTime gameTime);
 
-        }
+        public abstract void draw(RenderWindow window);
 
-        public override void draw(GameTime gameTime, RenderWindow window)
-        {
+        public abstract void loadContent(ContentManager content);
 
-        }
+        public abstract void initialize();
 
-        public override void loadContent(ContentManager content)
-        {
-
-        }
-
-        public override void initialize()
-        {
-
-        }
-
-    }
+    
 }

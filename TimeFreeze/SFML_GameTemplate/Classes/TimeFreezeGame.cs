@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class TimeFreezeGame : Game
 {
 
-    EGameState currentGameState = EGameState.MainMenu;
+    EGameState currentGameState = EGameState.LevelChooser;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -18,7 +18,7 @@ class TimeFreezeGame : Game
     float fps;
 
     public TimeFreezeGame()
-        : base(800, 600, "name")
+        : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.Escape);
