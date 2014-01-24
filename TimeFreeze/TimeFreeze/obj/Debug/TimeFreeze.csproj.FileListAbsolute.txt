@@ -1,1 +1,0 @@
-C:\Users\Kai\Dropbox\CSharp\Visual Studio 2012\Projects\TimeFreeze\TimeFreeze\bin\Debug\TimeFreeze.exe.config
