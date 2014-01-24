@@ -14,6 +14,9 @@ class TimeFreezeGame : Game
 
     IGameState gameState;
 
+    Text infoText;
+    float fps;
+
     public TimeFreezeGame()
         : base(800, 600, "name")
     {
@@ -32,6 +35,8 @@ class TimeFreezeGame : Game
         keys.Add(Keyboard.Key.Right);
 
         Input.init(keys);
+
+        Assets.font = new Font("Content/Font/PRIMELEC.ttf");
 
         handleNewGameState();
     }
@@ -55,14 +60,19 @@ class TimeFreezeGame : Game
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
+        fps = 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
+
         window.Clear(AcaOrange);
 
         gameState.Draw(gameTime, window);
+        infoText.DisplayedString = ""+currentGameState;
+        infoText.DisplayedString += " " + fps;
+        window.Draw(infoText);
     }
 
     public override void loadContent(ContentManager content)
     {
-       
+        infoText = new Text("", Assets.font);
     }
 
 
