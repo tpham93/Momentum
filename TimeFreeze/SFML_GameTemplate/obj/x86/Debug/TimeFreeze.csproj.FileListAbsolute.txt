@@ -9,3 +9,14 @@ C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Deb
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.pdb
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\SFML_GameTemplate.pdb
 C:\Users\Kai\Desktop\TimeFreeze\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\TimeFreeze.csprojResolveAssemblyReference.cache
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.exe.config
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\SFML_GameTemplate.exe
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\SFML_GameTemplate.pdb
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\obj\x86\Debug\TimeFreeze.csprojResolveAssemblyReference.cache
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\csfml-audio-2.dll
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\csfml-graphics-2.dll
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\csfml-window-2.dll
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\libsndfile-1.dll
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\openal32.dll
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.exe
+C:\Users\Tuan\Desktop\gj_game\TimeFreeze\SFML_GameTemplate\bin\x86\Debug\SFML_GameTemplate.pdb

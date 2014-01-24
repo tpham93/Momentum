@@ -75,6 +75,18 @@
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="Classes\Sat\Collision\Edge.cs" />
+    <Compile Include="Classes\Sat\Collision\IntersectData.cs" />
+    <Compile Include="Classes\Sat\Collision\Range.cs" />
+    <Compile Include="Classes\Sat\Etc\Helper.cs" />
+    <Compile Include="Classes\Sat\Etc\VectorData.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\CircleShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\EdgeShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\EShapeType.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\RectangleShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\Shape2D.cs" />
+    <Compile Include="Classes\Sat\Point.cs" />
+    <Compile Include="Classes\Sat\Vector2.cs" />
     <Compile Include="Classes\TimeFreezeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +110,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
