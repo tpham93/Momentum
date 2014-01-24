@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-enum EGameState {None, MainMenu, InGame, EGameStateCount };
+enum EGameState {None, MainMenu, LevelChooser, Credits, InGame, EGameStateCount };
 
 interface IGameState
 {
