@@ -44,9 +44,6 @@ class TimeFreezeGame : Game
 
     public override void update(GameTime gameTime)
     {
-        if (Input.isClicked(Keyboard.Key.Escape))
-            window.Close();
-
         currentGameState = gameState.Update(gameTime);
 
         if (Input.isClicked(Keyboard.Key.Right))
@@ -98,7 +95,9 @@ class TimeFreezeGame : Game
             case EGameState.InGame:
                 gameState = new InGame(LevelID.LEVEL0);
                 break;
-
+            case EGameState.Credits:
+                gameState = new Credits();
+                break;
             case EGameState.LevelChooser:
                 gameState = new LevelChooser();
                 break;
