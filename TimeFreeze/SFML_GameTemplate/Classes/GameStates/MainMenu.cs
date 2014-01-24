@@ -23,13 +23,13 @@ class MainMenu : IGameState
     public void Initialize()
     {
         lvlselection.Color = Color.Red;
-        lvlselection.Position = new Vector2f(10, 60);
+        lvlselection.Position = new Vector2f(10, 120);
         lvlselection.Scale = new Vector2f(2, 2);
         credits.Color = Color.White;
-        credits.Position = new Vector2f(10, 120);
+        credits.Position = new Vector2f(10, 240);
         credits.Scale = new Vector2f(1, 1);
         end.Color = Color.White;
-        end.Position = new Vector2f(10, 180);
+        end.Position = new Vector2f(10, 360);
         end.Scale = new Vector2f(1, 1);
     }
 

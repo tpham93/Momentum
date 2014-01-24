@@ -99,10 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Block\floor.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Block\wall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Level\map0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
