@@ -22,6 +22,7 @@ class TimeFreezeGame : Game
 
         Input.init(keys);
 
+        handleNewGameState();
     }
 
     public override void update(GameTime gameTime)
@@ -31,6 +32,7 @@ class TimeFreezeGame : Game
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
+        window.Clear(AcaOrange);
         gameState.Draw(gameTime, window);
     }
 
@@ -42,7 +44,20 @@ class TimeFreezeGame : Game
 
     private void handleNewGameState()
     {
+        switch (currentGameState)
+        {
+            case EGameState.None:
+                window.Close();
+                break;
 
+            case EGameState.MainMenu:
+                gameState = new MainMenu();
+                break;
+
+            case EGameState.InGame:
+               // gameState = new InGame();
+                break;
+        }
 
 
     }
