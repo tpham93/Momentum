@@ -12,6 +12,7 @@ class InGame : IGameState
 
     List<Objects> worldObjects;
     List<Objects> worldObjectsMovable;
+    List<AbstractParticle> particles;
 
     private Level level;
     Sprite[] floor;
@@ -34,7 +35,7 @@ class InGame : IGameState
 
 
     private int[,] floorMap;
-    Random random;
+    public static Random random;
 
     public static bool isLevelDark = false;
     public static bool isLevelFreezed = false;
@@ -96,6 +97,8 @@ class InGame : IGameState
         timeFrTxt.Position = new Vector2f(Constants.WINDOWWIDTH - 75 - 27, 15);
         timeFrTxt.Scale = new Vector2f(0.7f, 0.7f);
 
+
+        particles = new List<AbstractParticle>();
 
     }
 
@@ -175,7 +178,11 @@ class InGame : IGameState
                     IntersectData iData = shapeI.intersects(shapeJ);
 
                     if (iData.Intersects)
+                    {                        //kollision
+                        Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+                        particles.Add(new SparkleParticle(shapeJ.Position, dir));
                         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
+                    }
                 }
                 for (int j = i + 1; j < worldObjects.Count; ++j)
                 {
@@ -183,7 +190,14 @@ class InGame : IGameState
                     IntersectData iData = shapeI.intersects(shapeJ);
 
                     if (iData.Intersects)
+                    {
+                        Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+
+
+                        particles.Add(new SparkleParticle(shapeJ.Position, dir));
+                        //kollision
                         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
+                    }
                 }
             }
         }
@@ -200,6 +214,14 @@ class InGame : IGameState
                     }
                 }
             }
+        }
+
+        for (int i = 0; i < particles.Count; i++)
+        {
+            particles[i].update(gameTime);
+
+            if (particles[i].lifetime <= 0)
+                particles.Remove(particles[i]);
         }
     }
 
@@ -244,6 +266,8 @@ class InGame : IGameState
             obj.draw(targets, currentRenderState, gameTime);
         }
 
+        foreach (AbstractParticle p in particles)
+            p.draw(gameTime, targets);
 
         //Draw menubar
         targets.ElementAt(2).Draw(menubarSprite);
