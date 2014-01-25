@@ -23,5 +23,6 @@ public static class Assets
     public static Vector2i worldOffSet = new Vector2i(0, 0);
 
     public static Color AcaOrange = new Color(255, 144, 0);
+    public static Color AcaDarkOrange = new Color(255, 70, 0);
 }
 
