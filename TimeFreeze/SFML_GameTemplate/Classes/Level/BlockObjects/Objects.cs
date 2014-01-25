@@ -55,7 +55,7 @@ using SFML.Window;
 
         public static void loadContent()
         {
-            objektTextures = new Texture[8];
+            objektTextures = new Texture[9];
             objektTextures[0] = new Texture("Content/Block/floor.png");
             objektTextures[1] = new Texture("Content/Block/wall.png");
             objektTextures[2] = new Texture("Content/Block/ball.png");
@@ -64,6 +64,7 @@ using SFML.Window;
             objektTextures[5] = new Texture("Content/Block/floor_03.png");
             objektTextures[6] = new Texture("Content/Items/hourglass_large.png");
             objektTextures[7] = new Texture("Content/Block/lightstone.png");
+            objektTextures[8] = new Texture("Content/Block/wall2.png");
 
         }
 

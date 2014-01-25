@@ -49,6 +49,8 @@ using SFML.Window;
                 {
                     if ((Assets.colorWall).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new WallBlock(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
+                    if ((Assets.colorWall2).Equals(baseLevelImage.GetPixel(x, y)))
+                        baseLevelStatic.Add(new Wall2(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
                     else if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
                     else if ((Assets.colorLightStone).Equals(baseLevelImage.GetPixel(x, y)))
@@ -77,7 +79,7 @@ using SFML.Window;
                     else if (int.Parse(ls[0]) == -2)
                         timeFreezenum += int.Parse(ls[1]);
                     else if (int.Parse(ls[0]) == 1)
-                        baseLevelMovable.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+                        baseLevelMovable.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2])), int.Parse(ls[3])));
 
                 }
             }

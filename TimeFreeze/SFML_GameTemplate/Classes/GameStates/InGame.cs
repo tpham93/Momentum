@@ -238,11 +238,33 @@ class InGame : IGameState
                         Event e = new Event(worldObjectsMovable[i], worldObjectsMovable[j]);
                         if (e.handleCollision)
                             handleCollision(worldObjectsMovable[i], worldObjectsMovable[j], iData);
+
+                        switch (e.eventType)
+                        {
+                            case GameEventType.Hourglass:
+                                if (worldObjectsMovable[i].getType() == Objects.BlockType.HOURGLAS)
+                                {
+                                    Hourglass h = (Hourglass)worldObjectsMovable[i];
+                                    timeFreezeNum += h.getNum();
+
+                                    worldObjectsMovable.RemoveAt(i);
+                                    --i;
+                                    --j;
+                                }
+                                else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
+                                {
+                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    timeFreezeNum += h.getNum();
+                                    worldObjectsMovable.RemoveAt(j);
+                                }
+                                break;
+
+                        }
                     }
                 }
 
 
-                for (int j = i + 1; j < worldObjects.Count; ++j)
+                for (int j = i+1; j < worldObjects.Count; ++j)
                 {
                     Shape2DSAT shapeJ = worldObjects[j].Shape;
                     IntersectData iData = shapeI.intersects(shapeJ);
@@ -258,10 +280,6 @@ class InGame : IGameState
                             case GameEventType.Win:
                                 hasWon = true;
                                 break;
-                            case GameEventType.Hourglass:
-                                //TODO
-                                break;
-
                         }
                     }
                 }
