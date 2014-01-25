@@ -10,22 +10,25 @@ using SFML.Window;
     abstract class Objects
     {
         public static Texture[] objektTextures;
-        
-        private Vector2f position;
+
+        protected Shape2DSAT shape;
 
         public Vector2f Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return shape.Position; }
+            set { shape.Position = value; }
         }
-        private float rotation;
 
         public float Rotation
         {
-            get { return rotation; }
-            set { rotation = value; }
+            get { return shape.Rotation; }
+            set { shape.Rotation = value; }
         }
 
+        protected Objects(Shape2DSAT shape)
+        {
+            this.shape = shape;
+        }
 
         public abstract void update(GameTime gameTime);
 

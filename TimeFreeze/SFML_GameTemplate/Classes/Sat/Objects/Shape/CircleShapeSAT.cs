@@ -54,6 +54,10 @@ using SFML.Graphics;
             }
         }
 
+        public CircleShapeSAT(float radius, Vector2f position, bool moveable = true)
+            : this(radius, new Vector2(position), moveable)
+        {
+        }
         public CircleShapeSAT(float radius, Vector2 position, bool moveable = true)
             : base(radius, position, new Vector2(radius), moveable)
         {

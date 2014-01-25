@@ -12,9 +12,10 @@ using SFML.Window;
 
         Sprite sprite;
         public Goal(Vector2f position)
+            : base(new PolygonShapeSAT(new Vector2i(Constants.TILESIZE, Constants.TILESIZE), position, false))
         {
             this.Position = position;
-            sprite = new Sprite(Objects.objektTextures[3], new IntRect(0,0,16,16));
+            sprite = new Sprite(Objects.objektTextures[3], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
             sprite.Position = position;
 
         }
