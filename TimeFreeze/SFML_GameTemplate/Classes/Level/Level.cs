@@ -45,9 +45,10 @@ using SFML.Window;
                 {
                     if ((Assets.colorWall).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new WallBlock(new Vector2f(Assets.worldOffSet.X+(x*Assets.baseBlockSize.X),Assets.worldOffSet.Y+( y*Assets.baseBlockSize.Y))));
-                    if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
+                    else if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X), Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y))));
-                
+                    else if ((Assets.colorLightStone).Equals(baseLevelImage.GetPixel(x, y)))
+                        baseLevelStatic.Add(new LightBlock(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X), Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y)),false));
                 }
             }
 
