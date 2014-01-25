@@ -196,9 +196,20 @@ class InGame : IGameState
                     if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
                     {
                         selectedObject = worldObjectsMovable[i];
+                        Console.Out.WriteLine("Selected");
                         break;
                     }
                 }
+            }
+            else
+            {
+                Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
+                float length = velocity.Length();
+                velocity /= length;
+
+                Console.Out.WriteLine("velocity set");
+                selectedObject.Velocity = new Vector2f(velocity.X * 5,velocity.Y * 5);
+                selectedObject = null;
             }
         }
     }

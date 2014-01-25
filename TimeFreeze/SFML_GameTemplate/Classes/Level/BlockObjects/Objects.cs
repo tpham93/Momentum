@@ -16,7 +16,7 @@ using SFML.Window;
 
         private Vector2f velocity;
 
-        protected Vector2f Velocity
+        public Vector2f Velocity
         {
             get { return velocity; }
             set { velocity = value; }
