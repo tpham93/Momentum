@@ -14,6 +14,7 @@ public abstract class AbstractParticle
     public float speed;
 
     public double lifetime;
+    public double maxLifeTime;
 
     public abstract void draw(GameTime gametime, List<RenderTexture> targets);
     public abstract void update(GameTime gameTime);
