@@ -81,6 +81,7 @@
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\IGameState.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
     <Compile Include="Classes\Level\BlockObjects\Objects.cs" />
     <Compile Include="Classes\Level\BlockObjects\WallBlock.cs" />
     <Compile Include="Classes\Level\Level.cs" />
@@ -98,6 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Block\ball.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Block\floor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -106,6 +110,9 @@
     </Content>
     <Content Include="Content\Level\map0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map0.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="csfml-audio-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

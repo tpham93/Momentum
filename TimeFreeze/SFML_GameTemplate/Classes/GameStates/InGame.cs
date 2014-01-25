@@ -12,6 +12,7 @@ class InGame : IGameState
     List<Object> worldObjects;
 
     private Level level;
+    Sprite floor;
 
     public static LevelID levelId = LevelID.LEVEL0;
 
@@ -20,6 +21,8 @@ class InGame : IGameState
         worldObjects = new List<object>();
         level = new Level();
         worldObjects = level.generateLevel(id);
+        floor = new Sprite(Objects.objektTextures[0], new IntRect(0,0,16,16));
+
     }
 
     public void Initialize()
@@ -41,10 +44,23 @@ class InGame : IGameState
 
     public void Draw(GameTime gameTime, RenderWindow window)
     {
-        
+
+        //draw floor
+        for (uint x = 0; x < Constants.WINDOWWIDTH / 16; x++)
+        {
+            for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
+            {
+                floor.Position = new SFML.Window.Vector2f(x * 16, y * 16);
+                window.Draw(floor);
+            }
+        }
+
+
+
         foreach (Objects obj in worldObjects)
         {
             obj.draw(window);
         }
+        
     }
 }
