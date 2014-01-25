@@ -242,16 +242,20 @@ class InGame : IGameState
                         switch (e.eventType)
                         {
                             case GameEventType.Hourglass:
-                                timeFreezeNum++;
                                 if (worldObjectsMovable[i].getType() == Objects.BlockType.HOURGLAS)
                                 {
+                                    Hourglass h = (Hourglass)worldObjectsMovable[i];
+                                    timeFreezeNum += h.getNum();
+
                                     worldObjectsMovable.RemoveAt(i);
                                     --i;
                                     --j;
                                 }
                                 else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
                                 {
-                                    worldObjectsMovable.RemoveAt(--j);
+                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    timeFreezeNum += h.getNum();
+                                    worldObjectsMovable.RemoveAt(j);
                                 }
                                 break;
 
