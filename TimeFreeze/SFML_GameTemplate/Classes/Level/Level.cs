@@ -44,8 +44,11 @@ using SFML.Window;
                     String[] ls =line.Split(':');
                     if(int.Parse(ls[0])==0)
                         baseLevel.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
-                    if (int.Parse(ls[0]) == -1)
+                    else if (int.Parse(ls[0]) == -1)
                         isLevelDark = true;
+                    else if (int.Parse(ls[0]) == 1)
+                        baseLevel.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+
                 }
             }
 
@@ -71,6 +74,11 @@ using SFML.Window;
         LEVEL2,
         LEVEL3,
         LEVEL4,
+        LEVEL5,
+        LEVEL6,
+        LEVEL7,
+        LEVEL8,
+        LEVEL9,
 
         LEVELNUM
 
