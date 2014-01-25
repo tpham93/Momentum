@@ -13,10 +13,22 @@ using SFML.Window;
         private bool isLevelDark = false;
 
         public bool IsLevelDark{ get { return isLevelDark; } }
-
-        public List<Object> generateLevel(LevelID id)
+        public struct Leveldata
         {
-            List<Object> baseLevel = new List<Object>();
+            public List<Objects> staticObj;
+            public List<Objects> movableObj;
+
+            public Leveldata(List<Objects> stObj, List<Objects> mvObj)
+            {
+                this.staticObj = stObj;
+                this.movableObj = mvObj;
+            }
+        }
+
+        public Leveldata generateLevel(LevelID id)
+        {
+            List<Objects> baseLevelStatic = new List<Objects>();
+            List<Objects> baseLevelMovable = new List<Objects>();
             isLevelDark = false;
 
             Console.WriteLine(id);
@@ -28,12 +40,13 @@ using SFML.Window;
                 for (uint y = 0; y < baseLevelImage.Size.Y; y++)
                 {
                     if ((Assets.colorWall).Equals(baseLevelImage.GetPixel(x, y)))
-                        baseLevel.Add(new WallBlock(new Vector2f(Assets.worldOffSet.X+(x*Assets.baseBlockSize.X),Assets.worldOffSet.Y+( y*Assets.baseBlockSize.Y))));
+                        baseLevelStatic.Add(new WallBlock(new Vector2f(Assets.worldOffSet.X+(x*Assets.baseBlockSize.X),Assets.worldOffSet.Y+( y*Assets.baseBlockSize.Y))));
                     if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
-                        baseLevel.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X), Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y))));
+                        baseLevelStatic.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X), Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y))));
                 
                 }
             }
+
             //Load Map File
             using (StreamReader sr = new StreamReader("Content/Level/map" + (int)id + ".txt"))
             {
@@ -43,18 +56,18 @@ using SFML.Window;
                 {
                     String[] ls =line.Split(':');
                     if(int.Parse(ls[0])==0)
-                        baseLevel.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+                        baseLevelMovable.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
                     else if (int.Parse(ls[0]) == -1)
                         isLevelDark = true;
                     else if (int.Parse(ls[0]) == 1)
-                        baseLevel.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+                        baseLevelMovable.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
 
                 }
             }
 
 
 
-            return baseLevel;
+            return new Leveldata(baseLevelStatic, baseLevelMovable);
 
         }
         

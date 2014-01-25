@@ -10,7 +10,8 @@ using SFML.Window;
 class InGame : IGameState
 {
 
-    List<Object> worldObjects;
+    List<Objects> worldObjects;
+    List<Objects> worldObjectsMovable;
 
     private Level level;
     Sprite[] floor;
@@ -54,9 +55,14 @@ class InGame : IGameState
 
     public void Initialize()
     {
-        worldObjects = new List<object>();
+        worldObjects = new List<Objects>();
         level = new Level();
-        worldObjects = level.generateLevel(levelId);
+
+        Level.Leveldata lvlData = level.generateLevel(levelId);
+
+        worldObjects = lvlData.staticObj;
+        worldObjectsMovable = lvlData.movableObj;
+
         isLevelDark = level.IsLevelDark;
         
 
@@ -151,6 +157,10 @@ class InGame : IGameState
 
 
         foreach (Objects obj in worldObjects)
+        {
+            obj.draw(targets, currentRenderState);
+        }
+        foreach (Objects obj in worldObjectsMovable)
         {
             obj.draw(targets, currentRenderState);
         }
