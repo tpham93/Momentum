@@ -68,4 +68,17 @@ using SFML.Window;
         }
 
         public abstract void initialize();
+
+        public abstract BlockType getType();
+
+        public enum BlockType
+        {
+            BALL,
+            GOAL,
+            HOURGLAS,
+            WALL,
+            LIGHTBLOCK
+
+
+        }
 }

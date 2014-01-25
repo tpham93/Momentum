@@ -36,4 +36,9 @@ class Hourglass : Objects
     //{
     //    targets.ElementAt(0).Draw(sprite, state);
     //}
+
+    public override Objects.BlockType getType()
+    {
+        return BlockType.HOURGLAS;
+    }
 }
