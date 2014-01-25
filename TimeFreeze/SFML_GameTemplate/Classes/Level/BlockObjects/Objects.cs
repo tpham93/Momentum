@@ -32,17 +32,17 @@ using SFML.Window;
 
         public abstract void update(GameTime gameTime);
 
-        public abstract void draw(List<RenderTexture> targets);
+        public abstract void draw(List<RenderTexture> targets, RenderStates state);
 
         public static void loadContent()
         {
-            objektTextures = new Texture[6];
-            objektTextures[0] = new Texture("Content/Block/floor.png");
+            objektTextures = new Texture[7];            objektTextures[0] = new Texture("Content/Block/floor.png");
             objektTextures[1] = new Texture("Content/Block/wall.png");
             objektTextures[2] = new Texture("Content/Block/ball.png");
             objektTextures[3] = new Texture("Content/Block/goal.png");
             objektTextures[4] = new Texture("Content/Block/floor_02.png");
             objektTextures[5] = new Texture("Content/Block/floor_03.png");
+            objektTextures[6] = new Texture("Content/Items/hourglass_large.png");
 
         }
 

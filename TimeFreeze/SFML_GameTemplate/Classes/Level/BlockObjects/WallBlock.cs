@@ -23,9 +23,9 @@ using SFML.Window;
            
         }
 
-        public override void draw( List<RenderTexture> targets)
+        public override void draw( List<RenderTexture> targets, RenderStates state)
         {
-            targets.ElementAt(0).Draw(objSprite);
+            targets.ElementAt(0).Draw(objSprite, state);
         }
 
 

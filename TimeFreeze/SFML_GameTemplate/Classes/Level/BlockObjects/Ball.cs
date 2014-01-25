@@ -24,9 +24,9 @@ using SFML.Window;
             throw new NotImplementedException();
         }
 
-        public override void draw(List<RenderTexture> targets)
+        public override void draw(List<RenderTexture> targets, RenderStates state)
         {
-            targets.ElementAt(0).Draw(sprite);
+            targets.ElementAt(0).Draw(sprite, state);
         }
 
         public override void initialize()
