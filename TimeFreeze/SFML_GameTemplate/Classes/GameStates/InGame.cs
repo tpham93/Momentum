@@ -48,8 +48,6 @@ class InGame : IGameState
             for (int y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
                 floorMap[x, y] = random.Next(3);
-
-
             }
 
         }

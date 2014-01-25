@@ -33,6 +33,7 @@ using SFML.Window;
             List<Objects> baseLevelStatic = new List<Objects>();
             List<Objects> baseLevelMovable = new List<Objects>();
             isLevelDark = false;
+            int timeFreezenum = 0;
 
             Console.WriteLine(id);
             //load base Image
@@ -58,10 +59,12 @@ using SFML.Window;
                 while ((line = sr.ReadLine()) != null)
                 {
                     String[] ls =line.Split(':');
-                    if(int.Parse(ls[0])==0)
+                    if (int.Parse(ls[0]) == 0)
                         baseLevelMovable.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
                     else if (int.Parse(ls[0]) == -1)
                         isLevelDark = true;
+                    else if (int.Parse(ls[0]) == -2)
+                        timeFreezenum++;
                     else if (int.Parse(ls[0]) == 1)
                         baseLevelMovable.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
 
@@ -70,7 +73,7 @@ using SFML.Window;
 
 
 
-            return new Leveldata(baseLevelStatic, baseLevelMovable);
+            return new Leveldata(baseLevelStatic, baseLevelMovable, timeFreezenum);
 
         }
         
