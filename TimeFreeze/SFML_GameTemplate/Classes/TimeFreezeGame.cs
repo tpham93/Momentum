@@ -24,7 +24,7 @@ class TimeFreezeGame : Game
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
-        keys.Add(Keyboard.Key.);
+        keys.Add(Keyboard.Key.Escape);
         keys.Add(Keyboard.Key.W);
         keys.Add(Keyboard.Key.A);
         keys.Add(Keyboard.Key.S);
