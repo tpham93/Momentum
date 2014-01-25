@@ -182,8 +182,14 @@ class InGame : IGameState
             levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
         }
 
-        if (helpTime >= 10)
+        if (helpTime >= 5)
         {
+            hasWon = false;
+            levelDone.Position = new Vector2f(100, 400);
+            levelId++;
+            helpTime = 0;
+            Initialize();
+            
 
         }
         
