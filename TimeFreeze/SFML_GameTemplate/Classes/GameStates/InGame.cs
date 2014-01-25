@@ -87,6 +87,8 @@ class InGame : IGameState
 
     private Objects selectedObject;
 
+    Text levelDone;
+
 
 
 
@@ -114,6 +116,9 @@ class InGame : IGameState
         worldObjects = lvlData.staticObj;
         worldObjectsMovable = lvlData.movableObj;
         timeFreezeNum = lvlData.freezeNum;
+
+        levelDone = new Text("", Assets.font);
+        levelDone.Position = new Vector2f(100, 400);
 
         isLevelDark = false;//level.IsLevelDark;
 
@@ -164,8 +169,24 @@ class InGame : IGameState
 
     }
 
+    double helpTime = 0;
+
     public EGameState Update(GameTime gameTime, RenderWindow window)
+
+
     {
+        if (hasWon)
+        {
+            helpTime += gameTime.ElapsedTime.TotalSeconds;
+            levelDone.Position += new Vector2f(0, -0.5f);
+            levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
+        }
+
+        if (helpTime >= 10)
+        {
+
+        }
+        
         if (Input.isClicked(Keyboard.Key.G))
         {
             timeFreezeNum++;
@@ -413,5 +434,7 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[4]);
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
+
+        targets.ElementAt(0).Draw(levelDone, currentRenderState);
     }
 }
