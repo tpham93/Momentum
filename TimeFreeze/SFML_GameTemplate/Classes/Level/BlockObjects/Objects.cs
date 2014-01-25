@@ -16,7 +16,7 @@ using SFML.Window;
 
         private Vector2f velocity;
 
-        protected Vector2f Velocity
+        public Vector2f Velocity
         {
             get { return velocity; }
             set { velocity = value; }
@@ -49,7 +49,7 @@ using SFML.Window;
         public virtual void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
         {
             
-            sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
+            sprite.Position = Position;
             targets.ElementAt(0).Draw(sprite, state);
         }
 

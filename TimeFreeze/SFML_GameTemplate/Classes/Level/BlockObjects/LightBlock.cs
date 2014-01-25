@@ -20,7 +20,7 @@ using SFML.Window;
             sprite.Origin = new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
             spr = new Sprite();
             spr.Texture = Assets.lightCircle;
-            spr.Origin = new Vector2f(30, 30) ;
+            spr.Origin = new Vector2f(32, 32) ;
             spr.Position = this.Position;
             spr.Scale = new Vector2f(3f, 3f);
             
@@ -46,7 +46,7 @@ using SFML.Window;
             
 
             
-            sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
+            sprite.Position = Position;
             
             targets.ElementAt(0).Draw(sprite, state);
             targets.ElementAt(1).Draw(spr);
