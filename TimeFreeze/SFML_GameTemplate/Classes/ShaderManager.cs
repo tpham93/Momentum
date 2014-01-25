@@ -48,7 +48,7 @@ public static class ShaderManager
     
         }
 
-        return doNothingRenderStates;
+        return RenderStates.Default;
     }
 }
 

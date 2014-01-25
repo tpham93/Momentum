@@ -11,9 +11,10 @@ using SFML.Window;
 
         private Sprite sprite;
         public Ball(Vector2f position)
+            :base(new CircleShapeSAT(Constants.TILESIZE,position,true))
         {
             this.Position = position;
-            sprite = new Sprite(Objects.objektTextures[2], new IntRect(0, 0, 16, 16));
+            sprite = new Sprite(Objects.objektTextures[2], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
             sprite.Position = position;
 
 

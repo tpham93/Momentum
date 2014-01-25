@@ -33,7 +33,7 @@ public abstract class Game
         window.Closed += closeHandler;
         window.MouseWheelMoved += mouseWheelHandler;
         
-        window.SetVerticalSyncEnabled(true);
+        window.SetVerticalSyncEnabled(false);
         window.SetFramerateLimit(60);
 
         contentManager = new ContentManager();
@@ -70,7 +70,6 @@ public abstract class Game
                 texture.Clear();
 
             draw(gameTime, renderTargets);
-
             renderTargets.ElementAt(0).Display();
 
             window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
