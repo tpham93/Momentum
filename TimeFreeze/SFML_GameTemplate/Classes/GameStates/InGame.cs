@@ -23,7 +23,7 @@ class InGame : IGameState
     Sprite[] buttonSprites;
     Text levelName;
 
-    private bool isPaused = false;
+    public static bool isPaused = false;
 
     public static LevelID levelId;
 
@@ -34,7 +34,7 @@ class InGame : IGameState
     Random random;
 
     public static bool isLevelDark= false;
-    public static bool isLevelFreezed = true;
+    public static bool isLevelFreezed = false;
 
     public InGame()
     {

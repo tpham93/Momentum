@@ -48,7 +48,6 @@ class TimeFreezeGame : Game
 
         handleNewGameState();
 
-
     }
 
     public override void update(GameTime gameTime, RenderWindow window)
@@ -73,7 +72,7 @@ class TimeFreezeGame : Game
 
     public override void draw(GameTime gameTime, List<RenderTexture> target)
     {
-        fps = 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
+        fps = 1.0f / ((float)gameTime.ElapsedTime.TotalSeconds);
 
         
 

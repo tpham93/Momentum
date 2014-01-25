@@ -21,6 +21,8 @@ public abstract class Game
 
     static int wheelDelta;
 
+    public Sprite lightSprite;
+
     public Game(int width, int height, String title)
     {
 
@@ -56,6 +58,15 @@ public abstract class Game
         gameTime.Start();
         loadContent(contentManager);
 
+        
+        lightSprite = new Sprite();
+        lightSprite.Texture = Assets.lightCircle;
+        lightSprite.Scale = new Vector2f(4, 4);
+        lightSprite.Origin = new Vector2f(32, 32);
+        lightSprite.Position = new Vector2f(300, 300);
+        lightSprite.Color = Color.White;
+        
+
         while (window.IsOpen())
         {
             
@@ -66,14 +77,32 @@ public abstract class Game
 
             update(gameTime, window);
 
+
             foreach (RenderTexture texture in renderTargets)
                 texture.Clear();
 
             draw(gameTime, renderTargets);
-            renderTargets.ElementAt(0).Display();
+            renderTargets[1].Draw(lightSprite);
 
-            window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+            foreach (RenderTexture texture in renderTargets)
+                texture.Display();
 
+
+            if (InGame.isPaused)
+            {
+                RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
+                s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
+                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
+            }
+            else
+                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+                
+            
+//                Texture.Bind(renderTargets[0].Texture);
+
+             
+
+             //   window.Draw(new Sprite(renderTargets.ElementAt(1).Texture));
             window.Display();
         }
     }

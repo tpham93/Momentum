@@ -10,6 +10,7 @@ using SFML.Window;
     {
 
         private Sprite sprite;
+
         public Ball(Vector2f position)
             :base(new CircleShapeSAT(Constants.TILESIZE,position,true))
         {
