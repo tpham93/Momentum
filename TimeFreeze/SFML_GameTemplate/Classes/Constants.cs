@@ -13,6 +13,7 @@ public static class Constants
     public const    int WINDOWHEIGHT    = 600;
 
     public const    String LEVELPATH    = "Content/Level/";
+    public const    String SHADERPATH   = "Content/Shader/";
 
 
 }

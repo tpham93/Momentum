@@ -1,9 +1,0 @@
-uniform sampler2D texSampler;
- 
-void main(void)
-{
-vec4 test = texture2D(texSampler, vec2(gl_TexCoord[0]));
- gl_FragColor = test;
-
-
-}
