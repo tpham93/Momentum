@@ -66,10 +66,10 @@ public abstract class Game
         
         lightSprite = new Sprite();
         lightSprite.Texture = Assets.lightCircle;
-        lightSprite.Scale = new Vector2f(4, 4);
+        lightSprite.Scale = new Vector2f(5, 5);
         lightSprite.Origin = new Vector2f(32, 32);
-        lightSprite.Position = new Vector2f(300, 300);
-        lightSprite.Color = Color.White;
+        lightSprite.Position = new Vector2f(400, 300);
+        lightSprite.Color = Color.Red;
 
 
         while (window.IsOpen())
@@ -80,9 +80,9 @@ public abstract class Game
             Input.update();
             gameTime.Update();
 
-            lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2));
-            Vector2i mousePos = Input.currentMousePos;
-            lightSprite.Position = new Vector2f(mousePos.X, mousePos.Y);
+         //   lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2));
+         //   Vector2i mousePos = Input.currentMousePos;
+        //    lightSprite.Position = new Vector2f(mousePos.X, mousePos.Y);
             update(gameTime, window);
 
 
@@ -100,7 +100,7 @@ public abstract class Game
 
 
             draw(gameTime, renderTargets);
-            //renderTargets[1].Draw(lightSprite);
+            renderTargets[1].Draw(lightSprite);
 
             foreach (RenderTexture texture in renderTargets)
                 texture.Display();
