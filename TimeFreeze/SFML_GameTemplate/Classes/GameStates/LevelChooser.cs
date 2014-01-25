@@ -13,6 +13,7 @@ class LevelChooser : IGameState
 {
     int chooseIndex = 0;
     Text[] levelName;
+    Text[] shownLevelName;
 
     public LevelChooser()
     {
@@ -21,13 +22,23 @@ class LevelChooser : IGameState
         FileInfo[] test = levelInfos.GetFiles();
 
         levelName = new Text[test.Length];
+        shownLevelName = new Text[levelName.Length / 2];
 
         for (int i = 0; i < test.Length; i++)
         {
             levelName[i] = new Text("" + test[i].ToString(), Assets.font);
-            levelName[i].Color = Color.White;
-            levelName[i].Position = new Vector2f(Constants.WINDOWWIDTH / 3 , (Constants.WINDOWHEIGHT / 3) + i * 50);
+            if (i % 2 == 0)
+            {
+                shownLevelName[i / 2] = new Text("Level " + (int)((i / 2) + 1), Assets.font);
+                
+                if (i / 2 < 10)
+                    shownLevelName[i / 2].Position = new Vector2f(50, 60 + (i / 2) * 40);
+                else
+                    shownLevelName[i / 2].Position = new Vector2f(130, 60 + (i / 2) * 40);
+            }
         }
+        shownLevelName[0].Color = Color.Red;
+        shownLevelName[0].Scale = new Vector2f(1.1f, 1.1f);
         for (int i = 0; i < test.Length; i++)
             Console.WriteLine(levelName[i].DisplayedString);
     }
@@ -42,28 +53,49 @@ class LevelChooser : IGameState
         
     }
 
-    public EGameState Update(GameTime gameTime)
+    public EGameState Update(GameTime gameTime, RenderWindow window)
     {
         if (Input.isClicked(Keyboard.Key.S))
-            chooseIndex = (chooseIndex + 1) % levelName.Length;
+        {
+            chooseIndex = (chooseIndex + 1) % (levelName.Length / 2);
+            changeColor();
+        }
 
         else if (Input.isClicked(Keyboard.Key.W))
-            chooseIndex = (chooseIndex + (levelName.Length - 1)) % levelName.Length;
+        {
+            chooseIndex = (chooseIndex + (levelName.Length - 1)) % (levelName.Length / 2);
+            changeColor();
+        }
 
         if (Input.isClicked(Keyboard.Key.Return))
         {
-            String test = levelName[chooseIndex].DisplayedString.Replace("map", "").Replace(".png", "").Trim();
-            InGame.levelId = (LevelID)int.Parse(test);
+            String mapID = levelName[chooseIndex*2].DisplayedString.Replace("map", "").Replace(".png", "").Trim();
+            
+            InGame.levelId= (LevelID)int.Parse(mapID);
             
             return EGameState.InGame;
         }
 
         return EGameState.LevelChooser;
     }
+    private void changeColor()
+    {
+        resetAllColor();
+        shownLevelName[chooseIndex].Color = new Color(Color.Red);
+        shownLevelName[chooseIndex].Scale = new Vector2f(1.1f, 1.1f);
 
+    }
+    private void resetAllColor()
+    {
+        foreach (Text t in shownLevelName)
+        {
+            t.Color = new Color(Color.White);
+            t.Scale = new Vector2f(1f, 1f);
+        }
+    }
     public void Draw(GameTime gameTime, RenderWindow window)
     {
-        foreach (Text t in levelName)
+        foreach (Text t in shownLevelName)
             window.Draw(t);
     }
 }

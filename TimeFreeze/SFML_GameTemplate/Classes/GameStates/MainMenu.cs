@@ -38,7 +38,7 @@ class MainMenu : IGameState
       
     }
 
-    public EGameState Update(GameTime gameTime)
+    public EGameState Update(GameTime gameTime, RenderWindow window)
     {
 
 

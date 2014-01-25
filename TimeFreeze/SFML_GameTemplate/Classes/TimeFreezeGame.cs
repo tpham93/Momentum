@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class TimeFreezeGame : Game
 {
 
-    EGameState currentGameState = EGameState.InGame;
+    EGameState currentGameState = EGameState.MainMenu;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -29,6 +29,8 @@ class TimeFreezeGame : Game
         keys.Add(Keyboard.Key.Return);
         keys.Add(Keyboard.Key.Space);
 
+        keys.Add(Keyboard.Key.P);
+
         keys.Add(Keyboard.Key.Up);
         keys.Add(Keyboard.Key.Down);
         keys.Add(Keyboard.Key.Left);
@@ -42,9 +44,15 @@ class TimeFreezeGame : Game
         handleNewGameState();
     }
 
-    public override void update(GameTime gameTime)
+    public override void update(GameTime gameTime, RenderWindow window)
     {
-        currentGameState = gameState.Update(gameTime);
+        currentGameState = gameState.Update(gameTime, window);
+
+        if (Input.isClicked(Keyboard.Key.Escape))
+            if (currentGameState == EGameState.MainMenu)
+                currentGameState = 0;
+            else
+            currentGameState = EGameState.MainMenu;
 
         if (Input.isClicked(Keyboard.Key.Right))
             currentGameState++;
@@ -93,7 +101,7 @@ class TimeFreezeGame : Game
                 break;
 
             case EGameState.InGame:
-                gameState = new InGame(LevelID.LEVEL0);
+                gameState = new InGame();
                 break;
             case EGameState.Credits:
                 gameState = new Credits();
