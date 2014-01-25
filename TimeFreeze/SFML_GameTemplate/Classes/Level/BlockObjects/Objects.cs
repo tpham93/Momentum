@@ -40,20 +40,15 @@ using SFML.Window;
 
         public virtual void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
         {
-            RectangleShape rect = new RectangleShape(new Vector2f(2, 2));
-            rect.Origin = new Vector2f(1, 1);
-            rect.Position = sprite.Position;
-
-            rect.FillColor = Color.White;
-
+            
             sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
             targets.ElementAt(0).Draw(sprite, state);
-            targets.ElementAt(0).Draw(rect, state);
         }
 
         public static void loadContent()
         {
-            objektTextures = new Texture[8];            objektTextures[0] = new Texture("Content/Block/floor.png");
+            objektTextures = new Texture[7];
+            objektTextures[0] = new Texture("Content/Block/floor.png");
             objektTextures[1] = new Texture("Content/Block/wall.png");
             objektTextures[2] = new Texture("Content/Block/ball.png");
             objektTextures[3] = new Texture("Content/Block/goal.png");
