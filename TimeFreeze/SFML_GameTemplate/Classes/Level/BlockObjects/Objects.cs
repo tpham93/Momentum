@@ -12,6 +12,12 @@ using SFML.Window;
         public static Texture[] objektTextures;
 
         protected Shape2DSAT shape;
+        protected Sprite sprite;
+
+        public Shape2DSAT Shape
+        {
+            get { return shape; }
+        }
 
         public Vector2f Position
         {
@@ -32,7 +38,18 @@ using SFML.Window;
 
         public abstract void update(GameTime gameTime);
 
-        public abstract void draw(List<RenderTexture> targets, RenderStates state);
+        public void draw(List<RenderTexture> targets, RenderStates state)
+        {
+            RectangleShape rect = new RectangleShape(new Vector2f(2, 2));
+            rect.Origin = new Vector2f(1, 1);
+            rect.Position = sprite.Position;
+
+            rect.FillColor = Color.White;
+
+            sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
+            targets.ElementAt(0).Draw(sprite, state);
+            targets.ElementAt(0).Draw(rect, state);
+        }
 
         public static void loadContent()
         {
@@ -47,6 +64,4 @@ using SFML.Window;
         }
 
         public abstract void initialize();
-
-    
 }

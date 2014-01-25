@@ -9,13 +9,13 @@ using SFML.Window;
 
     class WallBlock : Objects
     {
-        private Sprite objSprite;
+        //private Sprite sprite;
 
         public WallBlock(Vector2f position)
             : base(new PolygonShapeSAT(new Vector2i(Constants.TILESIZE, Constants.TILESIZE), position, false))
         {
-            objSprite = new Sprite(Objects.objektTextures[1], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
-            objSprite.Position = position;
+            sprite = new Sprite(Objects.objektTextures[1], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
+            sprite.Origin = new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
         }
 
         public override void update(GameTime gameTime)
@@ -23,10 +23,10 @@ using SFML.Window;
            
         }
 
-        public override void draw( List<RenderTexture> targets, RenderStates state)
-        {
-            targets.ElementAt(0).Draw(objSprite, state);
-        }
+        //public override void draw( List<RenderTexture> targets, RenderStates state)
+        //{
+        //    targets.ElementAt(0).Draw(sprite, state);
+        //}
 
 
 

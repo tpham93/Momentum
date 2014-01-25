@@ -148,4 +148,23 @@ using SFML.Graphics;
             return contains(new Vector2(point));
         }
         public abstract bool contains(Vector2 point);
+
+        public static void handleCollision(IntersectData data, Shape2DSAT o1, Shape2DSAT o2)
+        {
+            if (o1.moveable)
+            {
+                if (o2.moveable)
+                {
+                    o1.Position_ -= (data.Mtv * data.PenetrationDepth / 2);
+                    o2.Position_ += (data.Mtv * data.PenetrationDepth / 2);
+                }
+                else
+                    o1.Position_ -= (data.Mtv * data.PenetrationDepth);
+            }
+            else if (o2.moveable)
+            {
+                o2.Position_ += (data.Mtv * data.PenetrationDepth);
+            }
+        }
+
     }

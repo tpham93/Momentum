@@ -10,13 +10,13 @@ using SFML.Window;
     class Goal : Objects
     {
 
-        Sprite sprite;
+        //Sprite sprite;
         public Goal(Vector2f position)
             : base(new PolygonShapeSAT(new Vector2i(Constants.TILESIZE, Constants.TILESIZE), position, false))
         {
             this.Position = position;
             sprite = new Sprite(Objects.objektTextures[3], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
-            sprite.Position = position;
+            sprite.Origin = new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
 
         }
         public override void update(GameTime gameTime)
@@ -24,10 +24,10 @@ using SFML.Window;
             throw new NotImplementedException();
         }
 
-        public override void draw(List<RenderTexture> targets, RenderStates state)
-        {
-            targets.ElementAt(0).Draw(sprite, state);
-        }
+        //public override void draw(List<RenderTexture> targets, RenderStates state)
+        //{
+        //    targets.ElementAt(0).Draw(sprite, state);
+        //}
 
         public override void initialize()
         {

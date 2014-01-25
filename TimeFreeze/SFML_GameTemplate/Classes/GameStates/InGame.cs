@@ -112,8 +112,7 @@ class InGame : IGameState
     {
         if (!isPaused)
         {
-            level.update(gameTime);
-
+            updateGame(gameTime, window);
         }
 
         if (Input.isClicked(Keyboard.Key.P))
@@ -127,6 +126,41 @@ class InGame : IGameState
 
         return EGameState.InGame;
     }
+
+    public void updateGame(GameTime gameTime, RenderWindow window)
+    {
+        for (int i = 0; i < worldObjectsMovable.Count; ++i)
+        {
+            worldObjectsMovable[i].update(gameTime);
+        }
+
+
+        for (int i = 0; i < worldObjectsMovable.Count; ++i)
+        {
+            Shape2DSAT shapeI = worldObjectsMovable[i].Shape;
+
+            for (int j = i + 1; j < worldObjectsMovable.Count; ++j)
+            {
+                Shape2DSAT shapeJ = worldObjectsMovable[j].Shape;
+                IntersectData iData = shapeI.intersects(shapeJ);
+
+                if(iData.Intersects)
+                    Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
+            }
+            for (int j = i + 1; j < worldObjects.Count; ++j)
+            {
+                Shape2DSAT shapeJ = worldObjects[j].Shape;
+                IntersectData iData = shapeI.intersects(shapeJ);
+
+                if (iData.Intersects)
+                    Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
+            }
+        }
+
+
+    }
+
+
 
     public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
