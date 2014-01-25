@@ -26,6 +26,7 @@ class InGame : IGameState
 
     private bool isPaused = false;
     private int timeFreezeNum = 0;
+    private Text timeFrTxt = new Text("", Assets.font);
     
 
     public static LevelID levelId;
@@ -90,6 +91,8 @@ class InGame : IGameState
         levelName = new Text("Level " + (int)(levelId+1), Assets.font);
         levelName.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X + 20, 1);
         levelName.Color = Color.White;
+        timeFrTxt.Position = new Vector2f(Constants.WINDOWWIDTH - 85 - 30, 9);
+        timeFrTxt.Scale = new Vector2f(0.5f, 0.5f);
         
 
     }
@@ -172,17 +175,20 @@ class InGame : IGameState
 
 
         //Draw menubar
-        targets.ElementAt(0).Draw(menubarSprite);
+        targets.ElementAt(2).Draw(menubarSprite);
 
         if (isPaused)
-            targets.ElementAt(0).Draw(buttonSprites[1]);
+            targets.ElementAt(2).Draw(buttonSprites[1]);
         else
-            targets.ElementAt(0).Draw(buttonSprites[0]);
-        targets.ElementAt(0).Draw(buttonSprites[2]);
-        targets.ElementAt(0).Draw(levelName);
-        if (isPaused)
-            targets.ElementAt(0).Draw(buttonSprites[3]);
+            targets.ElementAt(2).Draw(buttonSprites[0]);
+        targets.ElementAt(2).Draw(buttonSprites[2]);
+        targets.ElementAt(2).Draw(levelName);
+        if (timeFreezeNum==0)
+            targets.ElementAt(2).Draw(buttonSprites[3]);
         else
-            targets.ElementAt(0).Draw(buttonSprites[4]);
+            targets.ElementAt(2).Draw(buttonSprites[4]);
+        targets.ElementAt(2).Draw(timeFrTxt);
+        
+
     }
 }

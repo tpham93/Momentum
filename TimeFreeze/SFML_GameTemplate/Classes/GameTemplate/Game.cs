@@ -27,6 +27,8 @@ public abstract class Game
         renderTargets = new List<RenderTexture>();
         renderTargets.Add(new RenderTexture((uint)width,(uint)height));
         renderTargets.Add(new RenderTexture((uint)width, (uint)height));
+        renderTargets.Add(new RenderTexture((uint)width, (uint)height));
+
 
         window = new RenderWindow(new VideoMode((uint)width, (uint)height), title);
 
