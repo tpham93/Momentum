@@ -82,6 +82,7 @@
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\IGameState.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Accelerator.cs" />
     <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
     <Compile Include="Classes\Level\BlockObjects\Goal.cs" />
     <Compile Include="Classes\Level\BlockObjects\Hourglass.cs" />
