@@ -91,8 +91,9 @@ class InGame : IGameState
         levelName = new Text("Level " + (int)(levelId+1), Assets.font);
         levelName.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X + 20, 1);
         levelName.Color = Color.White;
-        timeFrTxt.Position = new Vector2f(Constants.WINDOWWIDTH - 85 - 30, 9);
-        timeFrTxt.Scale = new Vector2f(0.5f, 0.5f);
+        timeFrTxt.Color = Color.White;
+        timeFrTxt.Position = new Vector2f(Constants.WINDOWWIDTH - 75 - 27, 15);
+        timeFrTxt.Scale = new Vector2f(0.7f, 0.7f);
         
 
     }
@@ -122,10 +123,18 @@ class InGame : IGameState
             isPaused = !isPaused;
 
         //Mouse pause Game
-        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 69)
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 35)
             isPaused = !isPaused;
-        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 69)
+        //Mouse reset
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 35)
             Initialize();
+        //Mouse timefreeze Game
+        if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 96 - 30 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 64 - 30 && Input.currentMousePos.Y < 35)
+            if (timeFreezeNum > 0)
+            {
+                timeFreezeNum--;
+                isLevelFreezed = true;
+            }
 
         return EGameState.InGame;
     }
@@ -214,10 +223,11 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[0]);
         targets.ElementAt(2).Draw(buttonSprites[2]);
         targets.ElementAt(2).Draw(levelName);
-        if (timeFreezeNum==0)
+        if (timeFreezeNum!=0)
             targets.ElementAt(2).Draw(buttonSprites[3]);
         else
             targets.ElementAt(2).Draw(buttonSprites[4]);
+        timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
         
 

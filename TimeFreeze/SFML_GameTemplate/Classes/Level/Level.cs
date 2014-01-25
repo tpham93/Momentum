@@ -64,7 +64,7 @@ using SFML.Window;
                     else if (int.Parse(ls[0]) == -1)
                         isLevelDark = true;
                     else if (int.Parse(ls[0]) == -2)
-                        timeFreezenum++;
+                        timeFreezenum += int.Parse(ls[1]);
                     else if (int.Parse(ls[0]) == 1)
                         baseLevelMovable.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
 
