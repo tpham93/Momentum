@@ -18,9 +18,10 @@ public class SparkleParticle : AbstractParticle
         this.direction = new Vector2f(direction.X, direction.Y);
         this.speed = (float)InGame.random.NextDouble() * 5.0f;
 
-        this.lifetime = 5.0;
+        this.lifetime = 3.0 * InGame.random.NextDouble();
+        this.maxLifeTime = 3.0 * InGame.random.NextDouble();
 
-      //  this.sprite.Scale = new Vector2f(2, 1);
+        this.sprite.Scale = new Vector2f(0.5f, 0.5f);
     }
 
     public override void draw(GameTime gametime, List<RenderTexture> targets)
@@ -32,7 +33,7 @@ public class SparkleParticle : AbstractParticle
     {
 
         this.sprite.Position += this.direction * this.speed;
-
+        this.sprite.Color = Help.lerp(Color.Transparent, Color.White, Math.Min((float)(this.lifetime / this.maxLifeTime), 1.0f));
         
 
         this.lifetime -= gameTime.ElapsedTime.TotalSeconds;

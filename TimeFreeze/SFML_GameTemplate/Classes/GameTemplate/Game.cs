@@ -96,15 +96,17 @@ public abstract class Game
             foreach (RenderTexture texture in renderTargets)
                 texture.Display();
 
-
+            
             if (InGame.isLevelDark)
             {
                 RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
                 s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
-                renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
+                renderTargets[0].Draw(new Sprite(renderTargets[0].Texture), s);
             }
             else
                 renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+
+          //  renderTargets[0].Display();
 
             if (InGame.isLevelFreezed && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
             {
