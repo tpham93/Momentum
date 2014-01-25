@@ -46,11 +46,11 @@ using SFML.Window;
 
         public abstract void update(GameTime gameTime);
 
-        public virtual void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
+        public virtual void draw(List<RenderTexture> targets, GameTime time)
         {
             
             sprite.Position = Position;
-            targets.ElementAt(0).Draw(sprite, state);
+            targets.ElementAt(0).Draw(sprite);
         }
 
         public static void loadContent()

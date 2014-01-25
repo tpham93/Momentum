@@ -33,4 +33,13 @@ public static class Help
     {
         return v1.X * v2.X + v1.Y * v2.Y;
     }
+    public static float toRadian(float degree)
+    {
+        return degree * ((float)Math.PI / 180.0f);
+    }
+
+    public static float toDegree(float radian)
+    {
+        return radian * (180.0f / (float)Math.PI);
+    }
 }

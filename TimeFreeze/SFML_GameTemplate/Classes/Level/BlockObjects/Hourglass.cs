@@ -40,13 +40,12 @@ class Hourglass : Objects
     {
         throw new NotImplementedException();
     }
-    public override void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
+    public override void draw(List<RenderTexture> targets, GameTime time)
     {
 
         sprite.Position = Position;
-
-        targets.ElementAt(0).Draw(sprite, state);
-        targets.ElementAt(0).Draw(numT, state);
+        targets.ElementAt(0).Draw(sprite);
+        targets.ElementAt(0).Draw(numT);
     }
 
     //public override void draw(List<RenderTexture> targets, RenderStates state)

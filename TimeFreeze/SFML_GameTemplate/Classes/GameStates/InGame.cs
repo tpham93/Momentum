@@ -76,7 +76,11 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
-    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
+    Sprite arrowSprite = new Sprite();
+
+    bool drawArrow = false;
+
+   // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
 
 
     private int[,] floorMap;
@@ -96,8 +100,6 @@ class InGame : IGameState
     Text levelDone;
 
 
-
-
     public InGame()
     {
         arrow = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
@@ -112,6 +114,10 @@ class InGame : IGameState
                 floorMap[x, y] = random.Next(3);
             }
         }
+
+        arrowSprite = new Sprite(Assets.easyArrow);
+        arrowSprite.Origin = new Vector2f(0,32);
+
     }
 
     public void Initialize()
@@ -231,6 +237,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
             }
 
@@ -356,10 +363,22 @@ class InGame : IGameState
                 Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
                 float length = velocity.Length();
                 velocity /= length;
-
+               
                 Console.Out.WriteLine("velocity set");
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
+
+                arrowSprite.Position = selectedObject.Position;
+                arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
+                arrowSprite.Rotation += Help.toDegree((float)Math.PI);
+                /*
+                         lookRotation = (float)(Math.Atan2(getCenter().Y - mousePos.Y, getCenter().X - mousePos.X));
+            lookRotation += MathHelper.Pi; 
+                 
+                 */
+                drawArrow = true;
                 selectedObject = null;
+
+              
             }
         }
 
@@ -421,17 +440,17 @@ class InGame : IGameState
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[0], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[0]);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[1], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[1]);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[2], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[2]);
                 }
             }
         }
@@ -440,11 +459,11 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
         foreach (Objects obj in worldObjectsMovable)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
 
         foreach (AbstractParticle p in particles)
@@ -470,6 +489,9 @@ class InGame : IGameState
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
 
-        targets.ElementAt(0).Draw(levelDone, currentRenderState);
+        if(drawArrow)
+            targets.ElementAt(2).Draw(arrowSprite);
+
+        targets.ElementAt(2).Draw(levelDone);
     }
 }
