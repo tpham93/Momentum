@@ -117,6 +117,12 @@
     <Content Include="Content\Block\floor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Block\floor_02.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\floor_03.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Block\goal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
