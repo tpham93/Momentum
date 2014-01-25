@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,21 @@ public static class Help
                             (byte)(color1.G - color1.G * t + color2.G * t), 
                             (byte)(color1.B - color1.B * t + color2.B * t), 
                             (byte)(color1.A - color1.A * t + color2.A * t));
+    }
+
+    public static Vector2f lerp(Vector2f first, Vector2f sec, float t)
+    {
+           return new Vector2f( (first.X - first.X * t + sec.X * t), 
+                                (first.Y - first.Y * t + sec.Y * t));
+    }
+
+    public static Vector2f toVec2f(Vector2 vec)
+    {
+        return new Vector2f(vec.X, vec.Y);
+    }
+
+    public static float Dot(Vector2f v1, Vector2f v2)
+    {
+        return v1.X * v2.X + v1.Y * v2.Y;
     }
 }
