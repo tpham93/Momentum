@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,12 @@ using System.Threading.Tasks;
         private int x;
         private int y;
 
+        public Point(Vector2i v)
+            : this(v.X, v.Y)
+        {
+        }
         public Point(int z)
-            :this(z,z)
+            : this(z, z)
         {
         }
         public Point(int x, int y)

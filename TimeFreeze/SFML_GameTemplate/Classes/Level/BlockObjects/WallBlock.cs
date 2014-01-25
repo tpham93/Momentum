@@ -12,10 +12,9 @@ using SFML.Window;
         private Sprite objSprite;
 
         public WallBlock(Vector2f position)
+            : base(new PolygonShapeSAT(new Vector2i(Constants.TILESIZE, Constants.TILESIZE), position, false))
         {
-            this.Position = position;
-            
-            objSprite = new Sprite(Objects.objektTextures[1], new IntRect(0 ,0, 16, 16));
+            objSprite = new Sprite(Objects.objektTextures[1], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
             objSprite.Position = position;
         }
 
@@ -24,9 +23,9 @@ using SFML.Window;
            
         }
 
-        public override void draw( List<RenderTexture> targets)
+        public override void draw( List<RenderTexture> targets, RenderStates state)
         {
-            targets.ElementAt(0).Draw(objSprite);
+            targets.ElementAt(0).Draw(objSprite, state);
         }
 
 

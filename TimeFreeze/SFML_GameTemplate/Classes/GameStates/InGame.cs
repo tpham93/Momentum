@@ -27,6 +27,8 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
+    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.Grayscale);
+    EShader currentShader = EShader.Grayscale;
     private int[,] floorMap;
     Random random;
 
@@ -102,6 +104,14 @@ class InGame : IGameState
 
         }
 
+        if (Input.isClicked(Keyboard.Key.F1))
+            if (currentShader == EShader.Grayscale)
+                currentShader = EShader.None;
+            else
+                currentShader = EShader.Grayscale;
+
+        currentRenderState = ShaderManager.getRenderState(currentShader);
+
         if (Input.isClicked(Keyboard.Key.P))
             isPaused = !isPaused;
 
@@ -124,7 +134,7 @@ class InGame : IGameState
         {
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
-                
+
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
@@ -147,7 +157,7 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets);
+            obj.draw(targets, currentRenderState);
         }
 
         targets.ElementAt(0).Draw(menubarSprite);
