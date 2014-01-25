@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 class MainMenu : IGameState
 {
-    Text lvlselection = new Text("Level selection", Assets.font);
-    Text credits = new Text("Credits", Assets.font);
-    Text end = new Text("End Game", Assets.font);
+    Text[] buttonTexts = new Text[3];
+
     int current = 0;
     
 
@@ -22,15 +21,20 @@ class MainMenu : IGameState
 
     public void Initialize()
     {
-        lvlselection.Color = Color.Red;
-        lvlselection.Position = new Vector2f(10, 120);
-        lvlselection.Scale = new Vector2f(2, 2);
-        credits.Color = Color.White;
-        credits.Position = new Vector2f(10, 240);
-        credits.Scale = new Vector2f(1, 1);
-        end.Color = Color.White;
-        end.Position = new Vector2f(10, 360);
-        end.Scale = new Vector2f(1, 1);
+        buttonTexts[0] = new Text("Start", Assets.font);
+        buttonTexts[0].Color = Color.Red;
+        buttonTexts[0].Position = new Vector2f(10, 120);
+        buttonTexts[0].Scale = new Vector2f(2, 2);
+
+        buttonTexts[1] = new Text("Credits", Assets.font);
+        buttonTexts[1].Color = Color.White;
+        buttonTexts[1].Position = new Vector2f(10, 240);
+        buttonTexts[1].Scale = new Vector2f(1, 1);
+
+        buttonTexts[2] = new Text("Quit", Assets.font);
+        buttonTexts[2].Color = Color.White;
+        buttonTexts[2].Position = new Vector2f(10, 360);
+        buttonTexts[2].Scale = new Vector2f(1, 1);
     }
 
     public void LoadContent(ContentManager manager)
@@ -40,44 +44,25 @@ class MainMenu : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
-        if (Input.isInside(lvlselection.GetGlobalBounds()))
+
+        for (int i = 0; i < buttonTexts.Length; i++)
         {
-            current = 0;
-            changeColor();
+            if (Input.isInside(buttonTexts[i].GetGlobalBounds()))
+            {
+                current = i;
+            }
 
-            if (Input.leftClicked())
-                return EGameState.LevelChooser;
-            
-        }
-        else if (Input.isInside(credits.GetGlobalBounds()))
-        { 
-            current = 1;
-            changeColor();
-
-            if (Input.leftClicked())
-                return EGameState.Credits;
-        }
-
-        else if (Input.isInside(end.GetGlobalBounds()))
-        { 
-            current = 2;
-            changeColor();
-
-            if (Input.leftClicked())
-                return EGameState.None;
+        
         }
 
 
         if (Input.isClicked(Keyboard.Key.S))
-        {
             current = (current + 1) % 3;
-            changeColor();
-        }
+
         if (Input.isClicked(Keyboard.Key.W))
-        {
             current = (current + 2) % 3;
-            changeColor();
-        }
+        
+
         if(Input.isClicked(Keyboard.Key.Return))
             switch (current)
             {
@@ -94,51 +79,37 @@ class MainMenu : IGameState
         if (Input.isClicked(Keyboard.Key.Escape))
             return EGameState.None;
 
+        changeColor();
+
         return EGameState.MainMenu;
     }
 
     public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
 
-       // targets.ElementAt(0).Clear(Color.Red);
-
-
         targets.ElementAt(0).Clear(Color.Black);
-        targets.ElementAt(0).Draw(lvlselection);
-        targets.ElementAt(0).Draw(credits);
-        targets.ElementAt(0).Draw(end);
 
+        foreach (Text t in buttonTexts)
+            targets[0].Draw(t);
 
     }
 
     public void changeColor()
     {
-        switch (current)
+        for (int i = 0; i < buttonTexts.Length; i++)
         {
-            case 0: 
-                lvlselection.Color = Color.Red;
-                lvlselection.Scale = new Vector2f(2, 2);
-                credits.Color = Color.White;
-                credits.Scale = new Vector2f(1, 1);
-                end.Color = Color.White;
-                end.Scale = new Vector2f(1, 1);
-                break;
-            case 1: 
-                lvlselection.Color = Color.White;
-                lvlselection.Scale = new Vector2f(1, 1);
-                credits.Color = Color.Red;
-                credits.Scale = new Vector2f(2, 2);
-                end.Color = Color.White;
-                end.Scale = new Vector2f(1, 1);
-                break;
-            case 2: 
-                lvlselection.Color = Color.White;
-                lvlselection.Scale = new Vector2f(1, 1);
-                credits.Color = Color.White;
-                credits.Scale = new Vector2f(1, 1);
-                end.Color = Color.Red;
-                end.Scale = new Vector2f(2, 2);
-                break;
+            if (i == current)
+            {
+                buttonTexts[i].Color = Color.Red;
+                buttonTexts[i].Scale = new Vector2f(2, 2);
+            }
+
+            else
+            {
+                buttonTexts[i].Color = Color.White;
+                buttonTexts[i].Scale = new Vector2f(1, 1);
+            }
         }
+
     }
 }

@@ -392,6 +392,8 @@ class InGame : IGameState
             particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
         }
 
+        //play hitSound
+        Assets.hitSound.Play();
 
 
         speedI /= speedValueI;

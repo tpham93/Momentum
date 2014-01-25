@@ -25,10 +25,6 @@ public static class ShaderManager
         grayscaleRenderStates = new RenderStates(grayscaleShader);
         grayscaleRenderStates.BlendMode = BlendMode.Alpha;
 
-        doNothingShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH + "IdleFragmentShader.txt");
-        doNothingRenderStates = new RenderStates(doNothingShader);
-        doNothingRenderStates.BlendMode = BlendMode.Alpha;
-
         lightShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH + "LightShaderFragment.txt");
         lightRenderStates = new RenderStates(lightShader);
         lightRenderStates.BlendMode = BlendMode.Add;
@@ -39,8 +35,6 @@ public static class ShaderManager
     {
         switch (eShader)
         {
-            case EShader.None:
-                return doNothingRenderStates;
 
             case EShader.Grayscale:
                 return grayscaleRenderStates;
