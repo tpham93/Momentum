@@ -49,7 +49,7 @@ using SFML.Window;
         public virtual void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
         {
             
-            sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
+            sprite.Position = Position;
             targets.ElementAt(0).Draw(sprite, state);
         }
 
