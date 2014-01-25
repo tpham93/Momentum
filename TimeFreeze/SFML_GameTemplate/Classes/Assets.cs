@@ -11,6 +11,8 @@ public static class Assets
 {
     public static Font font;
 
+    public static Texture lightCircle = new Texture("Content/Lights/lightCircle.png");
+
     public static Color colorFloor = new Color(105, 105, 105);
     public static Color colorWall = new Color(0, 0, 255);
     public static Color colorGoal = new Color(0, 255, 0);

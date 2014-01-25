@@ -21,12 +21,16 @@ public abstract class Game
 
     static int wheelDelta;
 
+    public Sprite lightSprite;
+
     public Game(int width, int height, String title)
     {
 
         renderTargets = new List<RenderTexture>();
         renderTargets.Add(new RenderTexture((uint)width,(uint)height));
         renderTargets.Add(new RenderTexture((uint)width, (uint)height));
+        renderTargets.Add(new RenderTexture((uint)width, (uint)height));
+
 
         window = new RenderWindow(new VideoMode((uint)width, (uint)height), title);
 
@@ -56,6 +60,15 @@ public abstract class Game
         gameTime.Start();
         loadContent(contentManager);
 
+        
+        lightSprite = new Sprite();
+        lightSprite.Texture = Assets.lightCircle;
+        lightSprite.Scale = new Vector2f(4, 4);
+        lightSprite.Origin = new Vector2f(32, 32);
+        lightSprite.Position = new Vector2f(300, 300);
+        lightSprite.Color = Color.White;
+
+
         while (window.IsOpen())
         {
             
@@ -64,16 +77,41 @@ public abstract class Game
             Input.update();
             gameTime.Update();
 
+            lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Sin(gameTime.TotalTime.TotalSeconds));
+
             update(gameTime, window);
 
-            foreach (RenderTexture texture in renderTargets)
-                texture.Clear();
+
+            for (int i = 0; i < renderTargets.Count; i++)
+                if (i == 2)
+                    renderTargets[i].Clear(Color.Transparent);
+                else
+                    renderTargets[i].Clear();
 
             draw(gameTime, renderTargets);
-            renderTargets.ElementAt(0).Display();
+            renderTargets[1].Draw(lightSprite);
 
-            window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+            foreach (RenderTexture texture in renderTargets)
+                texture.Display();
 
+
+            if (InGame.isPaused)
+            {
+                RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
+                s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
+                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
+                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
+            }
+            else
+                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
+                
+            
+//                Texture.Bind(renderTargets[0].Texture);
+
+             
+
+             //   window.Draw(new Sprite(renderTargets.ElementAt(1).Texture));
             window.Display();
         }
     }
