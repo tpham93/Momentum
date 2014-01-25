@@ -118,6 +118,11 @@ class InGame : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
+        if(Input.isClicked(Keyboard.Key.G))
+        {
+            timeFreezeNum++;
+        }
+
         if (!isPaused)
         {
             updateGame(gameTime, window);
