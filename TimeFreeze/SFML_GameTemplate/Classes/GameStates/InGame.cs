@@ -41,6 +41,8 @@ class InGame : IGameState
     public static bool isLevelFreezed = false;
 
 
+    Text levelDone;
+
     private Objects selectedObject;
 
     public InGame()
@@ -62,6 +64,9 @@ class InGame : IGameState
         level = new Level();
 
         Level.Leveldata lvlData = level.generateLevel(levelId);
+
+        levelDone = new Text("", Assets.font);
+        levelDone.Position = new Vector2f(100, 100);
 
         worldObjects = lvlData.staticObj;
         worldObjectsMovable = lvlData.movableObj;
@@ -118,10 +123,21 @@ class InGame : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
+
+        if (isPaused)
+        {
+            levelDone.Position += new Vector2f(0, -1);
+            levelDone.DisplayedString = "Hurray \n Level Geschafft \n Du bist ganz okay!";
+        }
+
+
         if(Input.isClicked(Keyboard.Key.G))
         {
             timeFreezeNum++;
+            
         }
+
+
 
         if (!isPaused)
         {
@@ -316,6 +332,8 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[4]);
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
+
+        targets.ElementAt(0).Draw(levelDone, currentRenderState);
 
 
     }
