@@ -29,7 +29,7 @@ using SFML.Window;
 
         public abstract void update(GameTime gameTime);
 
-        public abstract void draw(List<RenderTexture> targets);
+        public abstract void draw(List<RenderTexture> targets, RenderStates state);
 
         public static void loadContent()
         {

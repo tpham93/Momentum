@@ -38,6 +38,8 @@ class TimeFreezeGame : Game
         keys.Add(Keyboard.Key.Left);
         keys.Add(Keyboard.Key.Right);
 
+        keys.Add(Keyboard.Key.F1);
+
         Input.init(window, keys);
 
         Assets.font = new Font("Content/Font/PRIMELEC.ttf");
