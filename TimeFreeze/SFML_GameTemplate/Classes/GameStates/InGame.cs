@@ -63,16 +63,18 @@ class InGame : IGameState
         floor[2] = new Sprite(Objects.objektTextures[5], new IntRect(0, 0, 16, 16));
 
         //Menubar ini
-        menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 230, 48));
+        menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 255, 48));
         menubarSprite.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X, 0);
         menubarSprite.Color = new Color(menubarSprite.Color.R, menubarSprite.Color.G, menubarSprite.Color.B, (byte)150);
-        buttonSprites = new Sprite[3];
+        buttonSprites = new Sprite[4];
         buttonSprites[0] = new Sprite(buttons[0], new IntRect(0, 0, 32, 32));
         buttonSprites[0].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[1] = new Sprite(buttons[1], new IntRect(0, 0, 32, 32));
         buttonSprites[1].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[2] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
         buttonSprites[2].Position = new Vector2f(Constants.WINDOWWIDTH -32 -5, 7);
+        buttonSprites[3] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
+        buttonSprites[3].Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 5, 7);
         levelName = new Text("Level " + (int)(levelId+1), Assets.font);
         levelName.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X + 20, 1);
         levelName.Color = Color.White;
@@ -106,9 +108,9 @@ class InGame : IGameState
 
 
         //Mouse pause Game
-        if (Input.leftClicked() && Input.currentMousePos.X - window.Position.X > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X - window.Position.X < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y - window.Position.Y < 69)
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 69)
             isPaused = !isPaused;
-        if (Input.leftClicked() && Input.currentMousePos.X - window.Position.X > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X - window.Position.X < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y - window.Position.Y < 69)
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 69)
             Initialize();
 
         return EGameState.InGame;
