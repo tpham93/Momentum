@@ -80,8 +80,11 @@ public abstract class Game
             update(gameTime, window);
 
 
-            foreach (RenderTexture texture in renderTargets)
-                texture.Clear();
+            for (int i = 0; i < renderTargets.Count; i++)
+                if (i == 2)
+                    renderTargets[i].Clear(Color.Transparent);
+                else
+                    renderTargets[i].Clear();
 
             draw(gameTime, renderTargets);
             renderTargets[1].Draw(lightSprite);
@@ -95,9 +98,11 @@ public abstract class Game
                 RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
                 s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
                 window.Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
+                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
             }
             else
                 window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
                 
             
 //                Texture.Bind(renderTargets[0].Texture);
