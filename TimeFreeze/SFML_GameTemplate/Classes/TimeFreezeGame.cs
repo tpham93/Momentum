@@ -55,10 +55,13 @@ class TimeFreezeGame : Game
         currentGameState = gameState.Update(gameTime, window);
 
         if (Input.isClicked(Keyboard.Key.Escape))
+        {
             if (currentGameState == EGameState.MainMenu)
-                currentGameState = 0;
+                window.Close();
             else
-            currentGameState = EGameState.MainMenu;
+                currentGameState = EGameState.MainMenu;
+
+        }
 
         if (Input.isClicked(Keyboard.Key.Right))
             currentGameState++;

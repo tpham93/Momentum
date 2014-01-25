@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 class MainMenu : IGameState
 {
-    Text lvlselection = new Text("Levelauswahl", Assets.font);
-    Text credits = new Text("Mitwirkende", Assets.font);
-    Text end = new Text("Ende", Assets.font);
+    Text lvlselection = new Text("Level selection", Assets.font);
+    Text credits = new Text("Credits", Assets.font);
+    Text end = new Text("End Game", Assets.font);
     int current = 0;
     
 
