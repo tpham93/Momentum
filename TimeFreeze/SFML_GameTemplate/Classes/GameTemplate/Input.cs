@@ -92,6 +92,11 @@ public static class Input
         return oldMouse[(int)Mouse.Button.Left] && !currentMouse[(int)Mouse.Button.Left];
     }
 
+    public static bool isInside(FloatRect rect)
+    {
+        return (currentMousePos.X > rect.Left && currentMousePos.X < rect.Left + rect.Width && currentMousePos.Y > rect.Top && currentMousePos.Y < rect.Top + rect.Height);
+    }
+
 
 
 

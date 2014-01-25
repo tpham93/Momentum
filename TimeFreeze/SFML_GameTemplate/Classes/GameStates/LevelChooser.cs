@@ -36,6 +36,8 @@ class LevelChooser : IGameState
                     shownLevelName[i / 2].Position = new Vector2f(130, 60 + (i / 2) * 40);
             }
         }
+
+        
         shownLevelName[0].Color = Color.Red;
         shownLevelName[0].Scale = new Vector2f(1.1f, 1.1f);
         for (int i = 0; i < test.Length; i++)
@@ -54,6 +56,29 @@ class LevelChooser : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
+
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
+        for (int i = 0; i < shownLevelName.Length; i++)//Text t in shownLevelName)
+        {
+            Text t = shownLevelName[i];
+
+            if (Input.isInside(t.GetGlobalBounds()))
+            {
+                chooseIndex = i;
+                changeColor();
+
+                if (Input.leftClicked())
+                {
+                    changeToLevel();
+
+                    return EGameState.InGame;
+                }
+                break;
+            }
+        }
+
         if (Input.isClicked(Keyboard.Key.S))
         {
             chooseIndex = (chooseIndex + 1) % (levelName.Length / 2);
@@ -68,12 +93,12 @@ class LevelChooser : IGameState
 
         if (Input.isClicked(Keyboard.Key.Return))
         {
-            String mapID = levelName[chooseIndex*2].DisplayedString.Replace("map", "").Replace(".png", "").Trim();
-            
-            InGame.levelId= (LevelID)int.Parse(mapID);
+           changeToLevel();
             
             return EGameState.InGame;
         }
+
+        
 
         return EGameState.LevelChooser;
     }
@@ -96,6 +121,14 @@ class LevelChooser : IGameState
     {
         foreach (Text t in shownLevelName)
             targets.ElementAt(0).Draw(t);
+    }
+
+    private void changeToLevel()
+    {
+        String mapID = levelName[chooseIndex * 2].DisplayedString.Replace("map", "").Replace(".png", "").Trim();
+
+        InGame.levelId = (LevelID)int.Parse(mapID);
+
     }
 }
 

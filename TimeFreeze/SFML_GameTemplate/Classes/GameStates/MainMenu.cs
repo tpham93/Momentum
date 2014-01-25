@@ -40,6 +40,32 @@ class MainMenu : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
+        if (Input.isInside(lvlselection.GetGlobalBounds()))
+        {
+            current = 0;
+            changeColor();
+
+            if (Input.leftClicked())
+                return EGameState.LevelChooser;
+            
+        }
+        else if (Input.isInside(credits.GetGlobalBounds()))
+        { 
+            current = 1;
+            changeColor();
+
+            if (Input.leftClicked())
+                return EGameState.Credits;
+        }
+
+        else if (Input.isInside(end.GetGlobalBounds()))
+        { 
+            current = 2;
+            changeColor();
+
+            if (Input.leftClicked())
+                return EGameState.None;
+        }
 
 
         if (Input.isClicked(Keyboard.Key.S))
@@ -64,6 +90,9 @@ class MainMenu : IGameState
                 case 2: 
                     return EGameState.None;
             }
+
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.None;
 
         return EGameState.MainMenu;
     }
