@@ -41,7 +41,7 @@ using SFML.Window;
         {
             //throw new NotImplementedException();
         }
-        public override void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
+        public override void draw(List<RenderTexture> targets, GameTime time)
         {
 
             spr.Scale = new Vector2f((float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f);
@@ -52,7 +52,7 @@ using SFML.Window;
             
             sprite.Position = Position;
             
-            targets.ElementAt(0).Draw(sprite, state);
+            targets.ElementAt(0).Draw(sprite);
             targets.ElementAt(1).Draw(spr);
         }
 

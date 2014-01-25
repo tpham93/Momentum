@@ -26,6 +26,7 @@ public abstract class Game
 
     public Game(int width, int height, String title)
     {
+        Assets.font = new Font("Content/Font/PRIMELEC.ttf");
 
         renderTargets = new List<RenderTexture>();
         renderTargets.Add(new RenderTexture((uint)width,(uint)height));
@@ -39,8 +40,8 @@ public abstract class Game
         window.Closed += closeHandler;
         window.MouseWheelMoved += mouseWheelHandler;
         
-        window.SetVerticalSyncEnabled(false);
-        window.SetFramerateLimit(60);
+       // window.SetVerticalSyncEnabled(false);
+      //  window.SetFramerateLimit(60);
 
         contentManager = new ContentManager();
         gameTime = new GameTime();
