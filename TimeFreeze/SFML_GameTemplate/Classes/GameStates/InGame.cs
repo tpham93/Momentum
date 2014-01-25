@@ -30,6 +30,8 @@ class InGame : IGameState
     private int[,] floorMap;
     Random random;
 
+    private bool isLevelDark= false;
+
     public InGame()
     {
         random = new Random();
@@ -51,7 +53,7 @@ class InGame : IGameState
         worldObjects = new List<object>();
         level = new Level();
         worldObjects = level.generateLevel(levelId);
-
+        isLevelDark = level.IsLevelDark;
         
 
         floor = new Sprite[3];
