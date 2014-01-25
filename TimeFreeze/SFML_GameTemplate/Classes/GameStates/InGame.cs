@@ -27,13 +27,14 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
-    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.Grayscale);
-    EShader currentShader = EShader.Grayscale;
+    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
+   // EShader currentShader = EShader.None;
+
     private int[,] floorMap;
     Random random;
 
     public static bool isLevelDark= false;
-    public static bool isLevelFreezed = false;
+    public static bool isLevelFreezed = true;
 
     public InGame()
     {
@@ -102,13 +103,6 @@ class InGame : IGameState
 
         }
 
-        if (Input.isClicked(Keyboard.Key.F1))
-            if (currentShader == EShader.Grayscale)
-                currentShader = EShader.None;
-            else
-                currentShader = EShader.Grayscale;
-
-        currentRenderState = ShaderManager.getRenderState(currentShader);
 
         if (Input.isClicked(Keyboard.Key.P))
             isPaused = !isPaused;
@@ -133,21 +127,23 @@ class InGame : IGameState
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
 
-                floor.Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                targets.ElementAt(0).Draw(floor, currentRenderState);
+               // floor.Position = new SFML.Window.Vector2f(x * 16, y * 16);
+               // targets.ElementAt(0).Draw(floor, currentRenderState);
+
+                if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[0]);
+                    targets.ElementAt(0).Draw(floor[0], currentRenderState);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[1]);
+                    targets.ElementAt(0).Draw(floor[1], currentRenderState);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[2]);
+                    targets.ElementAt(0).Draw(floor[2], currentRenderState);
                 }
             }
         }
