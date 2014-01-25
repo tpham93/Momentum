@@ -25,6 +25,8 @@ class InGame : IGameState
     Text levelName;
 
     private bool isPaused = false;
+    private int timeFreezeNum = 0;
+    
 
     public static LevelID levelId;
 
@@ -62,6 +64,7 @@ class InGame : IGameState
 
         worldObjects = lvlData.staticObj;
         worldObjectsMovable = lvlData.movableObj;
+        timeFreezeNum = lvlData.freezeNum;
 
         isLevelDark = level.IsLevelDark;
         
@@ -75,15 +78,17 @@ class InGame : IGameState
         menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 255, 48));
         menubarSprite.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X, 0);
         menubarSprite.Color = new Color(menubarSprite.Color.R, menubarSprite.Color.G, menubarSprite.Color.B, (byte)150);
-        buttonSprites = new Sprite[4];
+        buttonSprites = new Sprite[6];
         buttonSprites[0] = new Sprite(buttons[0], new IntRect(0, 0, 32, 32));
         buttonSprites[0].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[1] = new Sprite(buttons[1], new IntRect(0, 0, 32, 32));
         buttonSprites[1].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[2] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
         buttonSprites[2].Position = new Vector2f(Constants.WINDOWWIDTH -32 -5, 7);
-        buttonSprites[3] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
-        buttonSprites[3].Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 5, 7);
+        buttonSprites[3] = new Sprite(buttons[3], new IntRect(0, 0, 32, 32));
+        buttonSprites[3].Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 30, 7);
+        buttonSprites[4] = new Sprite(buttons[4], new IntRect(0, 0, 32, 32));
+        buttonSprites[4].Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 30, 7);
         levelName = new Text("Level " + (int)(levelId+1), Assets.font);
         levelName.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X + 20, 1);
         levelName.Color = Color.White;
@@ -96,10 +101,12 @@ class InGame : IGameState
     public void LoadContent(ContentManager manager)
     {
         menubarTexture = new Texture("Content/Ingame/menBar.png");
-        buttons = new Texture[3];
+        buttons = new Texture[5];
         buttons[0] = new Texture("Content/Ingame/pause.png");
         buttons[1] = new Texture("Content/Ingame/play.png");
         buttons[2] = new Texture("Content/Ingame/back.png");
+        buttons[3] = new Texture("Content/Ingame/hourButton.png");
+        buttons[4] = new Texture("Content/Ingame/hourButtonBW.png");
 
     }
 
@@ -162,6 +169,8 @@ class InGame : IGameState
             obj.draw(targets, currentRenderState);
         }
 
+
+        //Draw menubar
         targets.ElementAt(0).Draw(menubarSprite);
 
         if (isPaused)
@@ -170,5 +179,9 @@ class InGame : IGameState
             targets.ElementAt(0).Draw(buttonSprites[0]);
         targets.ElementAt(0).Draw(buttonSprites[2]);
         targets.ElementAt(0).Draw(levelName);
+        if (isPaused)
+            targets.ElementAt(0).Draw(buttonSprites[3]);
+        else
+            targets.ElementAt(0).Draw(buttonSprites[4]);
     }
 }

@@ -17,11 +17,14 @@ using SFML.Window;
         {
             public List<Objects> staticObj;
             public List<Objects> movableObj;
+            public int freezeNum;
 
-            public Leveldata(List<Objects> stObj, List<Objects> mvObj)
+            public Leveldata(List<Objects> stObj, List<Objects> mvObj, int freezeNum)
             {
                 this.staticObj = stObj;
                 this.movableObj = mvObj;
+                this.freezeNum = freezeNum;
+
             }
         }
 
