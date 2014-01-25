@@ -6,11 +6,6 @@ using System.Text;
 using SFML.Window;
 using SFML.Graphics;
 
-using Sat.Collision;
-using Sat.Etc;
-
-namespace Sat.Object.Shape
-{
     class CircleShapeSAT : Shape2DSAT
     {
         /// <summary>
@@ -124,4 +119,3 @@ namespace Sat.Object.Shape
             return (Position_ - point).LengthSquared() <= radius * radius;
         }
     }
-}

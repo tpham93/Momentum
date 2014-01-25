@@ -92,10 +92,10 @@ class LevelChooser : IGameState
             t.Scale = new Vector2f(1f, 1f);
         }
     }
-    public void Draw(GameTime gameTime, RenderWindow window)
+    public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
         foreach (Text t in shownLevelName)
-            window.Draw(t);
+            targets.ElementAt(0).Draw(t);
     }
 }
 

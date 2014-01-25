@@ -10,9 +10,14 @@ using SFML.Window;
 
     class Level
     {
+        private bool isLevelDark = false;
+
+        public bool IsLevelDark{ get { return isLevelDark; } }
+
         public List<Object> generateLevel(LevelID id)
         {
             List<Object> baseLevel = new List<Object>();
+            isLevelDark = false;
 
             Console.WriteLine(id);
             //load base Image
@@ -32,14 +37,18 @@ using SFML.Window;
             //Load Map File
             using (StreamReader sr = new StreamReader("Content/Level/map" + (int)id + ".txt"))
             {
+                
                 String line;
                 while ((line = sr.ReadLine()) != null)
                 {
                     String[] ls =line.Split(':');
                     if(int.Parse(ls[0])==0)
                         baseLevel.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+                    else if (int.Parse(ls[0]) == -1)
+                        isLevelDark = true;
                     else if (int.Parse(ls[0]) == 1)
                         baseLevel.Add(new Hourglass(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+
                 }
             }
 
@@ -48,6 +57,7 @@ using SFML.Window;
             return baseLevel;
 
         }
+        
 
         public void update(GameTime time)
         {

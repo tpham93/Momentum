@@ -5,10 +5,7 @@ using System.Text;
 
 
 
-using Sat.Etc;
 
-namespace Sat.Collision
-{
     class IntersectData
     {
         private bool interects = false;
@@ -74,5 +71,11 @@ namespace Sat.Collision
             this.mtv = mtv;
             this.penetrationDepth = penetrationDepth;
         }
+
+        public override string ToString()
+        {
+            return "intersects: " + interects + "\t mtv: " + mtv  + "\t penetrationDepth: " + penetrationDepth ;
+        }
+
     }
-}
+

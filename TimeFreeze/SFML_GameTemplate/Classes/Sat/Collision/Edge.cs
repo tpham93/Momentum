@@ -6,8 +6,7 @@ using System.Text;
 
 
 
-namespace Sat.Collision
-{
+
     struct Edge
     {
         Vector2 max;
@@ -40,4 +39,4 @@ namespace Sat.Collision
             this.v2 = v2;
         }
     }
-}
+

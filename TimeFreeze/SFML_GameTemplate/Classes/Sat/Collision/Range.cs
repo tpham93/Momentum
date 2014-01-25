@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sat.Collision
-{
+
     class Range
     {
         float min;
@@ -73,4 +72,4 @@ namespace Sat.Collision
             return "{" + min + " : " + max + "}";
         }
     }
-}
+
