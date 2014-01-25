@@ -65,15 +65,16 @@ public abstract class Game
             gameTime.Update();
 
             update(gameTime, window);
+
+            foreach (RenderTexture texture in renderTargets)
+                texture.Clear();
+
             draw(gameTime, renderTargets);
 
             renderTargets.ElementAt(0).Display();
 
-         //   window.
-            //Sprite testSprite = new Sprite();
-            //testSprite.Texture = renderTargets.ElementAt(0).Texture;
-
             window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+
             window.Display();
         }
     }
