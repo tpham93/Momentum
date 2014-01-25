@@ -51,5 +51,10 @@ using SFML.Window;
             targets.ElementAt(0).Draw(sprite, state);
             targets.ElementAt(1).Draw(spr);
         }
+
+        public override Objects.BlockType getType()
+        {
+            return BlockType.LIGHTBLOCK;
+        }
     }
 
