@@ -15,5 +15,5 @@ public static class Constants
     public const    String LEVELPATH    = "Content/Level/";
     public const    String SHADERPATH   = "Content/Shader/";
 
-
+    public const    int TILESIZE        = 16;
 }

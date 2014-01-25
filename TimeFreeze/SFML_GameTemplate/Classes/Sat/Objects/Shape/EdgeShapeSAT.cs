@@ -84,6 +84,13 @@ using SFML.Graphics;
             }
         }
 
+
+        public PolygonShapeSAT(Vector2f[] corners, Vector2f position, bool moveable = true)
+            :this(HelperSAT.convertVector2fArray(corners), new Vector2(position), moveable)
+        {
+
+        }
+
         public PolygonShapeSAT(Vector2[] corners, Vector2 position, bool moveable = true)
             : base(0, position, Vector2.Zero, moveable)
         {
@@ -127,6 +134,12 @@ using SFML.Graphics;
                     currentNormals.Add(normal);
                 }
             }
+        }
+
+
+        public PolygonShapeSAT(Vector2i size, Vector2f position, bool moveable = true)
+            : this(new Point(size), new Vector2(position),moveable)
+        {
         }
 
         public PolygonShapeSAT(Point size, Vector2 position, bool moveable = true)

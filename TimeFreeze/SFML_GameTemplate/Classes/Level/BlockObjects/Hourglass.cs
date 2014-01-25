@@ -11,9 +11,10 @@ class Hourglass : Objects
 
     private Sprite sprite;
     public Hourglass(Vector2f position)
+        : base(new PolygonShapeSAT(new Vector2i(2 * Constants.TILESIZE, 2 * Constants.TILESIZE), position, false))
     {
         this.Position = position;
-        sprite = new Sprite(Objects.objektTextures[4], new IntRect(0, 0, 32, 32));
+        sprite = new Sprite(Objects.objektTextures[6], new IntRect(0, 0, 2 * Constants.TILESIZE, 2 * Constants.TILESIZE));
         sprite.Position = position;
 
 
@@ -23,14 +24,16 @@ class Hourglass : Objects
         throw new NotImplementedException();
     }
 
-    public override void draw(SFML.Graphics.RenderWindow window)
-    {
-        window.Draw(sprite);
-    }
+
 
     public override void initialize()
     {
         throw new NotImplementedException();
     }
 
+
+    public override void draw(List<RenderTexture> targets, RenderStates state)
+    {
+        targets.ElementAt(0).Draw(sprite, state);
+    }
 }
