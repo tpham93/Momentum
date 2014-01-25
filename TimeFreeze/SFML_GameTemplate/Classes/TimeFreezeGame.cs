@@ -33,6 +33,8 @@ class TimeFreezeGame : Game
 
         keys.Add(Keyboard.Key.P);
 
+        keys.Add(Keyboard.Key.G);
+
         keys.Add(Keyboard.Key.Up);
         keys.Add(Keyboard.Key.Down);
         keys.Add(Keyboard.Key.Left);
@@ -53,6 +55,8 @@ class TimeFreezeGame : Game
     public override void update(GameTime gameTime, RenderWindow window)
     {
         currentGameState = gameState.Update(gameTime, window);
+        
+
 
         if (Input.isClicked(Keyboard.Key.Escape))
         {

@@ -34,5 +34,10 @@ using SFML.Window;
         {
             throw new NotImplementedException();
         }
+
+        public override Objects.BlockType getType()
+        {
+            return BlockType.WALL;
+        }
     }
 
