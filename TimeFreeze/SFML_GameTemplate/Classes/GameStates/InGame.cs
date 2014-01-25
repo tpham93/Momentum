@@ -13,7 +13,8 @@ class InGame : IGameState
     List<Object> worldObjects;
 
     private Level level;
-    Sprite floor;
+    Sprite[] floor;
+
 
     Texture menubarTexture;
     Sprite menubarSprite;
@@ -28,10 +29,26 @@ class InGame : IGameState
 
     RenderStates currentRenderState = ShaderManager.getRenderState(EShader.Grayscale);
     EShader currentShader = EShader.Grayscale;
+    private int[,] floorMap;
+    Random random;
+
+    public static bool isLevelDark= false;
+    public static bool isLevelFreezed = false;
 
     public InGame()
     {
-        
+        random = new Random();
+        floorMap = new int[Constants.WINDOWWIDTH / 16,Constants.WINDOWHEIGHT/ 16];
+        for (int x = 0; x < Constants.WINDOWWIDTH / 16; x++)
+        {
+            for (int y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
+            {
+                floorMap[x, y] = random.Next(3);
+
+
+            }
+
+        }
     }
 
     public void Initialize()
@@ -39,11 +56,13 @@ class InGame : IGameState
         worldObjects = new List<object>();
         level = new Level();
         worldObjects = level.generateLevel(levelId);
-
+        isLevelDark = level.IsLevelDark;
         
 
-        
-        floor = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
+        floor = new Sprite[3];
+        floor[0] = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
+        floor[1]= new Sprite(Objects.objektTextures[4], new IntRect(0, 0, 16, 16));
+        floor[2] = new Sprite(Objects.objektTextures[5], new IntRect(0, 0, 16, 16));
 
         //Menubar ini
         menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 230, 48));
@@ -113,8 +132,23 @@ class InGame : IGameState
         {
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
+
                 floor.Position = new SFML.Window.Vector2f(x * 16, y * 16);
                 targets.ElementAt(0).Draw(floor, currentRenderState);
+                {
+                    floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
+                    targets.ElementAt(0).Draw(floor[0]);
+                }
+                else if (floorMap[x, y] == 1)
+                {
+                    floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
+                    targets.ElementAt(0).Draw(floor[1]);
+                }
+                else
+                {
+                    floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
+                    targets.ElementAt(0).Draw(floor[2]);
+                }
             }
         }
 

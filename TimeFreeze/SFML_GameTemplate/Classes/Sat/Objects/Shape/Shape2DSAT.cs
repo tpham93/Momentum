@@ -6,10 +6,6 @@ using System.Text;
 using SFML.Window;
 using SFML.Graphics;
 
-using Sat.Collision;
-
-namespace Sat.Object.Shape
-{
     abstract class Shape2DSAT
     {
 
@@ -163,4 +159,3 @@ namespace Sat.Object.Shape
         //    }
         //}
     }
-}

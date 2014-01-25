@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sat
-{
     struct Vector2
     {
         float x;
@@ -124,5 +122,8 @@ namespace Sat
         {
  	         return base.GetHashCode();
         }
+        public override string ToString()
+        {
+            return "(" + x + "/" + y + ")";
+        }
     }
-}
