@@ -74,8 +74,7 @@ class TimeFreezeGame : Game
     {
         fps = 1.0f / ((float)gameTime.ElapsedTime.TotalSeconds);
 
-        
-
+       
         window.Clear(Color.Black);
 
         gameState.Draw(gameTime, target);
