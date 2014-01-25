@@ -15,7 +15,6 @@ public class SparkleParticle : AbstractParticle
         this.sprite.Position = startPos;
         this.sprite.Origin = new Vector2f(32, 32);
 
-
         this.speed = speed;
 
         this.lifetime = 3.0 * InGame.random.NextDouble();

@@ -203,9 +203,12 @@ class InGame : IGameState
                 isLevelFreezed = false;
             }
 
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
         if (!isPaused)
         {
-            return updateGame(gameTime, window);
+            updateGame(gameTime, window);
         }
 
 
