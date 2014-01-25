@@ -9,13 +9,20 @@ using SFML.Window;
 class Hourglass : Objects
 {
 
+    private int num;
+    private Text numT;
     //private Sprite sprite;
-    public Hourglass(Vector2f position)
+    public Hourglass(Vector2f position, int num)
         : base(new PolygonShapeSAT(new Vector2i(2 * Constants.TILESIZE, 2 * Constants.TILESIZE), position, false))
     {
         this.Position = position;
         sprite = new Sprite(Objects.objektTextures[6], new IntRect(0, 0, 2 * Constants.TILESIZE, 2 * Constants.TILESIZE));
         sprite.Origin = new Vector2f(Constants.TILESIZE, Constants.TILESIZE);
+
+        numT = new Text(num.ToString(), Assets.font);
+        numT.Position = position;
+
+        this.num = num;
 
 
     }
@@ -30,7 +37,13 @@ class Hourglass : Objects
     {
         throw new NotImplementedException();
     }
+    public override void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
+    {
 
+        sprite.Position = Position;
+        targets.ElementAt(0).Draw(sprite, state);
+        targets.ElementAt(0).Draw(numT, state);
+    }
 
     //public override void draw(List<RenderTexture> targets, RenderStates state)
     //{
@@ -40,5 +53,10 @@ class Hourglass : Objects
     public override Objects.BlockType getType()
     {
         return BlockType.HOURGLAS;
+    }
+
+    public int getNum()
+    {
+        return num;
     }
 }
