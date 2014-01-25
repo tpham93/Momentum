@@ -67,7 +67,7 @@ class InGame : IGameState
         worldObjectsMovable = lvlData.movableObj;
         timeFreezeNum = lvlData.freezeNum;
 
-        isLevelDark = true;//level.IsLevelDark;
+        isLevelDark = false;//level.IsLevelDark;
 
 
         floor = new Sprite[3];

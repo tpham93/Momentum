@@ -23,6 +23,8 @@ public abstract class Game
 
     public Sprite lightSprite;
 
+    private RenderTexture finalTexture;
+
     public Game(int width, int height, String title)
     {
 
@@ -30,6 +32,7 @@ public abstract class Game
         renderTargets.Add(new RenderTexture((uint)width,(uint)height));
         renderTargets.Add(new RenderTexture((uint)width, (uint)height));
         renderTargets.Add(new RenderTexture((uint)width, (uint)height));
+        finalTexture = new RenderTexture((uint)width, (uint)height);
 
 
         window = new RenderWindow(new VideoMode((uint)width, (uint)height), title);
@@ -89,6 +92,8 @@ public abstract class Game
                 else
                     renderTargets[i].Clear();
 
+            finalTexture.Clear();
+
 
             draw(gameTime, renderTargets);
             renderTargets[1].Draw(lightSprite);
@@ -101,21 +106,21 @@ public abstract class Game
             {
                 RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
                 s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
-                renderTargets[0].Draw(new Sprite(renderTargets[0].Texture), s);
+                finalTexture.Draw(new Sprite(renderTargets[0].Texture), s);
             }
             else
-                renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture));
+                finalTexture.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
 
-          //  renderTargets[0].Display();
+            finalTexture.Display();
 
             if (InGame.isLevelFreezed && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
             {
                 RenderStates s = ShaderManager.getRenderState(EShader.Grayscale);
                 s.Shader.SetParameter("time", (float)gameTime.TotalTime.TotalMilliseconds / 2);
-                window.Draw(new Sprite(renderTargets[0].Texture),s);
+                window.Draw(new Sprite(finalTexture.Texture), s);
             }
             else
-                window.Draw(new Sprite(renderTargets[0].Texture));
+                window.Draw(new Sprite(finalTexture.Texture));
 
             //draw interface
             window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
@@ -141,4 +146,3 @@ public abstract class Game
     }
 
 }
-
