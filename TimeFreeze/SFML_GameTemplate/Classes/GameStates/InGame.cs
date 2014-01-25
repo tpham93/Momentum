@@ -10,6 +10,49 @@ using SFML.Window;
 class InGame : IGameState
 {
 
+    enum GameEventType
+    {
+        None,
+        Win,
+        Hourglass,
+        X_Ray,
+    }
+
+    struct Event
+    {
+        public GameEventType eventType;
+        public Objects objectI;
+        public Objects objectJ;
+        public bool handleCollision;
+
+        public Event(Objects objectI, Objects objectJ)
+        {
+            this.objectI = objectI;
+            this.objectJ = objectJ;
+            this.eventType = getEventType(objectI.getType(), objectJ.getType());
+            this.handleCollision = this.eventType == GameEventType.None;
+        }
+
+        public static GameEventType getEventType(Objects.BlockType o1, Objects.BlockType o2)
+        {
+            if (isPair(o1, o2, Objects.BlockType.BALL, Objects.BlockType.HOURGLAS))
+            {
+                return GameEventType.Hourglass;
+            }
+            if (isPair(o1, o2, Objects.BlockType.BALL, Objects.BlockType.GOAL))
+            {
+                return GameEventType.Win;
+            }
+
+            return GameEventType.None;
+        }
+
+        private static bool isPair(Objects.BlockType o1, Objects.BlockType o2, Objects.BlockType a1, Objects.BlockType a2)
+        {
+            return o1 == a1 && o2 == a2 || o1 == a2 && o2 == a1;
+        }
+    }
+
     List<Objects> worldObjects;
     List<Objects> worldObjectsMovable;
     List<AbstractParticle> particles;
@@ -39,14 +82,17 @@ class InGame : IGameState
 
     public static bool isLevelDark = false;
     public static bool isLevelFreezed = false;
+    private bool hasWon;
 
-
-    Text levelDone;
 
     private Objects selectedObject;
 
+
+
+
     public InGame()
     {
+        hasWon = false;
         random = new Random();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
         for (int x = 0; x < Constants.WINDOWWIDTH / 16; x++)
@@ -65,14 +111,11 @@ class InGame : IGameState
 
         Level.Leveldata lvlData = level.generateLevel(levelId);
 
-        levelDone = new Text("", Assets.font);
-        levelDone.Position = new Vector2f(100, 100);
-
         worldObjects = lvlData.staticObj;
         worldObjectsMovable = lvlData.movableObj;
         timeFreezeNum = lvlData.freezeNum;
 
-        isLevelDark = true;//level.IsLevelDark;
+        isLevelDark = false;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
@@ -123,25 +166,9 @@ class InGame : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
-
-        if (isPaused)
-        {
-            levelDone.Position += new Vector2f(0, -1);
-            levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
-        }
-
-
-        if(Input.isClicked(Keyboard.Key.G))
+        if (Input.isClicked(Keyboard.Key.G))
         {
             timeFreezeNum++;
-            
-        }
-
-
-
-        if (!isPaused)
-        {
-            updateGame(gameTime, window);
         }
 
         if (Input.isClicked(Keyboard.Key.P))
@@ -176,26 +203,19 @@ class InGame : IGameState
                 isLevelFreezed = false;
             }
 
-
-        if (Input.isClicked(Keyboard.Key.Escape))
-            return EGameState.MainMenu;
-
         if (!isPaused)
         {
-            updateGame(gameTime, window);
+            return updateGame(gameTime, window);
         }
-
-
 
 
         return EGameState.InGame;
     }
 
-    public void updateGame(GameTime gameTime, RenderWindow window)
+    public EGameState updateGame(GameTime gameTime, RenderWindow window)
     {
         if (!isLevelFreezed)
         {
-
             for (int i = 0; i < worldObjectsMovable.Count; ++i)
             {
                 worldObjectsMovable[i].update(gameTime);
@@ -212,9 +232,13 @@ class InGame : IGameState
 
                     if (iData.Intersects)
                     {
-                        handleCollision(worldObjectsMovable[i], worldObjectsMovable[j], iData);
+                        Event e = new Event(worldObjectsMovable[i], worldObjectsMovable[j]);
+                        if (e.handleCollision)
+                            handleCollision(worldObjectsMovable[i], worldObjectsMovable[j], iData);
                     }
                 }
+
+
                 for (int j = i + 1; j < worldObjects.Count; ++j)
                 {
                     Shape2DSAT shapeJ = worldObjects[j].Shape;
@@ -222,7 +246,20 @@ class InGame : IGameState
 
                     if (iData.Intersects)
                     {
-                        handleCollision(worldObjectsMovable[i], worldObjects[j], iData);
+                        Event e = new Event(worldObjectsMovable[i], worldObjects[j]);
+                        if (e.handleCollision)
+                            handleCollision(worldObjectsMovable[i], worldObjects[j], iData);
+
+                        switch(e.eventType)
+                        {
+                            case GameEventType.Win:
+                                hasWon = true;
+                                break;
+                            case GameEventType.Hourglass:
+                                //TODO
+                                break;
+
+                        }
                     }
                 }
             }
@@ -248,7 +285,7 @@ class InGame : IGameState
                 velocity /= length;
 
                 Console.Out.WriteLine("velocity set");
-                selectedObject.Velocity = new Vector2f(velocity.X * 5,velocity.Y * 5);
+                selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
             }
         }
@@ -260,6 +297,8 @@ class InGame : IGameState
             if (particles[i].lifetime <= 0)
                 particles.Remove(particles[i]);
         }
+
+        return EGameState.InGame;
     }
 
     public void handleCollision(Objects objectsI, Objects objectsJ, IntersectData iData)
@@ -267,19 +306,26 @@ class InGame : IGameState
         Shape2DSAT shapeI = objectsI.Shape;
         Shape2DSAT shapeJ = objectsJ.Shape;
 
-         Vector2 speedI = new Vector2(objectsI.Velocity);
-        float speedValueI = speedI.Length();
-
         //kollision
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
         Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-        particles.Add(new SparkleParticle(shapeI.Position, -dir, new Vector2f(speedI.X, speedI.Y), speedValueI ));
+        Vector2 speedI = new Vector2(objectsI.Velocity); 
+
+        Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+        float speedValueI = speedI.Length();
+
+
+        for (int i = 0; i < InGame.random.Next(5,10); i++)
+        {
+            particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+        }
+
 
 
         speedI /= speedValueI;
-        Vector2 newSpeedI = speedI - 2* Vector2.Dot(speedI,iData.Mtv) * iData.Mtv;
-        objectsI.Velocity = speedValueI* 0.6f * new Vector2f(newSpeedI.X,newSpeedI.Y);
+        Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+        objectsI.Velocity = speedValueI * 0.6f * new Vector2f(newSpeedI.X, newSpeedI.Y);
 
 
         Vector2 speedJ = new Vector2(objectsJ.Velocity);
@@ -321,7 +367,7 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets, currentRenderState,gameTime);
+            obj.draw(targets, currentRenderState, gameTime);
         }
         foreach (Objects obj in worldObjectsMovable)
         {
@@ -346,9 +392,5 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[4]);
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
-
-        targets.ElementAt(0).Draw(levelDone, currentRenderState);
-
-
     }
 }
