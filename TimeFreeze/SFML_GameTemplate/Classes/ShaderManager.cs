@@ -6,18 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public enum EShader {None, Grayscale, FreezeDistortion};
+public enum EShader {None, Grayscale, Dark, FreezeDistortion};
 
 public static class ShaderManager
 {
     private static RenderStates grayscaleRenderStates;
     private static RenderStates doNothingRenderStates;
-    private static RenderStates distortionRenderStates;
+    private static RenderStates lightRenderStates;
 
     private static Shader grayscaleShader;
     private static Shader doNothingShader;
-    private static Shader distortionShader;
+    private static Shader lightShader;
 
+    
     public static void initialize()
     {
         grayscaleShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH +  "GrayScaleShader.txt");
@@ -28,10 +29,11 @@ public static class ShaderManager
         doNothingRenderStates = new RenderStates(doNothingShader);
         doNothingRenderStates.BlendMode = BlendMode.Alpha;
 
-        distortionShader = new Shader(Constants.SHADERPATH + "DistortionVertexShader.txt", Constants.SHADERPATH + "GrayScaleShader.txt");
-        distortionRenderStates = new RenderStates(distortionShader);
-        distortionRenderStates.BlendMode = BlendMode.Alpha;
+        lightShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH + "LightShaderFragment.txt");
+        lightRenderStates = new RenderStates(lightShader);
+        lightRenderStates.BlendMode = BlendMode.Add;
     }
+
 
     public static RenderStates getRenderState(EShader eShader)
     {
@@ -43,8 +45,8 @@ public static class ShaderManager
             case EShader.Grayscale:
                 return grayscaleRenderStates;
 
-            case EShader.FreezeDistortion:
-                return distortionRenderStates;
+            case EShader.Dark:
+                return lightRenderStates;
     
         }
 

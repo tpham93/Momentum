@@ -80,6 +80,7 @@
     <Compile Include="Classes\GameTemplate\Game.cs" />
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
+    <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\IGameState.cs" />
     <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
     <Compile Include="Classes\Level\BlockObjects\Goal.cs" />
@@ -134,6 +135,12 @@
     <Content Include="Content\Ingame\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Ingame\hourButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\hourButtonBW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Ingame\menBar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -167,17 +174,17 @@
     <Content Include="Content\Level\map2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Shader\DistortionVertexShader.txt">
+    <Content Include="Content\Lights\lightCircle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Shader\GrayScaleShader.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Shader\IdleFragmentShader.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Shader\IdleVertexShader.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Level\map3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -190,6 +197,9 @@
     </Content>
     <Content Include="Content\Level\map4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Shader\LightShaderFragment.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="csfml-audio-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
