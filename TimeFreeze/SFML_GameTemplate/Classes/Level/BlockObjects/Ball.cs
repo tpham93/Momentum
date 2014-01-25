@@ -39,7 +39,7 @@ using SFML.Window;
         public override void draw(List<RenderTexture> targets, GameTime time)
         {
 
-            spr.Scale = new Vector2f((float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds + (freq)), 2) / 2 + 0.5f, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds + (freq)), 2) / 2 + 0.5f);
+            spr.Scale = new Vector2f((float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds + (freq)), 2) / 2 + 2.0f, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds + (freq)), 2) / 2 + 2.0f);
 
             spr.Color = Help.lerp(Assets.AcaOrange, Assets.AcaDarkOrange, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds), 2));
 

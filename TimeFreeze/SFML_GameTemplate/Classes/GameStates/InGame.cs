@@ -269,8 +269,11 @@ class InGame : IGameState
             }
 
         if (Input.isClicked(Keyboard.Key.Escape))
+        {
+            isLevelDark = false;
+            isLevelFreezed = false;
             return EGameState.MainMenu;
-
+        }
         if (!isPaused)
         {
             updateGame(gameTime, window);
@@ -284,6 +287,14 @@ class InGame : IGameState
     {
         if (!isLevelFreezed)
         {
+            for (int i = 0; i < particles.Count; i++)
+            {
+                particles[i].update(gameTime);
+
+                if (particles[i].lifetime <= 0)
+                    particles.Remove(particles[i]);
+            }
+
             for (int i = 0; i < worldObjectsMovable.Count; ++i)
             {
                 worldObjectsMovable[i].update(gameTime);
@@ -359,6 +370,10 @@ class InGame : IGameState
                     if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
                     {
                         selectedObject = worldObjectsMovable[i];
+
+
+                        drawArrow = true;
+
                         Console.Out.WriteLine("Selected");
                         popUp.DisplayedString=("Ball selected");
                         popUp.Position = selectedObject.Position;
@@ -376,28 +391,17 @@ class InGame : IGameState
                
                 Console.Out.WriteLine("velocity set");
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
-
-                arrowSprite.Position = selectedObject.Position;
-                arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
-                arrowSprite.Rotation += Help.toDegree((float)Math.PI);
-                /*
-                         lookRotation = (float)(Math.Atan2(getCenter().Y - mousePos.Y, getCenter().X - mousePos.X));
-            lookRotation += MathHelper.Pi; 
-                 
-                 */
-                drawArrow = true;
                 selectedObject = null;
-
-              
             }
         }
 
-        for (int i = 0; i < particles.Count; i++)
-        {
-            particles[i].update(gameTime);
 
-            if (particles[i].lifetime <= 0)
-                particles.Remove(particles[i]);
+
+        if (selectedObject != null)
+        {
+            arrowSprite.Position = selectedObject.Position;
+            arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
+            arrowSprite.Rotation += Help.toDegree((float)Math.PI);
         }
 
         return EGameState.InGame;
