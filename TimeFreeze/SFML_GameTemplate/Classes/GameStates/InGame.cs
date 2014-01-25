@@ -111,11 +111,8 @@ class InGame : IGameState
 
         }
 
-
         if (Input.isClicked(Keyboard.Key.P))
             isPaused = !isPaused;
-
-
 
         //Mouse pause Game
         if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 69)
