@@ -17,26 +17,12 @@ using SFML.Window;
             sprite = new Sprite(Objects.objektTextures[2], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
             sprite.Origin = new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
             
-
-
         }
         public override void update(GameTime gameTime)
         {
-            Position += new Vector2f(1, 1);
+            Position += Velocity;
             sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
         }
-
-        //public override void draw(List<RenderTexture> targets, RenderStates state)
-        //{
-        //    RectangleShape rect = new RectangleShape(new Vector2f(2, 2));
-        //    rect.Origin = new Vector2f(1, 1);
-        //    rect.Position = sprite.Position;
-
-        //    rect.FillColor = Color.White;
-
-        //    targets.ElementAt(0).Draw(sprite, state);
-        //    targets.ElementAt(0).Draw(rect, state);
-        //}
 
         public override void initialize()
         {

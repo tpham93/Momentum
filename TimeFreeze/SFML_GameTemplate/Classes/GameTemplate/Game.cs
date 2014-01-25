@@ -77,8 +77,9 @@ public abstract class Game
             Input.update();
             gameTime.Update();
 
-            lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Sin(gameTime.TotalTime.TotalSeconds));
-
+            lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2));
+            Vector2i mousePos = Input.currentMousePos;
+            lightSprite.Position = new Vector2f(mousePos.X, mousePos.Y);
             update(gameTime, window);
 
 
@@ -88,6 +89,7 @@ public abstract class Game
                 else
                     renderTargets[i].Clear();
 
+
             draw(gameTime, renderTargets);
             renderTargets[1].Draw(lightSprite);
 
@@ -95,23 +97,27 @@ public abstract class Game
                 texture.Display();
 
 
-            if (InGame.isPaused)
+            if (InGame.isLevelDark)
             {
                 RenderStates s = (ShaderManager.getRenderState(EShader.Dark));
                 s.Shader.SetParameter("Texture1", renderTargets[1].Texture);
-                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
-                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
+                renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture), s);
             }
             else
-                window.Draw(new Sprite(renderTargets.ElementAt(0).Texture));
-                window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
-                
-            
-//                Texture.Bind(renderTargets[0].Texture);
+                renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture));
 
-             
+            if (InGame.isLevelFreezed && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
+            {
+                RenderStates s = ShaderManager.getRenderState(EShader.Grayscale);
+                s.Shader.SetParameter("time", (float)gameTime.TotalTime.TotalMilliseconds / 2);
+                window.Draw(new Sprite(renderTargets[0].Texture),s);
+            }
+            else
+                window.Draw(new Sprite(renderTargets[0].Texture));
 
-             //   window.Draw(new Sprite(renderTargets.ElementAt(1).Texture));
+            //draw interface
+            window.Draw(new Sprite(renderTargets.ElementAt(2).Texture));
+           
             window.Display();
         }
     }
