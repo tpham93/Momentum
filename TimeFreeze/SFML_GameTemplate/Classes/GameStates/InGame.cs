@@ -71,6 +71,8 @@ class InGame : IGameState
 
     Texture menubarTexture;
     Sprite menubarSprite;
+    Text popUp = new Text("", Assets.font);
+    float popUpTime = 0;
 
     Texture[] buttons;
     Sprite[] buttonSprites;
@@ -82,7 +84,12 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
-    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
+    Sprite arrowSprite = new Sprite();
+    Sprite tutArrowSprite = new Sprite();
+
+    bool drawArrow = false;
+
+   // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
 
 
     private int[,] floorMap;
@@ -93,6 +100,7 @@ class InGame : IGameState
     private bool hasWon;
 
     String[] levelText;
+    private bool isSelected = false;
 
 
     private Objects selectedObject;
@@ -100,10 +108,11 @@ class InGame : IGameState
     Text levelDone;
 
 
-
-
     public InGame()
     {
+
+
+        
         hasWon = false;
         random = new Random();
         levelText = setStrings();
@@ -115,6 +124,10 @@ class InGame : IGameState
                 floorMap[x, y] = random.Next(3);
             }
         }
+
+        arrowSprite = new Sprite(Assets.easyArrow);
+        arrowSprite.Origin = new Vector2f(0,32);
+
     }
 
     private String[] setStrings()
@@ -132,6 +145,11 @@ class InGame : IGameState
 
     public void Initialize()
     {
+
+
+        tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
+        tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 30, 100);
+
         worldObjects = new List<Objects>();
         level = new Level();
 
@@ -146,7 +164,7 @@ class InGame : IGameState
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
 
-        isLevelDark = false;//level.IsLevelDark;
+        isLevelDark = true;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
@@ -197,10 +215,28 @@ class InGame : IGameState
 
     double helpTime = 0;
 
+    private void performPopUp(GameTime gameTime)
+    {
+        
+        if(popUpTime<2)
+            popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
+            popUp.Position += new Vector2f(0, -0.5f);
+            popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255-(255/((3-popUpTime)/3))));
+
+
+        if (popUpTime >= 2)
+        {
+            popUp.DisplayedString = "";
+
+
+        }
+    }
+
     public EGameState Update(GameTime gameTime, RenderWindow window)
 
 
     {
+        performPopUp(gameTime);
         if (hasWon)
         {
             helpTime += gameTime.ElapsedTime.TotalSeconds;
@@ -235,6 +271,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
             }
 
@@ -257,8 +294,11 @@ class InGame : IGameState
             }
 
         if (Input.isClicked(Keyboard.Key.Escape))
+        {
+            isLevelDark = false;
+            isLevelFreezed = false;
             return EGameState.MainMenu;
-
+        }
         if (!isPaused)
         {
             updateGame(gameTime, window);
@@ -272,6 +312,14 @@ class InGame : IGameState
     {
         if (!isLevelFreezed)
         {
+            for (int i = 0; i < particles.Count; i++)
+            {
+                particles[i].update(gameTime);
+
+                if (particles[i].lifetime <= 0)
+                    particles.Remove(particles[i]);
+            }
+
             for (int i = 0; i < worldObjectsMovable.Count; ++i)
             {
                 worldObjectsMovable[i].update(gameTime);
@@ -367,7 +415,15 @@ class InGame : IGameState
                     if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
                     {
                         selectedObject = worldObjectsMovable[i];
+
+
+                        drawArrow = true;
+
                         Console.Out.WriteLine("Selected");
+                        popUp.DisplayedString=("Ball selected");
+                        popUp.Position = selectedObject.Position;
+                        popUpTime = 0;
+                        isSelected = true;
                         break;
                     }
                 }
@@ -377,19 +433,20 @@ class InGame : IGameState
                 Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
                 float length = velocity.Length();
                 velocity /= length;
-
+               
                 Console.Out.WriteLine("velocity set");
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
             }
         }
 
-        for (int i = 0; i < particles.Count; i++)
-        {
-            particles[i].update(gameTime);
 
-            if (particles[i].lifetime <= 0)
-                particles.Remove(particles[i]);
+
+        if (selectedObject != null)
+        {
+            arrowSprite.Position = selectedObject.Position;
+            arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
+            arrowSprite.Rotation += Help.toDegree((float)Math.PI);
         }
 
         return EGameState.InGame;
@@ -473,17 +530,17 @@ class InGame : IGameState
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[0], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[0]);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[1], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[1]);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[2], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[2]);
                 }
             }
         }
@@ -492,15 +549,17 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
         foreach (Objects obj in worldObjectsMovable)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
 
         foreach (AbstractParticle p in particles)
             p.draw(gameTime, targets);
+
+
 
         //Draw menubar
         targets.ElementAt(2).Draw(menubarSprite);
@@ -518,6 +577,15 @@ class InGame : IGameState
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
 
-        targets.ElementAt(0).Draw(levelDone, currentRenderState);
+        if(drawArrow)
+            targets.ElementAt(2).Draw(arrowSprite);
+
+        targets.ElementAt(2).Draw(tutArrowSprite);
+        targets.ElementAt(2).Draw(levelDone);
+        targets.ElementAt(2).Draw(popUp);
+
+        Console.WriteLine(tutArrowSprite.Position);
+
+        
     }
 }
