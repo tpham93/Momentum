@@ -77,6 +77,7 @@ class InGame : IGameState
     public static LevelID levelId;
 
     Sprite arrowSprite = new Sprite();
+    Sprite tutArrowSprite = new Sprite();
 
     bool drawArrow = false;
 
@@ -92,8 +93,6 @@ class InGame : IGameState
 
     private bool isSelected = false;
 
-    public Sprite arrow;
-
 
     private Objects selectedObject;
 
@@ -102,7 +101,8 @@ class InGame : IGameState
 
     public InGame()
     {
-        arrow = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
+
+
         
         hasWon = false;
         random = new Random();
@@ -122,6 +122,11 @@ class InGame : IGameState
 
     public void Initialize()
     {
+
+
+        tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
+        tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 30, 100);
+
         worldObjects = new List<Objects>();
         level = new Level();
 
@@ -187,11 +192,14 @@ class InGame : IGameState
 
     private void performPopUp(GameTime gameTime)
     {
-        if(popUpTime<5)
+        
+        if(popUpTime<2)
             popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
+            popUp.Position += new Vector2f(0, -0.5f);
+            popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255-(255/((3-popUpTime)/3))));
 
 
-        if (popUpTime >= 5)
+        if (popUpTime >= 2)
         {
             popUp.DisplayedString = "";
 
@@ -203,6 +211,7 @@ class InGame : IGameState
 
 
     {
+        performPopUp(gameTime);
         if (hasWon)
         {
             helpTime += gameTime.ElapsedTime.TotalSeconds;
@@ -353,6 +362,7 @@ class InGame : IGameState
                         Console.Out.WriteLine("Selected");
                         popUp.DisplayedString=("Ball selected");
                         popUp.Position = selectedObject.Position;
+                        popUpTime = 0;
                         isSelected = true;
                         break;
                     }
@@ -469,8 +479,6 @@ class InGame : IGameState
         foreach (AbstractParticle p in particles)
             p.draw(gameTime, targets);
 
-        if (isSelected)
-            targets.ElementAt(0).Draw(arrow);
 
 
         //Draw menubar
@@ -492,6 +500,12 @@ class InGame : IGameState
         if(drawArrow)
             targets.ElementAt(2).Draw(arrowSprite);
 
+        targets.ElementAt(2).Draw(tutArrowSprite);
         targets.ElementAt(2).Draw(levelDone);
+        targets.ElementAt(2).Draw(popUp);
+
+        Console.WriteLine(tutArrowSprite.Position);
+
+        
     }
 }
