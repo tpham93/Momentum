@@ -18,7 +18,7 @@ class TimeFreezeGame : Game
     float fps;
 
     public TimeFreezeGame()
-        : base(800, 600, "name")
+        : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.Escape);
@@ -29,6 +29,8 @@ class TimeFreezeGame : Game
         keys.Add(Keyboard.Key.Return);
         keys.Add(Keyboard.Key.Space);
 
+        keys.Add(Keyboard.Key.P);
+
         keys.Add(Keyboard.Key.Up);
         keys.Add(Keyboard.Key.Down);
         keys.Add(Keyboard.Key.Left);
@@ -37,16 +39,20 @@ class TimeFreezeGame : Game
         Input.init(keys);
 
         Assets.font = new Font("Content/Font/PRIMELEC.ttf");
+        Objects.loadContent();
 
         handleNewGameState();
     }
 
-    public override void update(GameTime gameTime)
+    public override void update(GameTime gameTime, RenderWindow window)
     {
-        if (Input.isClicked(Keyboard.Key.Escape))
-            window.Close();
+        currentGameState = gameState.Update(gameTime, window);
 
-        currentGameState = gameState.Update(gameTime);
+        if (Input.isClicked(Keyboard.Key.Escape))
+            if (currentGameState == EGameState.MainMenu)
+                currentGameState = 0;
+            else
+            currentGameState = EGameState.MainMenu;
 
         if (Input.isClicked(Keyboard.Key.Right))
             currentGameState++;
@@ -73,6 +79,9 @@ class TimeFreezeGame : Game
     public override void loadContent(ContentManager content)
     {
         infoText = new Text("", Assets.font);
+
+        
+        
     }
 
 
@@ -92,8 +101,15 @@ class TimeFreezeGame : Game
                 break;
 
             case EGameState.InGame:
-               // gameState = new InGame();
+                gameState = new InGame();
                 break;
+            case EGameState.Credits:
+                gameState = new Credits();
+                break;
+            case EGameState.LevelChooser:
+                gameState = new LevelChooser();
+                break;
+
         }
 
         gameState.LoadContent(contentManager);

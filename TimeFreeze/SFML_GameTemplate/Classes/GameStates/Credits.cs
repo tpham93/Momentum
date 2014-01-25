@@ -1,29 +1,34 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFML.Graphics;
 
 
 class Credits : IGameState
 {
     public void Initialize()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void LoadContent(ContentManager manager)
     {
-        throw new NotImplementedException();
+        
     }
 
-    public EGameState Update(GameTime gameTime)
+    public EGameState Update(GameTime gameTime, RenderWindow window)
     {
-        throw new NotImplementedException();
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
+        return EGameState.Credits;
     }
 
     public void Draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
     {
-        throw new NotImplementedException();
+        
     }
 }

@@ -70,30 +70,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Assets.cs" />
+    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\GameStates\Credits.cs" />
+    <Compile Include="Classes\GameStates\InGame.cs" />
+    <Compile Include="Classes\GameStates\LevelChooser.cs" />
+    <Compile Include="Classes\GameStates\MainMenu.cs" />
     <Compile Include="Classes\GameTemplate\ContentManager.cs" />
     <Compile Include="Classes\GameTemplate\Game.cs" />
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
+    <Compile Include="Classes\IGameState.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Goal.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Objects.cs" />
+    <Compile Include="Classes\Level\BlockObjects\WallBlock.cs" />
+    <Compile Include="Classes\Level\Level.cs" />
     <Compile Include="Classes\Program.cs" />
-    <Compile Include="Classes\Sat\Collision\Edge.cs" />
-    <Compile Include="Classes\Sat\Collision\IntersectData.cs" />
-    <Compile Include="Classes\Sat\Collision\Range.cs" />
-    <Compile Include="Classes\Sat\Etc\Helper.cs" />
-    <Compile Include="Classes\Sat\Etc\VectorData.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\CircleShape.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\EdgeShape.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\EShapeType.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\RectangleShape.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\Shape2D.cs" />
-    <Compile Include="Classes\Sat\Point.cs" />
-    <Compile Include="Classes\Sat\Vector2.cs" />
     <Compile Include="Classes\TimeFreezeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\Font\PRIMELEC.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Font\PRIMELEP.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Block\ball.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\goal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\menBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\pause.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map0.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level\map2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="csfml-audio-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
