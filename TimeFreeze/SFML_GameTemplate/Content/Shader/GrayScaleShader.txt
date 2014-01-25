@@ -1,0 +1,9 @@
+uniform sampler2D texSampler;
+ 
+void main(void)
+{
+	vec4 Color = texture2D(texSampler, vec2(gl_TexCoord[0]));
+	float help = dot(Color.rgb, vec3(0.3, 0.59, 0.11));
+
+	gl_FragColor = vec4(help,help,help, Color.a);
+}

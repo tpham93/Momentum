@@ -1,4 +1,5 @@
-﻿using SFML.Window;
+﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,8 @@ public static class Input
     {
         return oldMouse[(int)Mouse.Button.Left] && !currentMouse[(int)Mouse.Button.Left];
     }
+
+
 
 
 }

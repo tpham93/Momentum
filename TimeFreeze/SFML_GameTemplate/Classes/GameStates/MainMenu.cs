@@ -68,16 +68,16 @@ class MainMenu : IGameState
         return EGameState.MainMenu;
     }
 
-    public void Draw(GameTime gameTime, RenderWindow window)
+    public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
 
-        window.Clear(Color.Red);
+        targets.ElementAt(0).Clear(Color.Red);
 
 
-        window.Clear(Color.Black);
-        window.Draw(lvlselection);
-        window.Draw(credits);
-        window.Draw(end);
+        targets.ElementAt(0).Clear(Color.Black);
+        targets.ElementAt(0).Draw(lvlselection);
+        targets.ElementAt(0).Draw(credits);
+        targets.ElementAt(0).Draw(end);
 
 
     }
