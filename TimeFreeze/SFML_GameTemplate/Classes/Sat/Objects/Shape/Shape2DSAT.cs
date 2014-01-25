@@ -143,19 +143,28 @@ using SFML.Graphics;
         /// </summary>
         /// <param name="point">Point which needs to be checked</param>
         /// <returns>true if point is inside of the object</returns>
+        public bool contains(Vector2i point)
+        {
+            return contains(new Vector2(point));
+        }
         public abstract bool contains(Vector2 point);
 
-        //public static void handleCollision(IntersectData data, Shape2D o1, Shape2D o2)
-        //{
-        //    if (o1.moveable)
-        //    {
-        //        if (o2.moveable)
-        //        {
-        //            o1.Position += (data.Mtv * data.PenetrationDepth / 2);
-        //            o2.Position -= (data.Mtv * data.PenetrationDepth / 2);
-        //        }
-        //        else
-        //            o1.Position += (data.Mtv * data.PenetrationDepth);
-        //    }
-        //}
+        public static void handleCollision(IntersectData data, Shape2DSAT o1, Shape2DSAT o2)
+        {
+            if (o1.moveable)
+            {
+                if (o2.moveable)
+                {
+                    o1.Position_ -= (data.Mtv * data.PenetrationDepth / 2);
+                    o2.Position_ += (data.Mtv * data.PenetrationDepth / 2);
+                }
+                else
+                    o1.Position_ -= (data.Mtv * data.PenetrationDepth);
+            }
+            else if (o2.moveable)
+            {
+                o2.Position_ += (data.Mtv * data.PenetrationDepth);
+            }
+        }
+
     }

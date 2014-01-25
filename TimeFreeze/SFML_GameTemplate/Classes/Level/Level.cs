@@ -76,14 +76,6 @@ using SFML.Window;
             return new Leveldata(baseLevelStatic, baseLevelMovable, timeFreezenum);
 
         }
-        
-
-        public void update(GameTime time)
-        {
-            //TODO
-        }
-
-
     }
 
     public enum LevelID

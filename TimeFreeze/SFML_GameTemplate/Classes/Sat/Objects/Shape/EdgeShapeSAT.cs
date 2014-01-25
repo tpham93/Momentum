@@ -305,7 +305,23 @@ using SFML.Graphics;
         /// <returns>true if point is inside of the object</returns>
         public override bool contains(Vector2 point)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < currentCorners.Length; ++i)
+            {
+                Vector2 possibleMtv = Vector2.Normalize(currentCorners[(i + 1) % currentCorners.Length] - currentCorners[i]);
+                Vector2 normal = new Vector2(-possibleMtv.Y, possibleMtv.X);
+                Range r = getProjectionRange(normal);
+
+                if (Input.leftClicked())
+                {
+
+                }
+
+                if (!r.contains(Vector2.Dot(normal, point)))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static Vector2[] genCorners(Vector2 rectangleSize)
