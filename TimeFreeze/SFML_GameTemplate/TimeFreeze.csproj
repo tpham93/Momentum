@@ -134,6 +134,12 @@
     <Content Include="Content\Ingame\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Ingame\hourButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ingame\hourButtonBW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Ingame\menBar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
