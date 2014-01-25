@@ -84,6 +84,10 @@ class InGame : IGameState
     public static bool isLevelFreezed = false;
     private bool hasWon;
 
+    private bool isSelected = false;
+
+    public Sprite arrow;
+
 
     private Objects selectedObject;
 
@@ -92,6 +96,7 @@ class InGame : IGameState
 
     public InGame()
     {
+        arrow = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
         hasWon = false;
         random = new Random();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
@@ -295,6 +300,7 @@ class InGame : IGameState
                     {
                         selectedObject = worldObjectsMovable[i];
                         Console.Out.WriteLine("Selected");
+                        isSelected = true;
                         break;
                     }
                 }
@@ -397,6 +403,10 @@ class InGame : IGameState
 
         foreach (AbstractParticle p in particles)
             p.draw(gameTime, targets);
+
+        if (isSelected)
+            targets.ElementAt(0).Draw(arrow);
+
 
         //Draw menubar
         targets.ElementAt(2).Draw(menubarSprite);
