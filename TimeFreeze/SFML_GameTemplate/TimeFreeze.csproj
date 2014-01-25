@@ -92,11 +92,10 @@
     <Compile Include="Classes\Sat\Collision\Range.cs" />
     <Compile Include="Classes\Sat\Etc\Helper.cs" />
     <Compile Include="Classes\Sat\Etc\VectorData.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\CircleShape.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\EdgeShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\CircleShapeSAT.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\EdgeShapeSAT.cs" />
     <Compile Include="Classes\Sat\Objects\Shape\EShapeType.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\RectangleShape.cs" />
-    <Compile Include="Classes\Sat\Objects\Shape\Shape2D.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\Shape2DSAT.cs" />
     <Compile Include="Classes\Sat\Point.cs" />
     <Compile Include="Classes\Sat\Vector2.cs" />
     <Compile Include="Classes\TimeFreezeGame.cs" />

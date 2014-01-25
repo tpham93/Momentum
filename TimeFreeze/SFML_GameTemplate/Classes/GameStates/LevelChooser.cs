@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SFML.Window;
 
 
 class LevelChooser : IGameState

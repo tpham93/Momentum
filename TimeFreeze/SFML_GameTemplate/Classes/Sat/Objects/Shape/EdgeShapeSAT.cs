@@ -11,7 +11,7 @@ using Sat.Collision;
 
 namespace Sat.Object.Shape
 {
-    class PolygonShape : Shape2D
+    class PolygonShapeSAT : Shape2DSAT
     {
 
         Vector2[] corners;
@@ -48,7 +48,7 @@ namespace Sat.Object.Shape
         /// <summary>
         /// gets & sets the position
         /// </summary>
-        public override Vector2 Position
+        public override Vector2 Position_
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Sat.Object.Shape
         /// <summary>
         /// gets & sets the rotation
         /// </summary>
-        public override float Rotation
+        public override float Rotation_
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Sat.Object.Shape
             }
         }
 
-        public PolygonShape(Vector2[] corners, Vector2 position, bool moveable = true)
+        public PolygonShapeSAT(Vector2[] corners, Vector2 position, bool moveable = true)
             : base(0, position, Vector2.Zero, moveable)
         {
 
@@ -134,7 +134,7 @@ namespace Sat.Object.Shape
             }
         }
 
-        public PolygonShape(Point size, Vector2 position, bool moveable = true)
+        public PolygonShapeSAT(Point size, Vector2 position, bool moveable = true)
             : base(new Vector2(size.X / 2, size.Y / 2).Length(), position, new Vector2(size.X / 2, size.Y / 2), moveable)
         {
             this.area = size.X * size.Y;
@@ -179,7 +179,7 @@ namespace Sat.Object.Shape
         /// </summary>
         /// <param name="o">EdgeObject which is to be checked for an intersection</param>
         /// <returns>true if it intersects</returns>
-        public override IntersectData intersects(PolygonShape o)
+        public override IntersectData intersects(PolygonShapeSAT o)
         {
             VectorData mtv = new VectorData();
             mtv.length = float.PositiveInfinity;
@@ -224,7 +224,7 @@ namespace Sat.Object.Shape
             }
 
 
-            if (Vector2.Dot(mtv.direction, o.Position - Position) < 0)
+            if (Vector2.Dot(mtv.direction, o.Position_ - Position_) < 0)
             {
                 mtv.direction *= -1.0f;
             }
@@ -237,14 +237,14 @@ namespace Sat.Object.Shape
         /// </summary>
         /// <param name="o">CircleObject which is to be checked for an intersection</param>
         /// <returns>true if it intersects</returns>
-        public override IntersectData intersects(CircleShape o)
+        public override IntersectData intersects(CircleShapeSAT o)
         {
             VectorData mtv = new VectorData();
             mtv.length = float.PositiveInfinity;
 
             for (int i = 0; i < currentCorners.Length; ++i)
             {
-                Vector2 possibleMtv = Vector2.Normalize(currentCorners[i] - o.Position);
+                Vector2 possibleMtv = Vector2.Normalize(currentCorners[i] - o.Position_);
 
                 Range r1 = getProjectionRange(possibleMtv);
                 Range r2 = o.getProjectionRange(possibleMtv);
@@ -282,7 +282,7 @@ namespace Sat.Object.Shape
             }
 
 
-            if (Vector2.Dot(mtv.direction, o.Position - Position) < 0)
+            if (Vector2.Dot(mtv.direction, o.Position_ - Position_) < 0)
             {
                 mtv.direction *= -1;
             }

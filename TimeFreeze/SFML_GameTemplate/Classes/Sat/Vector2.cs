@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,10 +41,22 @@ namespace Sat
             : this(n,n)
         {
         }
-        public Vector2(float x,float y)
+        public Vector2(float x, float y)
         {
             this.x = x;
             this.y = y;
+        }
+        public Vector2(Vector2f v)
+            : this(v.X, v.Y)
+        {
+        }
+        public Vector2(Vector2i v)
+            : this(v.X, v.Y)
+        {
+        }
+        public Vector2(Vector2u v)
+            : this(v.X, v.Y)
+        {
         }
 
         public static float Dot(Vector2 v1, Vector2 v2)

@@ -10,7 +10,7 @@ using Sat.Collision;
 
 namespace Sat.Object.Shape
 {
-    abstract class Shape2D
+    abstract class Shape2DSAT
     {
 
         /*
@@ -37,14 +37,31 @@ namespace Sat.Object.Shape
         protected float radius;
 
         protected Vector2 position;
-        public abstract Vector2 Position
+        public Vector2f Position
+        {
+            get
+            {
+                Vector2 p = Position_;
+                return new Vector2f(p.X, p.Y);
+            }
+            set
+            {
+                Position_ = new Vector2(value);
+            }
+        }
+        public abstract Vector2 Position_
         {
             get;
             set;
         }
 
         protected float rotation;
-        public abstract float Rotation
+        public float Rotation
+        {
+            get { return Rotation_ * (float)Math.PI / 180f; }
+            set { Rotation_ = value * 180f / (float)Math.PI; }
+        }
+        public abstract float Rotation_
         {
             get;
             set;
@@ -64,7 +81,7 @@ namespace Sat.Object.Shape
         /// <summary>
         /// Constructor
         /// </summary>
-        protected Shape2D()
+        protected Shape2DSAT()
         {
             this.radius = 0f;
             this.position = Vector2.Zero;
@@ -75,7 +92,7 @@ namespace Sat.Object.Shape
         /// <summary>
         /// Constructor
         /// </summary>
-        protected Shape2D(float radius, Vector2 position, Vector2 middlePoint, bool moveable)
+        protected Shape2DSAT(float radius, Vector2 position, Vector2 middlePoint, bool moveable)
             : this()
         {
             this.radius = radius;
@@ -89,27 +106,27 @@ namespace Sat.Object.Shape
         /// </summary>
         /// <param name="o">Object which is to be checked for an intersection</param>
         /// <returns>true if it intersects</returns>
-        public IntersectData intersects(Shape2D o)
+        public IntersectData intersects(Shape2DSAT o)
         {
             if (moveable)
             {
                 float minDistance = this.radius + o.radius;
-                if (minDistance * minDistance >= (o.Position - Position).LengthSquared())
+                if (minDistance * minDistance >= (o.Position_ - Position_).LengthSquared())
                 {
                     IntersectData intersectData = null;
                     switch (o.ShapeType)
                     {
                         case EShapeType.PolygonShape:
-                            intersectData = intersects((PolygonShape)o);
+                            intersectData = intersects((PolygonShapeSAT)o);
                             break;
                         case EShapeType.CircleShape:
-                            intersectData = intersects((CircleShape)o);
+                            intersectData = intersects((CircleShapeSAT)o);
                             break;
                         default:
                             return null;
                     }
 
-                    if (Vector2.Dot(intersectData.Mtv, -o.Position + Position) > 0)
+                    if (Vector2.Dot(intersectData.Mtv, -o.Position_ + Position_) > 0)
                     {
                         intersectData.Mtv *= -1;
                     }
@@ -122,8 +139,8 @@ namespace Sat.Object.Shape
         public abstract Range getProjectionRange(Vector2 v);
 
 
-        public abstract IntersectData intersects(PolygonShape o);
-        public abstract IntersectData intersects(CircleShape o);
+        public abstract IntersectData intersects(PolygonShapeSAT o);
+        public abstract IntersectData intersects(CircleShapeSAT o);
 
         /// <summary>
         /// checks if a point is inside of the object
