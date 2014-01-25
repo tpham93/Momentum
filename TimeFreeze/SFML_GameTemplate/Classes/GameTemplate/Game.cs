@@ -106,7 +106,7 @@ public abstract class Game
             else
                 renderTargets[0].Draw(new Sprite(renderTargets.ElementAt(0).Texture));
 
-            if (InGame.isPaused && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
+            if (InGame.isLevelFreezed && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
             {
                 RenderStates s = ShaderManager.getRenderState(EShader.Grayscale);
                 s.Shader.SetParameter("time", (float)gameTime.TotalTime.TotalMilliseconds / 2);

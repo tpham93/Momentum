@@ -180,7 +180,7 @@ class InGame : IGameState
                     if (iData.Intersects)
                     {                        //kollision
                         Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-                        particles.Add(new SparkleParticle(shapeJ.Position, dir));
+                        particles.Add(new SparkleParticle(shapeI.Position, -dir));
                         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
                     }
                 }
@@ -194,7 +194,7 @@ class InGame : IGameState
                         Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
 
 
-                        particles.Add(new SparkleParticle(shapeJ.Position, dir));
+                        particles.Add(new SparkleParticle(shapeI.Position, -dir));
                         //kollision
                         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
                     }
