@@ -85,6 +85,7 @@
     <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
     <Compile Include="Classes\Level\BlockObjects\Goal.cs" />
     <Compile Include="Classes\Level\BlockObjects\Hourglass.cs" />
+    <Compile Include="Classes\Level\BlockObjects\LightBlock.cs" />
     <Compile Include="Classes\Level\BlockObjects\Objects.cs" />
     <Compile Include="Classes\Level\BlockObjects\WallBlock.cs" />
     <Compile Include="Classes\Level\Level.cs" />
@@ -114,6 +115,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Block\accelerator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Block\ball.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -126,7 +130,22 @@
     <Content Include="Content\Block\floor_03.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Block\glass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Block\goal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\lasergun.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\lightstone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\mirror.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\mirror_2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Block\wall.png">

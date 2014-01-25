@@ -71,7 +71,7 @@ class MainMenu : IGameState
     public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
 
-        targets.ElementAt(0).Clear(Color.Red);
+       // targets.ElementAt(0).Clear(Color.Red);
 
 
         targets.ElementAt(0).Clear(Color.Black);

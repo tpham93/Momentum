@@ -9,25 +9,19 @@ using SFML.Window;
     class Ball : Objects
     {
 
-        private Sprite sprite;
-
+        //private Sprite sprite;
         public Ball(Vector2f position)
-            :base(new CircleShapeSAT(Constants.TILESIZE,position,true))
+            :base(new CircleShapeSAT(Constants.TILESIZE/2,position,true))
         {
             this.Position = position;
             sprite = new Sprite(Objects.objektTextures[2], new IntRect(0, 0, Constants.TILESIZE, Constants.TILESIZE));
-            sprite.Position = position;
-
-
+            sprite.Origin = new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
+            
         }
         public override void update(GameTime gameTime)
         {
-            throw new NotImplementedException();
-        }
-
-        public override void draw(List<RenderTexture> targets, RenderStates state)
-        {
-            targets.ElementAt(0).Draw(sprite, state);
+            Position += Velocity;
+            sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
         }
 
         public override void initialize()
