@@ -63,13 +63,16 @@ namespace Sat.Etc
             return a.X * b.Y - a.Y * b.X;
         }
 
-        private static int inCircle(int radius, Point location, Point middlePoint)
-        {
-            int x = location.X - middlePoint.X;
-            int y = location.Y - middlePoint.Y;
+        //private static int inCircle(int radius, Point location, Point middlePoint)
+        //{
+        //    int x = location.X - middlePoint.X;
+        //    int y = location.Y - middlePoint.Y;
 
-            int distance = x * x + y * y;
-            return distance - radius * radius;
-        }
+        //    int distance = x * x + y * y;
+        //    return distance - radius * radius;
+        //}
+
+        
+
     }
 }
