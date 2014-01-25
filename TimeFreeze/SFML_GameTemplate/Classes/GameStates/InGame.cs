@@ -63,6 +63,8 @@ class InGame : IGameState
 
     Texture menubarTexture;
     Sprite menubarSprite;
+    Text popUp = new Text("", Assets.font);
+    float popUpTime = 0;
 
     Texture[] buttons;
     Sprite[] buttonSprites;
@@ -126,7 +128,7 @@ class InGame : IGameState
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
 
-        isLevelDark = false;//level.IsLevelDark;
+        isLevelDark = true;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
@@ -176,6 +178,20 @@ class InGame : IGameState
     }
 
     double helpTime = 0;
+
+    private void performPopUp(GameTime gameTime)
+    {
+        if(popUpTime<5)
+            popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
+
+
+        if (popUpTime >= 5)
+        {
+            popUp.DisplayedString = "";
+
+
+        }
+    }
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
 
@@ -328,7 +344,8 @@ class InGame : IGameState
                     {
                         selectedObject = worldObjectsMovable[i];
                         Console.Out.WriteLine("Selected");
-                        arrow.Position = selectedObject.Position;dwdd
+                        popUp.DisplayedString=("Ball selected");
+                        popUp.Position = selectedObject.Position;
                         isSelected = true;
                         break;
                     }
