@@ -30,7 +30,8 @@ class InGame : IGameState
     private int[,] floorMap;
     Random random;
 
-    private bool isLevelDark= false;
+    public static bool isLevelDark= false;
+    public static bool isLevelFreezed = false;
 
     public InGame()
     {
