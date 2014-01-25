@@ -45,7 +45,7 @@ using SFML.Window;
         {
 
             spr.Scale = new Vector2f((float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f);
-            spr.Color = Help.lerp(Assets.AcaOrange, Assets.AcaDarkOrange, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds),2));
+            spr.Color = Help.lerp(Color.White, Color.Yellow, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds),2));
 
             
 

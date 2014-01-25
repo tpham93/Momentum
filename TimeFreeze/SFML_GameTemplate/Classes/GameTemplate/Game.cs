@@ -21,7 +21,6 @@ public abstract class Game
 
     static int wheelDelta;
 
-    public Sprite lightSprite;
 
     private RenderTexture finalTexture;
 
@@ -63,13 +62,7 @@ public abstract class Game
         gameTime.Start();
         loadContent(contentManager);
 
-        
-        lightSprite = new Sprite();
-        lightSprite.Texture = Assets.lightCircle;
-        lightSprite.Scale = new Vector2f(5, 5);
-        lightSprite.Origin = new Vector2f(32, 32);
-        lightSprite.Position = new Vector2f(400, 300);
-        lightSprite.Color = Color.Red;
+   
 
 
         while (window.IsOpen())
@@ -97,10 +90,7 @@ public abstract class Game
 
 
             finalTexture.Clear();
-
-
             draw(gameTime, renderTargets);
-            renderTargets[1].Draw(lightSprite);
 
             foreach (RenderTexture texture in renderTargets)
                 texture.Display();

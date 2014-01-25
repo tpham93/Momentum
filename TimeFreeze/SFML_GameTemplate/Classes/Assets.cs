@@ -13,6 +13,7 @@ public static class Assets
 
     public static Texture lightCircle = new Texture("Content/Lights/lightCircle.png");
     public static Texture sparkle = new Texture("Content/Lights/sparkle.png");
+    public static Texture lightMask = new Texture("Content/Lights/lightMap.png");
 
     public static Color colorFloor = new Color(105, 105, 105);
     public static Color colorWall = new Color(0, 0, 255);

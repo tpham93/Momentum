@@ -88,8 +88,6 @@ class InGame : IGameState
     private Objects selectedObject;
 
 
-
-
     public InGame()
     {
         hasWon = false;
