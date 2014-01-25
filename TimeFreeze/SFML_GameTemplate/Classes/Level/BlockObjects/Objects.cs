@@ -46,7 +46,7 @@ using SFML.Window;
 
         public abstract void update(GameTime gameTime);
 
-        public void draw(List<RenderTexture> targets, RenderStates state)
+        public virtual void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
         {
             
             sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
@@ -63,6 +63,7 @@ using SFML.Window;
             objektTextures[4] = new Texture("Content/Block/floor_02.png");
             objektTextures[5] = new Texture("Content/Block/floor_03.png");
             objektTextures[6] = new Texture("Content/Items/hourglass_large.png");
+            objektTextures[7] = new Texture("Content/Block/lightstone.png");
 
         }
 

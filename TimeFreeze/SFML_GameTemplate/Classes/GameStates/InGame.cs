@@ -237,11 +237,11 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets, currentRenderState);
+            obj.draw(targets, currentRenderState,gameTime);
         }
         foreach (Objects obj in worldObjectsMovable)
         {
-            obj.draw(targets, currentRenderState);
+            obj.draw(targets, currentRenderState, gameTime);
         }
 
 
