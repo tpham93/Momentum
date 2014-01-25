@@ -20,9 +20,7 @@ using SFML.Window;
         }
         public override void update(GameTime gameTime)
         {
-            Vector2f speed = new Vector2f(Input.currentMousePos.X - Position.X,Input.currentMousePos.Y - Position.Y);
-            speed /= new Vector2(speed).Length();
-            Position += speed * 5;
+            Position += Velocity;
             sprite.Position = Position + new Vector2f(Constants.TILESIZE / 2, Constants.TILESIZE / 2);
         }
 

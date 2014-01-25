@@ -14,6 +14,14 @@ using SFML.Window;
         protected Shape2DSAT shape;
         protected Sprite sprite;
 
+        private Vector2f velocity;
+
+        protected Vector2f Velocity
+        {
+            get { return velocity; }
+            set { velocity = value; }
+        }
+
         public Shape2DSAT Shape
         {
             get { return shape; }
