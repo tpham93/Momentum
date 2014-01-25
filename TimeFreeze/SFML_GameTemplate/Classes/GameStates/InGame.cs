@@ -10,7 +10,8 @@ using SFML.Window;
 class InGame : IGameState
 {
 
-    List<Object> worldObjects;
+    List<Objects> worldObjects;
+    List<Objects> worldObjectsMovable;
 
     private Level level;
     Sprite[] floor;
@@ -27,13 +28,14 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
-    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.Grayscale);
-    EShader currentShader = EShader.Grayscale;
+    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
+   // EShader currentShader = EShader.None;
+
     private int[,] floorMap;
     Random random;
 
     public static bool isLevelDark= false;
-    public static bool isLevelFreezed = false;
+    public static bool isLevelFreezed = true;
 
     public InGame()
     {
@@ -53,9 +55,14 @@ class InGame : IGameState
 
     public void Initialize()
     {
-        worldObjects = new List<object>();
+        worldObjects = new List<Objects>();
         level = new Level();
-        worldObjects = level.generateLevel(levelId);
+
+        Level.Leveldata lvlData = level.generateLevel(levelId);
+
+        worldObjects = lvlData.staticObj;
+        worldObjectsMovable = lvlData.movableObj;
+
         isLevelDark = level.IsLevelDark;
         
 
@@ -65,16 +72,18 @@ class InGame : IGameState
         floor[2] = new Sprite(Objects.objektTextures[5], new IntRect(0, 0, 16, 16));
 
         //Menubar ini
-        menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 230, 48));
+        menubarSprite = new Sprite(menubarTexture, new IntRect(0, 0, 255, 48));
         menubarSprite.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X, 0);
         menubarSprite.Color = new Color(menubarSprite.Color.R, menubarSprite.Color.G, menubarSprite.Color.B, (byte)150);
-        buttonSprites = new Sprite[3];
+        buttonSprites = new Sprite[4];
         buttonSprites[0] = new Sprite(buttons[0], new IntRect(0, 0, 32, 32));
         buttonSprites[0].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[1] = new Sprite(buttons[1], new IntRect(0, 0, 32, 32));
         buttonSprites[1].Position = new Vector2f(Constants.WINDOWWIDTH - 64 - 15, 7);
         buttonSprites[2] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
         buttonSprites[2].Position = new Vector2f(Constants.WINDOWWIDTH -32 -5, 7);
+        buttonSprites[3] = new Sprite(buttons[2], new IntRect(0, 0, 32, 32));
+        buttonSprites[3].Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 5, 7);
         levelName = new Text("Level " + (int)(levelId+1), Assets.font);
         levelName.Position = new Vector2f(Constants.WINDOWWIDTH - menubarTexture.Size.X + 20, 1);
         levelName.Color = Color.White;
@@ -102,13 +111,6 @@ class InGame : IGameState
 
         }
 
-        if (Input.isClicked(Keyboard.Key.F1))
-            if (currentShader == EShader.Grayscale)
-                currentShader = EShader.None;
-            else
-                currentShader = EShader.Grayscale;
-
-        currentRenderState = ShaderManager.getRenderState(currentShader);
 
         if (Input.isClicked(Keyboard.Key.P))
             isPaused = !isPaused;
@@ -116,9 +118,9 @@ class InGame : IGameState
 
 
         //Mouse pause Game
-        if (Input.leftClicked() && Input.currentMousePos.X - window.Position.X > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X - window.Position.X < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y - window.Position.Y < 69)
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 69)
             isPaused = !isPaused;
-        if (Input.leftClicked() && Input.currentMousePos.X - window.Position.X > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X - window.Position.X < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y - window.Position.Y < 69)
+        if (Input.leftClicked() && Input.currentMousePos.X  > Constants.WINDOWWIDTH - 32  && Input.currentMousePos.X  < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 69)
             Initialize();
 
         return EGameState.InGame;
@@ -133,20 +135,21 @@ class InGame : IGameState
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
 
+
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[0]);
+                    targets.ElementAt(0).Draw(floor[0], currentRenderState);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[1]);
+                    targets.ElementAt(0).Draw(floor[1], currentRenderState);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[2]);
+                    targets.ElementAt(0).Draw(floor[2], currentRenderState);
                 }
             }
         }
@@ -154,6 +157,10 @@ class InGame : IGameState
 
 
         foreach (Objects obj in worldObjects)
+        {
+            obj.draw(targets, currentRenderState);
+        }
+        foreach (Objects obj in worldObjectsMovable)
         {
             obj.draw(targets, currentRenderState);
         }
