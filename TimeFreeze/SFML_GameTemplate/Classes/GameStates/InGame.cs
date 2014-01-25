@@ -267,14 +267,16 @@ class InGame : IGameState
         Shape2DSAT shapeI = objectsI.Shape;
         Shape2DSAT shapeJ = objectsJ.Shape;
 
+         Vector2 speedI = new Vector2(objectsI.Velocity);
+        float speedValueI = speedI.Length();
+
         //kollision
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
         Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-        particles.Add(new SparkleParticle(shapeI.Position, -dir));
+        particles.Add(new SparkleParticle(shapeI.Position, -dir, new Vector2f(speedI.X, speedI.Y), speedValueI ));
 
-        Vector2 speedI = new Vector2(objectsI.Velocity);
-        float speedValueI = speedI.Length();
+
         speedI /= speedValueI;
         Vector2 newSpeedI = speedI - 2* Vector2.Dot(speedI,iData.Mtv) * iData.Mtv;
         objectsI.Velocity = speedValueI* 0.6f * new Vector2f(newSpeedI.X,newSpeedI.Y);
