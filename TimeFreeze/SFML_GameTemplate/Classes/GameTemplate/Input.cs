@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public static class Input
 {
+    static Window window;
     static List<Keyboard.Key> usedKeys;
 
     static bool[] oldKeys;
@@ -20,7 +21,7 @@ public static class Input
     public static Vector2i oldMousePos;
     public static Vector2i currentMousePos;
 
-    public static void init(List<Keyboard.Key> usedKeys)
+    public static void init(Window window, List<Keyboard.Key> usedKeys)
     {
         Input.usedKeys = usedKeys;
         
@@ -44,7 +45,7 @@ public static class Input
                 currentKeys[(int)key] = false;
 
         oldMousePos = currentMousePos;
-        currentMousePos = Mouse.GetPosition();
+        currentMousePos = Mouse.GetPosition(window);
 
 
         for (int i = 0; i < oldMouse.Length; i++)
