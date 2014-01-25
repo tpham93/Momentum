@@ -84,6 +84,8 @@ class InGame : IGameState
     public static bool isLevelFreezed = false;
     private bool hasWon;
 
+    String[] levelText;
+
 
     private Objects selectedObject;
 
@@ -96,6 +98,7 @@ class InGame : IGameState
     {
         hasWon = false;
         random = new Random();
+        levelText = setStrings();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
         for (int x = 0; x < Constants.WINDOWWIDTH / 16; x++)
         {
@@ -104,6 +107,19 @@ class InGame : IGameState
                 floorMap[x, y] = random.Next(3);
             }
         }
+    }
+
+    private String[] setStrings()
+    {
+        String[] lvT = new String[5];
+        lvT[1] = "Da bist du ja quasi schon durch";
+        lvT[0] = "Du bist ganz OK";
+        lvT[2] = "Aplaus Aplaus";
+        lvT[3] = "Du hast doch gecheated";
+        lvT[4] = "Absturz in \n3 \n2 \n1";
+
+        return lvT;
+
     }
 
     public void Initialize()
@@ -179,7 +195,7 @@ class InGame : IGameState
         {
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
+            levelDone.DisplayedString = " Hurray \n Level Geschafft \n" + levelText[(int)levelId] ;
         }
 
         if (helpTime >= 5)
