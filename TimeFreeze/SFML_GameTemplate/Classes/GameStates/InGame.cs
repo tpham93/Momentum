@@ -238,10 +238,19 @@ class InGame : IGameState
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
         Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-        particles.Add(new SparkleParticle(shapeI.Position, -dir));
+        Vector2 speedI = new Vector2(objectsI.Velocity); 
 
-        Vector2 speedI = new Vector2(objectsI.Velocity);
+        Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
         float speedValueI = speedI.Length();
+
+
+        for (int i = 0; i < InGame.random.Next(5,10); i++)
+        {
+            particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+        }
+
+
+
         speedI /= speedValueI;
         Vector2 newSpeedI = speedI - 2* Vector2.Dot(speedI,iData.Mtv) * iData.Mtv;
         objectsI.Velocity = speedValueI* 0.6f * new Vector2f(newSpeedI.X,newSpeedI.Y);
