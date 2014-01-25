@@ -82,7 +82,7 @@ class TimeFreezeGame : Game
         infoText.DisplayedString = ""+currentGameState;
         infoText.DisplayedString += " " + fps;
 
-        target.ElementAt(0).Draw(infoText);
+        target.ElementAt(2).Draw(infoText);
     }
 
     public override void loadContent(ContentManager content)

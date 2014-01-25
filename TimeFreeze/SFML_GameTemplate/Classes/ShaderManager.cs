@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public enum EShader {None, Grayscale, Dark, FreezeDistortion};
+public enum EShader {None, Grayscale, Dark};
 
 public static class ShaderManager
 {

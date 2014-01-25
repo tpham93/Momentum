@@ -32,7 +32,6 @@ class InGame : IGameState
     public static LevelID levelId;
 
     RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
-   // EShader currentShader = EShader.None;
 
     private int[,] floorMap;
     Random random;
@@ -136,7 +135,12 @@ class InGame : IGameState
 
     public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
-        
+        if (isLevelDark)
+            targets[0].Clear(Color.Black);
+        else
+            targets[0].Clear(Color.Transparent);
+
+
         //draw floor
         for (uint x = 0; x < Constants.WINDOWWIDTH / 16; x++)
         {
