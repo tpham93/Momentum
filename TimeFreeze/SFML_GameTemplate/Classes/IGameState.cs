@@ -16,6 +16,6 @@ interface IGameState
 
     EGameState Update(GameTime gameTime, RenderWindow window);
 
-    void Draw(GameTime gameTime, RenderWindow window);
+    void Draw(GameTime gameTime, List<RenderTexture> targets);
 }
 

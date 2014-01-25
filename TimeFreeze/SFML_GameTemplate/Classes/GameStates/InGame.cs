@@ -111,7 +111,7 @@ class InGame : IGameState
         return EGameState.InGame;
     }
 
-    public void Draw(GameTime gameTime, RenderWindow window)
+    public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
         
         //draw floor
@@ -119,20 +119,21 @@ class InGame : IGameState
         {
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
+                
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    window.Draw(floor[0]);
+                    targets.ElementAt(0).Draw(floor[0]);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    window.Draw(floor[1]);
+                    targets.ElementAt(0).Draw(floor[1]);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    window.Draw(floor[2]);
+                    targets.ElementAt(0).Draw(floor[2]);
                 }
             }
         }
@@ -141,16 +142,16 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(window);
+            obj.draw(targets);
         }
 
-        window.Draw(menubarSprite);
+        targets.ElementAt(0).Draw(menubarSprite);
 
         if (isPaused)
-            window.Draw(buttonSprites[1]);
+            targets.ElementAt(0).Draw(buttonSprites[1]);
         else
-            window.Draw(buttonSprites[0]);
-        window.Draw(buttonSprites[2]);
-        window.Draw(levelName);
+            targets.ElementAt(0).Draw(buttonSprites[0]);
+        targets.ElementAt(0).Draw(buttonSprites[2]);
+        targets.ElementAt(0).Draw(levelName);
     }
 }

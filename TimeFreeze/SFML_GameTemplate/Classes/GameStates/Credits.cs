@@ -27,7 +27,7 @@ class Credits : IGameState
         return EGameState.Credits;
     }
 
-    public void Draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
+    public void Draw(GameTime gameTime, List<RenderTexture> targets)
     {
         
     }
