@@ -4,12 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sat
-{
     struct Point
     {
         private int x;
         private int y;
+
+        public Point(int z)
+            :this(z,z)
+        {
+        }
+        public Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
         public int X
         {
@@ -22,4 +30,3 @@ namespace Sat
             set { y = value; }
         }
     }
-}

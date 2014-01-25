@@ -6,11 +6,6 @@ using System.Text;
 using SFML.Window;
 using SFML.Graphics;
 
-using Sat.Etc;
-using Sat.Collision;
-
-namespace Sat.Object.Shape
-{
     class PolygonShapeSAT : Shape2DSAT
     {
 
@@ -80,11 +75,11 @@ namespace Sat.Object.Shape
                 float rotationCos = (float)Math.Cos(rotation);
                 for (int i = 0; i < corners.Length; ++i)
                 {
-                    currentCorners[i] = Helper.rotateVector2(corners[i], rotationCos, rotationSin) + position;
+                    currentCorners[i] = HelperSAT.rotateVector2(corners[i], rotationCos, rotationSin) + position;
                 }
                 for (int i = 0; i < normals.Count; ++i)
                 {
-                    currentNormals[i] = Helper.rotateVector2(normals[i], rotationCos, rotationSin);
+                    currentNormals[i] = HelperSAT.rotateVector2(normals[i], rotationCos, rotationSin);
                 }
             }
         }
@@ -313,4 +308,3 @@ namespace Sat.Object.Shape
         }
 
     }
-}

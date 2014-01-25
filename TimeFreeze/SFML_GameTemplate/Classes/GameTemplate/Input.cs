@@ -22,6 +22,7 @@ public static class Input
 
     public static void init(Window window, List<Keyboard.Key> usedKeys)
     {
+        Input.window = window;
         Input.usedKeys = usedKeys;
         
         oldKeys = new bool[(int)Keyboard.Key.KeyCount];

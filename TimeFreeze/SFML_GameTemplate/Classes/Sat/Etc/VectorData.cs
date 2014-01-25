@@ -5,8 +5,6 @@ using System.Text;
 
 using SFML.Window;
 
-namespace Sat.Etc
-{
     struct VectorData
     {
         public Vector2 direction;
@@ -23,4 +21,4 @@ namespace Sat.Etc
             this.length = scaledVector.Length();
         }
     }
-}
+
