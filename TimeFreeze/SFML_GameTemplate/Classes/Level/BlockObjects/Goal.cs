@@ -21,7 +21,7 @@ using SFML.Window;
         }
         public override void update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         //public override void draw(List<RenderTexture> targets, RenderStates state)

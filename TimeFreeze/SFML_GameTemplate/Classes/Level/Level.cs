@@ -12,6 +12,8 @@ using SFML.Window;
     {
         private bool isLevelDark = false;
 
+        private int lightCount;
+
         public bool IsLevelDark{ get { return isLevelDark; } }
         public struct Leveldata
         {
@@ -29,11 +31,13 @@ using SFML.Window;
         }
 
         public Leveldata generateLevel(LevelID id)
+            
         {
             List<Objects> baseLevelStatic = new List<Objects>();
             List<Objects> baseLevelMovable = new List<Objects>();
             isLevelDark = false;
             int timeFreezenum = 0;
+            lightCount = 0;
 
             Console.WriteLine(id);
             //load base Image
@@ -48,7 +52,10 @@ using SFML.Window;
                     else if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
                     else if ((Assets.colorLightStone).Equals(baseLevelImage.GetPixel(x, y)))
-                        baseLevelStatic.Add(new LightBlock(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2), false));
+                    {
+                        baseLevelStatic.Add(new LightBlock(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2), false, lightCount));
+                        lightCount++;
+                    }
                 }
             }
 
@@ -61,7 +68,10 @@ using SFML.Window;
                 {
                     String[] ls =line.Split(':');
                     if (int.Parse(ls[0]) == 0)
-                        baseLevelMovable.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2]))));
+                    {
+                        baseLevelMovable.Add(new Ball(new Vector2f((float)int.Parse(ls[1]), (float)int.Parse(ls[2])), lightCount));
+                        lightCount++;
+                    }
                     else if (int.Parse(ls[0]) == -1)
                         isLevelDark = true;
                     else if (int.Parse(ls[0]) == -2)

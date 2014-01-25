@@ -10,8 +10,10 @@ using SFML.Window;
     class LightBlock : Objects
     {
         Sprite spr;
+        int freq = 0;
+        
 
-        public LightBlock(Vector2f position, bool movable)
+        public LightBlock(Vector2f position, bool movable, int freq)
             :base(new CircleShapeSAT(Constants.TILESIZE/2,position,movable))
         {
 
@@ -23,6 +25,8 @@ using SFML.Window;
             spr.Origin = new Vector2f(32, 32) ;
             spr.Position = this.Position;
             spr.Scale = new Vector2f(3f, 3f);
+
+            this.freq = freq;
             
            
             
@@ -30,7 +34,7 @@ using SFML.Window;
 
         public override void update(GameTime gameTime)
         {
-            //throw new NotImplementedException();
+
         }
 
         public override void initialize()
@@ -40,8 +44,8 @@ using SFML.Window;
         public override void draw(List<RenderTexture> targets, RenderStates state, GameTime time)
         {
 
-
-            spr.Color = Help.lerp(Assets.AcaOrange, Color.Yellow, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds),2));
+            spr.Scale = new Vector2f((float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds+(freq)), 2)/2+2.5f);
+            spr.Color = Help.lerp(Assets.AcaOrange, Assets.AcaDarkOrange, (float)Math.Pow(Math.Sin(time.TotalTime.TotalSeconds),2));
 
             
 
