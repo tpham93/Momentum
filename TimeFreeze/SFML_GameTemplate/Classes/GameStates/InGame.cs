@@ -133,8 +133,7 @@ class InGame : IGameState
             for (uint y = 0; y < Constants.WINDOWHEIGHT / 16; y++)
             {
 
-                floor.Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                targets.ElementAt(0).Draw(floor, currentRenderState);
+                if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
                     targets.ElementAt(0).Draw(floor[0]);
