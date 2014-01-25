@@ -31,6 +31,9 @@ class Credits : IGameState
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
 
+        if (Input.isClicked(Keyboard.Key.Escape))
+            return EGameState.MainMenu;
+
         return EGameState.Credits;
     }
 

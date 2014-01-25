@@ -17,13 +17,14 @@ class TimeFreezeGame : Game
     Text infoText;
     float fps;
 
+    public static bool drawFps = true;
 
 
     public TimeFreezeGame()
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
-        keys.Add(Keyboard.Key.Escape);
+        keys.Add(Keyboard.Key.);
         keys.Add(Keyboard.Key.W);
         keys.Add(Keyboard.Key.A);
         keys.Add(Keyboard.Key.S);
@@ -55,17 +56,9 @@ class TimeFreezeGame : Game
     public override void update(GameTime gameTime, RenderWindow window)
     {
         currentGameState = gameState.Update(gameTime, window);
-        
 
-
-        if (Input.isClicked(Keyboard.Key.Escape))
-        {
-            if (currentGameState == EGameState.MainMenu)
-                window.Close();
-            else
-                currentGameState = EGameState.MainMenu;
-
-        }
+        if (Input.isClicked(Keyboard.Key.F1))
+            drawFps = !drawFps;
 
         if (Input.isClicked(Keyboard.Key.Right))
             currentGameState++;
@@ -86,10 +79,14 @@ class TimeFreezeGame : Game
         window.Clear(Color.Black);
 
         gameState.Draw(gameTime, target);
-        infoText.DisplayedString = ""+currentGameState;
-        infoText.DisplayedString += " " + fps;
 
-        target.ElementAt(2).Draw(infoText);
+        if (drawFps)
+        {
+            infoText.DisplayedString = "" + currentGameState;
+            infoText.DisplayedString += " " + fps;
+
+            target.ElementAt(2).Draw(infoText);
+        }
     }
 
     public override void loadContent(ContentManager content)
