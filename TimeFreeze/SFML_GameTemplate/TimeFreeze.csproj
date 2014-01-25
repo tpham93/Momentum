@@ -53,13 +53,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
-      <HintPath>..\..\..\..\..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2">
-      <HintPath>..\..\..\..\..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2">
-      <HintPath>..\..\..\..\..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
+      <HintPath>..\..\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +87,18 @@
     <Compile Include="Classes\Level\BlockObjects\WallBlock.cs" />
     <Compile Include="Classes\Level\Level.cs" />
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="Classes\Sat\Collision\Edge.cs" />
+    <Compile Include="Classes\Sat\Collision\IntersectData.cs" />
+    <Compile Include="Classes\Sat\Collision\Range.cs" />
+    <Compile Include="Classes\Sat\Etc\Helper.cs" />
+    <Compile Include="Classes\Sat\Etc\VectorData.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\CircleShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\EdgeShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\EShapeType.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\RectangleShape.cs" />
+    <Compile Include="Classes\Sat\Objects\Shape\Shape2D.cs" />
+    <Compile Include="Classes\Sat\Point.cs" />
+    <Compile Include="Classes\Sat\Vector2.cs" />
     <Compile Include="Classes\TimeFreezeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
