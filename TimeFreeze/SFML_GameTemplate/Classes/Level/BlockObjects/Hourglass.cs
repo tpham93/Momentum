@@ -21,6 +21,9 @@ class Hourglass : Objects
 
         numT = new Text(num.ToString(), Assets.font);
         numT.Position = position;
+        numT.Scale = new Vector2f(0.7f,0.7f);
+        
+        numT.Color = Color.Black;
 
         this.num = num;
 
