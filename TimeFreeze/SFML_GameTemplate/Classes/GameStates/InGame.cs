@@ -97,6 +97,7 @@ class InGame : IGameState
     public InGame()
     {
         arrow = new Sprite(Objects.objektTextures[0], new IntRect(0, 0, 16, 16));
+        
         hasWon = false;
         random = new Random();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
@@ -300,6 +301,7 @@ class InGame : IGameState
                     {
                         selectedObject = worldObjectsMovable[i];
                         Console.Out.WriteLine("Selected");
+                        arrow.Position = selectedObject.Position;dwdd
                         isSelected = true;
                         break;
                     }
