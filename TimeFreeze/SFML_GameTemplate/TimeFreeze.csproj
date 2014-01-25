@@ -87,6 +87,7 @@
     <Compile Include="Classes\Level\BlockObjects\Hourglass.cs" />
     <Compile Include="Classes\Level\BlockObjects\LightBlock.cs" />
     <Compile Include="Classes\Level\BlockObjects\Objects.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Wall2.cs" />
     <Compile Include="Classes\Level\BlockObjects\WallBlock.cs" />
     <Compile Include="Classes\Level\Level.cs" />
     <Compile Include="Classes\Particles\AbstractParticle.cs" />
@@ -151,6 +152,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Block\wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block\wall2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Ingame\back.png">
