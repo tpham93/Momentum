@@ -14,7 +14,7 @@ interface IGameState
     
     void LoadContent(ContentManager manager);
 
-    EGameState Update(GameTime gameTime);
+    EGameState Update(GameTime gameTime, RenderWindow window);
 
     void Draw(GameTime gameTime, RenderWindow window);
 }

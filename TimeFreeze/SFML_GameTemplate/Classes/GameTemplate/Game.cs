@@ -54,7 +54,7 @@ public abstract class Game
             window.DispatchEvents();
             Input.update();
             gameTime.Update();
-            update(gameTime);
+            update(gameTime, window);
 
             draw(gameTime, window);
 
@@ -63,7 +63,7 @@ public abstract class Game
         }
     }
     
-    public abstract void update(GameTime gameTime);
+    public abstract void update(GameTime gameTime, RenderWindow window);
 
     public abstract void draw(GameTime gameTime, RenderWindow window);
 

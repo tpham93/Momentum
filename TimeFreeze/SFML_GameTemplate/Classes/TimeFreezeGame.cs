@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class TimeFreezeGame : Game
 {
 
-    EGameState currentGameState = EGameState.LevelChooser;
+    EGameState currentGameState = EGameState.MainMenu;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -33,6 +33,8 @@ class TimeFreezeGame : Game
         keys.Add(Keyboard.Key.Return);
         keys.Add(Keyboard.Key.Space);
 
+        keys.Add(Keyboard.Key.P);
+
         keys.Add(Keyboard.Key.Up);
         keys.Add(Keyboard.Key.Down);
         keys.Add(Keyboard.Key.Left);
@@ -41,6 +43,7 @@ class TimeFreezeGame : Game
         Input.init(keys);
 
         Assets.font = new Font("Content/Font/PRIMELEC.ttf");
+        Objects.loadContent();
 
         handleNewGameState();
 
@@ -50,12 +53,15 @@ class TimeFreezeGame : Game
       //  renderStates.Texture = testTexture;
     }
 
-    public override void update(GameTime gameTime)
+    public override void update(GameTime gameTime, RenderWindow window)
     {
-        if (Input.isClicked(Keyboard.Key.Escape))
-            window.Close();
+        currentGameState = gameState.Update(gameTime, window);
 
-        currentGameState = gameState.Update(gameTime);
+        if (Input.isClicked(Keyboard.Key.Escape))
+            if (currentGameState == EGameState.MainMenu)
+                currentGameState = 0;
+            else
+            currentGameState = EGameState.MainMenu;
 
         if (Input.isClicked(Keyboard.Key.Right))
             currentGameState++;
@@ -85,6 +91,9 @@ class TimeFreezeGame : Game
     public override void loadContent(ContentManager content)
     {
         infoText = new Text("", Assets.font);
+
+        
+        
     }
 
 
@@ -106,7 +115,9 @@ class TimeFreezeGame : Game
             case EGameState.InGame:
                 gameState = new InGame();
                 break;
-
+            case EGameState.Credits:
+                gameState = new Credits();
+                break;
             case EGameState.LevelChooser:
                 gameState = new LevelChooser();
                 break;
