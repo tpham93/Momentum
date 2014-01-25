@@ -67,7 +67,7 @@ public abstract class Game
         lightSprite.Origin = new Vector2f(32, 32);
         lightSprite.Position = new Vector2f(300, 300);
         lightSprite.Color = Color.White;
-        
+
 
         while (window.IsOpen())
         {
@@ -76,6 +76,8 @@ public abstract class Game
             window.DispatchEvents();
             Input.update();
             gameTime.Update();
+
+            lightSprite.Color = Help.lerp(Color.Red, Color.Yellow, (float)Math.Sin(gameTime.TotalTime.TotalSeconds));
 
             update(gameTime, window);
 
