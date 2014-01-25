@@ -17,6 +17,10 @@ class TimeFreezeGame : Game
     Text infoText;
     float fps;
 
+    Shader testShader = new Shader("Content/VertexShader.txt", "Content/FragmentShader.txt");
+    RenderStates renderStates;
+
+
     public TimeFreezeGame()
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
@@ -39,6 +43,11 @@ class TimeFreezeGame : Game
         Assets.font = new Font("Content/Font/PRIMELEC.ttf");
 
         handleNewGameState();
+
+
+        renderStates = new RenderStates(testShader);
+        renderStates.BlendMode = BlendMode.Alpha;
+      //  renderStates.Texture = testTexture;
     }
 
     public override void update(GameTime gameTime)
@@ -62,12 +71,15 @@ class TimeFreezeGame : Game
     {
         fps = 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
 
-        window.Clear(AcaOrange);
+        
+
+        window.Clear(Color.Black);
 
         gameState.Draw(gameTime, window);
         infoText.DisplayedString = ""+currentGameState;
         infoText.DisplayedString += " " + fps;
-        window.Draw(infoText);
+
+        window.Draw(infoText, renderStates);
     }
 
     public override void loadContent(ContentManager content)
