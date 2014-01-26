@@ -11,19 +11,29 @@ class MainMenu : IGameState
     Text gameName = new Text(Constants.WINDOWNAME, Assets.font);
     Text[] buttonTexts = new Text[3];
 
+    List<AbstractParticle> particles = new List<AbstractParticle>();
+
+
     int current = 0;
-    
+
+    Sprite mouseLight;
+
 
 
     public MainMenu()
     {
-        
+        InGame.isLevelDark = true;
     }
 
     public void Initialize()
     {
+        mouseLight = new Sprite(Assets.lightCircle);
+        mouseLight.Scale = new Vector2f(8.0f, 8.0f);
+        mouseLight.Origin = new Vector2f(32,32);
+
         Assets.Ambient.Loop = true;
         Assets.Ambient.Play();
+
 
         buttonTexts[0] = new Text("Start", Assets.font);
         buttonTexts[0].Color = Color.Red;
@@ -53,7 +63,7 @@ class MainMenu : IGameState
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
     {
-
+        #region
         for (int i = 0; i < buttonTexts.Length; i++)
         {
             if (Input.isInside(buttonTexts[i].GetGlobalBounds()))
@@ -118,6 +128,31 @@ class MainMenu : IGameState
             return EGameState.None;
 
         changeColor(gameTime);
+        #endregion
+
+        particles.Add(new SparkleParticle(new Vector2f(     (float)InGame.random.NextDouble() * Constants.WINDOWWIDTH, 
+                                                            (float)InGame.random.NextDouble() * Constants.WINDOWHEIGHT)));
+
+     //   particles.Add(new SparkleParticle(new Vector2f((float)(Constants.WINDOWWIDTH / 3 + InGame.random.NextDouble() * 2 * Constants.WINDOWWIDTH / 3), Constants.WINDOWHEIGHT / 4)));
+
+        mouseLight.Position = new Vector2f(Input.currentMousePos.X, Input.currentMousePos.Y);
+
+        float scaleHelp = (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2);
+
+        mouseLight.Color = Help.lerp(Color.White, Assets.AcaOrange, scaleHelp);
+
+        scaleHelp = 8.0f + scaleHelp * 2.0f;
+
+        mouseLight.Scale = new Vector2f(scaleHelp, scaleHelp);
+
+
+        for (int i = 0; i < particles.Count; i++)
+        {
+            particles[i].update(gameTime);
+
+            if (particles[i].lifetime <= 0)
+                particles.Remove(particles[i]);
+        }
 
         return EGameState.MainMenu;
     }
@@ -130,7 +165,13 @@ class MainMenu : IGameState
         foreach (Text t in buttonTexts)
             targets[0].Draw(t);
 
-        targets[0].Draw(gameName);
+        targets[2].Draw(gameName);
+
+        foreach (AbstractParticle p in particles)
+            p.draw(gameTime, targets);
+
+        targets[1].Draw(mouseLight);
+
 
     }
 
