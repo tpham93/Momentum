@@ -16,6 +16,7 @@ class InGame : IGameState
         Win,
         Hourglass,
         X_Ray,
+        Accelerate,
     }
 
     struct Event
@@ -24,6 +25,7 @@ class InGame : IGameState
         public Objects objectI;
         public Objects objectJ;
         public bool handleCollision;
+        
 
         public Event(Objects objectI, Objects objectJ)
         {
@@ -43,6 +45,11 @@ class InGame : IGameState
             {
                 return GameEventType.Win;
             }
+            if (isPair(o1, o2, Objects.BlockType.BALL, Objects.BlockType.ACCELERATOR))
+            {
+                return GameEventType.Accelerate;
+            }
+
 
             return GameEventType.None;
         }
@@ -60,6 +67,7 @@ class InGame : IGameState
     private Level level;
     static int tutState = 0;
     Sprite[] floor;
+    public bool acc;
 
 
     Texture menubarTexture;
@@ -97,6 +105,7 @@ class InGame : IGameState
     public static bool isLevelFreezed = false;
     private bool hasWon;
 
+    String[] levelText;
     private bool isSelected = false;
 
 
@@ -112,6 +121,7 @@ class InGame : IGameState
         
         hasWon = false;
         random = new Random();
+        levelText = setStrings();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
         for (int x = 0; x < Constants.WINDOWWIDTH / 16; x++)
         {
@@ -123,6 +133,19 @@ class InGame : IGameState
 
         arrowSprite = new Sprite(Assets.easyArrow);
         arrowSprite.Origin = new Vector2f(0,32);
+
+    }
+
+    private String[] setStrings()
+    {
+        String[] lvT = new String[5];
+        lvT[1] = "Da bist du ja quasi schon durch";
+        lvT[0] = "Du bist ganz OK";
+        lvT[2] = "Aplaus Aplaus";
+        lvT[3] = "Du hast doch gecheated";
+        lvT[4] = "Absturz in \n3 \n2 \n1";
+
+        return lvT;
 
     }
 
@@ -141,6 +164,8 @@ class InGame : IGameState
         worldObjects = lvlData.staticObj;
         worldObjectsMovable = lvlData.movableObj;
         timeFreezeNum = lvlData.freezeNum;
+
+        acc = false;
 
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
@@ -248,7 +273,7 @@ class InGame : IGameState
         {
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
+            levelDone.DisplayedString = "Hurray \nLevel Geschafft \n" + levelText[(int)levelId] ;
         }
 
         if (helpTime >= 5)
@@ -380,6 +405,26 @@ class InGame : IGameState
                                 }
                                 break;
 
+                            case GameEventType.Accelerate:
+                                if (worldObjectsMovable[i].getType() == Objects.BlockType.ACCELERATOR)
+                                {
+                                    acc = true;
+                                    Accelerator a = (Accelerator)worldObjectsMovable[i];
+                                    
+
+                                    worldObjectsMovable.RemoveAt(i);
+                                    --i;
+                                    --j;
+                                }
+                                else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
+                                {
+                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    timeFreezeNum += h.getNum();
+                                    worldObjectsMovable.RemoveAt(j);
+                                }
+                                break;
+
+
                         }
                     }
                 }
@@ -465,30 +510,61 @@ class InGame : IGameState
         //kollision
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
-        Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-        Vector2 speedI = new Vector2(objectsI.Velocity); 
 
-        Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
-        float speedValueI = speedI.Length();
-
-
-        for (int i = 0; i < InGame.random.Next(5,10); i++)
+        if (acc)
         {
-            particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+            Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+            Vector2 speedI = new Vector2(objectsI.Velocity);
+
+            Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+            float speedValueI = speedI.Length();
+
+            speedI /= speedValueI;
+            Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+            objectsI.Velocity = speedValueI * 2f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+
+
+            Vector2 speedJ = new Vector2(objectsJ.Velocity);
+            float speedValueJ = speedJ.Length();
+            speedI /= speedValueJ;
+            Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
+            objectsJ.Velocity = speedValueJ * 2f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+
+
+
+
+
+
+
         }
 
+        else
+        {
+            Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+            Vector2 speedI = new Vector2(objectsI.Velocity);
+
+            Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+            float speedValueI = speedI.Length();
 
 
-        speedI /= speedValueI;
-        Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
-        objectsI.Velocity = speedValueI * 0.6f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+            for (int i = 0; i < InGame.random.Next(5, 10); i++)
+            {
+                particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+            }
 
 
-        Vector2 speedJ = new Vector2(objectsJ.Velocity);
-        float speedValueJ = speedJ.Length();
-        speedI /= speedValueJ;
-        Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
-        objectsJ.Velocity = speedValueJ * 0.6f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+
+            speedI /= speedValueI;
+            Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+            objectsI.Velocity = speedValueI * 0.6f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+
+
+            Vector2 speedJ = new Vector2(objectsJ.Velocity);
+            float speedValueJ = speedJ.Length();
+            speedI /= speedValueJ;
+            Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
+            objectsJ.Velocity = speedValueJ * 0.6f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+        }
     }
 
     public void Draw(GameTime gameTime, List<RenderTexture> targets)

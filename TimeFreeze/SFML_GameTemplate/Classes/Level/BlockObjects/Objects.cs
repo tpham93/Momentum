@@ -55,7 +55,7 @@ using SFML.Window;
 
         public static void loadContent()
         {
-            objektTextures = new Texture[9];
+            objektTextures = new Texture[10];
             objektTextures[0] = new Texture("Content/Block/floor.png");
             objektTextures[1] = new Texture("Content/Block/wall.png");
             objektTextures[2] = new Texture("Content/Block/ball.png");
@@ -65,6 +65,7 @@ using SFML.Window;
             objektTextures[6] = new Texture("Content/Items/hourglass_large.png");
             objektTextures[7] = new Texture("Content/Block/lightstone.png");
             objektTextures[8] = new Texture("Content/Block/wall2.png");
+            objektTextures[9] = new Texture("Content/Block/accelerator.png");
 
         }
 
@@ -78,7 +79,8 @@ using SFML.Window;
             GOAL,
             HOURGLAS,
             WALL,
-            LIGHTBLOCK
+            LIGHTBLOCK,
+            ACCELERATOR
 
 
         }

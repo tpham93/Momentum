@@ -20,6 +20,7 @@ public static class Assets
     public static Color colorWall2 = new Color(0, 0, 100);
     public static Color colorGoal = new Color(0, 255, 0);
     public static Color colorLightStone = new Color(100, 0, 100);
+    public static Color colorAccelerator = new Color(255, 100, 0);
 
     public static Vector2f baseBlockSize = new Vector2f(16, 16);
     public static Vector2i worldOffSet = new Vector2i(0, 0);
