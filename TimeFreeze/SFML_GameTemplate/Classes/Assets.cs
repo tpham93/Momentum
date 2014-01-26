@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
+using SFML.Audio;
 
 
 public static class Assets
@@ -14,6 +15,8 @@ public static class Assets
     public static Texture lightCircle = new Texture("Content/Lights/lightCircle.png");
     public static Texture sparkle = new Texture("Content/Lights/sparkle.png");
     public static Texture easyArrow = new Texture("Content/Items/basicArrow.png");
+
+    public static Sound hitSound = new Sound(new SoundBuffer("Content/Sounds/HitSound2.wav"));
 
     public static Color colorFloor = new Color(105, 105, 105);
     public static Color colorWall = new Color(0, 0, 255);

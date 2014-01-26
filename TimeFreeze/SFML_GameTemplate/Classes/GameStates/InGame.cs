@@ -308,7 +308,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
-                drawArrow = false;
+                
                 isLevelFreezed = false;
             }
 
@@ -328,6 +328,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
             }
             if (tutState == 0)
@@ -547,7 +548,7 @@ class InGame : IGameState
         {
             Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
             Vector2 speedI = new Vector2(objectsI.Velocity);
-
+			Assets.hitSound.Play();
             Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
             float speedValueI = speedI.Length();
 
@@ -623,6 +624,7 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[1]);
         else
             targets.ElementAt(2).Draw(buttonSprites[0]);
+
         targets.ElementAt(2).Draw(buttonSprites[2]);
         targets.ElementAt(2).Draw(levelName);
         if (timeFreezeNum != 0)
@@ -638,6 +640,8 @@ class InGame : IGameState
         
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
+
+        //Console.WriteLine(tutArrowSprite.Position);
 
         if(!(tutState>9000))
             targets.ElementAt(2).Draw(tutArrowSprite);
