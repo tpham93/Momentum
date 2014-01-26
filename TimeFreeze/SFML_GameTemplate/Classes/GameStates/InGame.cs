@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
+using System.IO;
 
 
 class InGame : IGameState
@@ -213,7 +214,7 @@ class InGame : IGameState
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
 
-        isLevelDark = false;//level.IsLevelDark;
+        isLevelDark = true;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
@@ -329,6 +330,12 @@ class InGame : IGameState
             hasWon = false;
             levelDone.Position = new Vector2f(100, 400);
             levelId++;
+
+            //if (new DirectoryInfo(Constants.LEVELPATH).GetFiles().Length / 2 < (int)levelId+1)
+            //{
+            //    return EGameState.MainMenu;
+            //}
+
             helpTime = 0;
             Initialize();
 
