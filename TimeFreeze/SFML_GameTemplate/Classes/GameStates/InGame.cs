@@ -95,6 +95,9 @@ class InGame : IGameState
     Sprite arrowSprite = new Sprite();
     Sprite tutArrowSprite = new Sprite();
 
+    private Text tutText1 = new Text("Click on the button above or press space", Assets.font);
+    
+
     bool drawArrow = false;
 
    // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
@@ -119,7 +122,7 @@ class InGame : IGameState
     public InGame()
     {
 
-        
+        tutText1.Position = new Vector2f(160, 530);
         
         hasWon = false;
         random = new Random();
@@ -684,8 +687,17 @@ class InGame : IGameState
 
         //Console.WriteLine(tutArrowSprite.Position);
 
-        if(!(tutState>9000))
+        if (!(tutState > 9000))
+        {
             targets.ElementAt(2).Draw(tutArrowSprite);
+
+            if (tutState == 0)
+            {
+                targets.ElementAt(2).Draw(tutText1);
+
+            }
+
+        }
 
         
 
