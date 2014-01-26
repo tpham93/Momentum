@@ -105,7 +105,7 @@ class InGame : IGameState
 
 
     private int[,] floorMap;
-    public static Random random;
+    public static Random random = new Random();
 
     public static bool isLevelDark = false;
     public static bool isLevelFreezed = false;

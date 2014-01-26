@@ -23,7 +23,7 @@ public class SparkleParticle : AbstractParticle
 
         this.sprite.Position = startPos;
 
-        this.speed = speed;
+        this.speed = speed / 2;
 
         Vector2f secondHalfDir1 = new Vector2f(halfDir.Y, -halfDir.X);
         Vector2f secondHalfDir2 = new Vector2f(-halfDir.Y, halfDir.X);
@@ -34,6 +34,7 @@ public class SparkleParticle : AbstractParticle
         else
             this.direction = Help.lerp(halfDir, secondHalfDir1, (float)InGame.random.NextDouble());
 
+        this.lightSprite.Scale = new Vector2f(2.0f * (float)InGame.random.NextDouble(), 2.0f * (float)InGame.random.NextDouble());
          
     }
 
