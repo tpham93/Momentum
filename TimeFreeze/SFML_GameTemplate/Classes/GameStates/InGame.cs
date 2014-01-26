@@ -129,7 +129,7 @@ class InGame : IGameState
         tutText.Position = new Vector2f(160, 530);
         clock = new UiClock();
 
-        tutText1.Position = new Vector2f(160, 530);
+        tutText.Position = new Vector2f(160, 530);
 
         failTimeStart = false;
 
