@@ -318,6 +318,15 @@ class InGame : IGameState
         if (Input.isClicked(Keyboard.Key.Space))
             if (timeFreezeNum > 0 && !isLevelFreezed)
             {
+                if (tutState == 0)
+                {
+                    tutState++;
+                    popUpTime = 0;
+                    popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
+                    popUpBonusTime = 2;
+                    tutArrowSprite.Position = new Vector2f(69, 305);
+                    popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                }
                 timeFreezeNum--;
                 Assets.nock.Play();
                 isLevelFreezed = true;
@@ -522,7 +531,6 @@ class InGame : IGameState
                 velocity /= length;
                
                 Console.Out.WriteLine("velocity set");
-                isLevelFreezed = false;
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
                 drawArrow = false;
