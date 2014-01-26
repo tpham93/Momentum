@@ -31,7 +31,6 @@ using SFML.Window;
         }
 
         public Leveldata generateLevel(LevelID id)
-            
         {
             List<Objects> baseLevelStatic = new List<Objects>();
             List<Objects> baseLevelMovable = new List<Objects>();

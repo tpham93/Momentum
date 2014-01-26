@@ -201,7 +201,7 @@ using SFML.Graphics;
 
                 float distance = Range.distance(r1, r2);
 
-                if (distance > 0)
+                if (distance >= 0)
                 {
                     return new IntersectData();
                 }
@@ -220,7 +220,7 @@ using SFML.Graphics;
 
                 float distance = Range.distance(r1, r2);
 
-                if (distance > 0)
+                if (distance >= 0)
                 {
                     return new IntersectData();
                 }
@@ -278,7 +278,7 @@ using SFML.Graphics;
 
                 float distance = Range.distance(r1, r2);
 
-                if (distance > 0)
+                if (distance >= 0)
                 {
                     return new IntersectData();
                 }

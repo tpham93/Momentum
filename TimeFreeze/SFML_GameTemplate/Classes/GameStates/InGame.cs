@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
+using System.IO;
 
 
 class InGame : IGameState
 {
 
-    enum GameEventType
+    public enum GameEventType
     {
         None,
         Win,
@@ -19,7 +20,27 @@ class InGame : IGameState
         Accelerate,
     }
 
-    struct Event
+    public struct LevelShapeData
+    {
+        public List<ObjectShape> worldObjectShape;
+        public List<ObjectShape> worldMoveableObjectShape;
+    }
+
+    public struct ObjectShape
+    {
+        public Objects firstObject;
+        public Shape2DSAT shape;
+        public Objects.BlockType blockType;
+
+        public ObjectShape(Objects firstObject, Shape2DSAT shape, Objects.BlockType blockType)
+        {
+            this.firstObject = firstObject;
+            this.shape = shape;
+            this.blockType = blockType;
+        }
+    }
+
+    public struct Event
     {
         public GameEventType eventType;
         public Objects objectI;
@@ -61,13 +82,17 @@ class InGame : IGameState
     }
 
     List<Objects> worldObjects;
-    List<Objects> worldObjectsMovable;
+    List<Objects> worldObjectsMoveable;
+    List<ObjectShape> worldShapeObjects;
+    List<ObjectShape> worldShapeObjectsMoveable;
     List<AbstractParticle> particles;
+
+    static WallBlock stubWallBlock = new WallBlock(new Vector2f());
 
     private Level level;
     static int tutState = 0;
     Sprite[] floor;
-    public bool acc;
+    //public bool acc;
 
 
     Texture menubarTexture;
@@ -129,8 +154,8 @@ class InGame : IGameState
         tutText.Position = new Vector2f(160, 530);
         clock = new UiClock();
 
-        tutText.Position = new Vector2f(160, 530);
-        failTimeStart = false;
+
+        tutText.Position = new Vector2f(160, 530);        failTimeStart = false;
 
         hasWon = false;
         random = new Random();
@@ -192,10 +217,16 @@ class InGame : IGameState
         Level.Leveldata lvlData = level.generateLevel(levelId);
 
         worldObjects = lvlData.staticObj;
-        worldObjectsMovable = lvlData.movableObj;
+        worldObjectsMoveable = lvlData.movableObj;
+
+        LevelShapeData levelShapeData = generateShapes(worldObjectsMoveable, worldObjects);
+
+        worldShapeObjects = levelShapeData.worldObjectShape;
+        worldShapeObjectsMoveable = levelShapeData.worldObjectShape;
+
         timeFreezeNum = lvlData.freezeNum;
 
-        acc = false;
+        //acc = false;
 
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
@@ -358,6 +389,12 @@ class InGame : IGameState
             hasWon = false;
             levelDone.Position = new Vector2f(100, 400);
             levelId++;
+
+            if (new DirectoryInfo(Constants.LEVELPATH).GetFiles().Length / 2 < (int)levelId + 1)
+            {
+                return EGameState.MainMenu;
+            }
+
             helpTime = 0;
             Initialize();
 
@@ -488,65 +525,65 @@ class InGame : IGameState
                     particles.Remove(particles[i]);
             }
 
-            for (int i = 0; i < worldObjectsMovable.Count; ++i)
+            for (int i = 0; i < worldObjectsMoveable.Count; ++i)
             {
-                worldObjectsMovable[i].update(gameTime);
+                worldObjectsMoveable[i].update(gameTime);
             }
 
-            for (int i = 0; i < worldObjectsMovable.Count; ++i)
+            for (int i = 0; i < worldObjectsMoveable.Count; ++i)
             {
-                Shape2DSAT shapeI = worldObjectsMovable[i].Shape;
+                Shape2DSAT shapeI = worldObjectsMoveable[i].Shape;
 
-                for (int j = i + 1; j < worldObjectsMovable.Count; ++j)
+                for (int j = i + 1; j < worldObjectsMoveable.Count; ++j)
                 {
-                    Shape2DSAT shapeJ = worldObjectsMovable[j].Shape;
+                    Shape2DSAT shapeJ = worldObjectsMoveable[j].Shape;
                     IntersectData iData = shapeI.intersects(shapeJ);
 
                     if (iData.Intersects)
                     {
-                        Event e = new Event(worldObjectsMovable[i], worldObjectsMovable[j]);
+                        Event e = new Event(worldObjectsMoveable[i], worldObjectsMoveable[j]);
                         if (e.handleCollision)
                         {
-                            handleCollision(worldObjectsMovable[i], worldObjectsMovable[j], iData);
+                            handleCollision(worldObjectsMoveable[i], worldObjectsMoveable[j], iData);
                             break;
                         }
 
                         switch (e.eventType)
                         {
                             case GameEventType.Hourglass:
-                                if (worldObjectsMovable[i].getType() == Objects.BlockType.HOURGLAS)
+                                if (worldObjectsMoveable[i].getType() == Objects.BlockType.HOURGLAS)
                                 {
-                                    Hourglass h = (Hourglass)worldObjectsMovable[i];
+                                    Hourglass h = (Hourglass)worldObjectsMoveable[i];
                                     timeFreezeNum += h.getNum();
 
-                                    worldObjectsMovable.RemoveAt(i);
+                                    worldObjectsMoveable.RemoveAt(i);
                                     --i;
                                     --j;
                                 }
-                                else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
+                                else if (worldObjectsMoveable[j].getType() == Objects.BlockType.HOURGLAS)
                                 {
-                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    Hourglass h = (Hourglass)worldObjectsMoveable[j];
                                     timeFreezeNum += h.getNum();
-                                    worldObjectsMovable.RemoveAt(j);
+                                    worldObjectsMoveable.RemoveAt(j);
                                 }
                                 break;
 
                             case GameEventType.Accelerate:
-                                if (worldObjectsMovable[i].getType() == Objects.BlockType.ACCELERATOR)
+                                if (worldObjectsMoveable[i].getType() == Objects.BlockType.ACCELERATOR)
                                 {
-                                    acc = true;
-                                    Accelerator a = (Accelerator)worldObjectsMovable[i];
+                                    //acc = true;
+                                    Accelerator a = (Accelerator)worldObjectsMoveable[i];
 
 
-                                    worldObjectsMovable.RemoveAt(i);
+                                    worldObjectsMoveable.RemoveAt(i);
                                     --i;
                                     --j;
                                 }
-                                else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
+                                else if (worldObjectsMoveable[j].getType() == Objects.BlockType.HOURGLAS)
                                 {
-                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    Hourglass h = (Hourglass)worldObjectsMoveable[j];
                                     timeFreezeNum += h.getNum();
-                                    worldObjectsMovable.RemoveAt(j);
+                                    worldObjectsMoveable.RemoveAt(j);
                                 }
                                 break;
 
@@ -556,24 +593,23 @@ class InGame : IGameState
                 }
 
 
-                for (int j = i + 1; j < worldObjects.Count; ++j)
+                for (int j = 0; j < worldShapeObjects.Count; ++j)
                 {
-                    Shape2DSAT shapeJ = worldObjects[j].Shape;
+                    Shape2DSAT shapeJ = worldShapeObjects[j].shape;
                     IntersectData iData = shapeI.intersects(shapeJ);
 
                     if (iData.Intersects)
                     {
-                        Event e = new Event(worldObjectsMovable[i], worldObjects[j]);
+                        Event e = new Event(worldObjectsMoveable[i], worldShapeObjects[j].firstObject);
                         if (e.handleCollision)
                         {
-                            handleCollision(worldObjectsMovable[i], worldObjects[j], iData);
+                            handleCollision(worldObjectsMoveable[i], worldShapeObjects[j].firstObject, iData);
                             break;
                         }
 
                         switch (e.eventType)
                         {
                             case GameEventType.Win:
-
                                 if (!hasWon)
                                     for (int k = 0; k < 25; k++)
                                         particles.Add(new SparkleParticle(shapeI.Position));
@@ -591,11 +627,11 @@ class InGame : IGameState
             {
                 if (Input.leftClicked() && selectedObject == null)
                 {
-                    for (int i = 0; i < worldObjectsMovable.Count; ++i)
+                    for (int i = 0; i < worldObjectsMoveable.Count; ++i)
                     {
-                        if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
+                        if (worldObjectsMoveable[i].Shape.contains(Input.currentMousePos))
                         {
-                            selectedObject = worldObjectsMovable[i];
+                            selectedObject = worldObjectsMoveable[i];
 
 
                             drawArrow = true;
@@ -628,6 +664,16 @@ class InGame : IGameState
                     tutText.DisplayedString = ("Click on the button above or press space to continue");
 
                     Console.Out.WriteLine("velocity set to " + length / 30);
+
+                    Vector2 v = new Vector2(selectedObject.Velocity);
+                    if (v != Vector2.Zero && v.LengthSquared() < (Constants.MINVELOCITY * Constants.MINVELOCITY / 90))
+                    {
+                        v = Vector2.Normalize(v);
+                        v *= Constants.MINVELOCITY / 30;
+                        selectedObject.Velocity = new Vector2f(v.X, v.Y);
+                    }
+
+                    //Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
                     selectedObject = null;
                    // drawArrow = false;
                 }
@@ -655,34 +701,26 @@ class InGame : IGameState
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
 
-        if (acc)
-        {
-            Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-            Vector2 speedI = new Vector2(objectsI.Velocity);
+        //if (acc)
+        //{
+        //    Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+        //    Vector2 speedI = new Vector2(objectsI.Velocity);
 
-            Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
-            float speedValueI = speedI.Length();
+        //    Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+        //    float speedValueI = speedI.Length();
 
-            speedI /= speedValueI;
-            Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
-            objectsI.Velocity = speedValueI * 2f * new Vector2f(newSpeedI.X, newSpeedI.Y);
-
-
-            Vector2 speedJ = new Vector2(objectsJ.Velocity);
-            float speedValueJ = speedJ.Length();
-            speedI /= speedValueJ;
-            Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
-            objectsJ.Velocity = speedValueJ * 2f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+        //    speedI /= speedValueI;
+        //    Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+        //    objectsI.Velocity = speedValueI * 2f * new Vector2f(newSpeedI.X, newSpeedI.Y);
 
 
-
-
-
-
-
-        }
-
-        else
+        //    Vector2 speedJ = new Vector2(objectsJ.Velocity);
+        //    float speedValueJ = speedJ.Length();
+        //    speedI /= speedValueJ;
+        //    Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
+        //    objectsJ.Velocity = speedValueJ * 2f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+        //}
+        //else
         {
             Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
             Vector2 speedI = new Vector2(objectsI.Velocity);
@@ -745,7 +783,7 @@ class InGame : IGameState
         {
             obj.draw(targets, gameTime);
         }
-        foreach (Objects obj in worldObjectsMovable)
+        foreach (Objects obj in worldObjectsMoveable)
         {
             obj.draw(targets, gameTime);
         }
@@ -794,9 +832,95 @@ class InGame : IGameState
             }
 
         }
+    }
+
+    public static LevelShapeData generateShapes(List<Objects> worldObjectsMoveable, List<Objects> worldObjects)
+    {
+        LevelShapeData output = new LevelShapeData();
+
+        bool[,] blocks = new bool[Constants.WINDOWWIDTH / Constants.TILESIZE, Constants.WINDOWHEIGHT / Constants.TILESIZE];
+
+        output.worldMoveableObjectShape = new List<ObjectShape>();
+        output.worldObjectShape = new List<ObjectShape>();
+
+        for (int i = 0; i < worldObjectsMoveable.Count; ++i)
+        {
+            output.worldMoveableObjectShape.Add(new ObjectShape(worldObjectsMoveable[i],worldObjectsMoveable[i].Shape, worldObjectsMoveable[i].getType()));
+        }
+        for (int i = 0; i < worldObjects.Count; ++i)
+        {
+            
+            Vector2f pos = (worldObjects[i].Position - (new Vector2f(Constants.TILESIZE,Constants.TILESIZE)/2f)) / Constants.TILESIZE;
+            if (worldObjects[i].getType() != Objects.BlockType.WALL && worldObjects[i].getType() != Objects.BlockType.LIGHTBLOCK)
+            {
+                output.worldObjectShape.Add(new ObjectShape(worldObjects[i],worldObjects[i].Shape, worldObjects[i].getType()));
+                blocks[(int)pos.X, (int)pos.Y] = false;
+            }
+            else
+            {
+                blocks[(int)pos.X, (int)pos.Y] = true;
+            }
+        }
+
+        int counter = 0;
+        int[,] shapesMatrix = new int[Constants.WINDOWWIDTH / Constants.TILESIZE, Constants.WINDOWHEIGHT / Constants.TILESIZE];
+
+        for (int y = 0; y <= blocks.GetUpperBound(1); ++y)
+        {
+            for (int x = 0; x <= blocks.GetUpperBound(0); ++x)
+            {
+
+                if (blocks[x, y])
+                {
+                    ++counter;
+                    Shape2DSAT shape = null;
+
+                    int size_x = 0;
+                    int size_y = 0;
+
+                    for (int i = x; i <= blocks.GetUpperBound(0) && blocks[i, y]; ++i)
+                    {
+                        ++size_x;
+                    }
+                    for (int i = y; i <= blocks.GetUpperBound(1) && blocks[x, i];  ++i)
+                    {
+                        ++size_y;
+                    }
+
+                    size_x = Math.Max(size_x - 1, 1);
+                    size_y = Math.Max(size_y - 1, 1);
+
+                    if (size_x > size_y)
+                    {
+                        for (int i = 0; i < size_x; ++i)
+                        {
+                            blocks[x+i, y] = false;
+                            shapesMatrix[x+i, y] = 1;
+                        }
+                        Vector2 size = new Vector2(size_x * Constants.TILESIZE, Constants.TILESIZE);
+                        shape = new PolygonShapeSAT( new Point((int)size.X, (int)size.Y), (new Vector2(x, y) * Constants.TILESIZE + size/2));
+
+                    }
+                    else
+                    {
+                        for (int i = 0; i < size_y; ++i)
+                        {
+                            blocks[x, y+i] = false;
+                            shapesMatrix[x, y+i] = 1;
+                        }
+                        Vector2 size = new Vector2(Constants.TILESIZE, size_y * Constants.TILESIZE);
+                        shape = new PolygonShapeSAT(new Point((int)size.X,(int)size.Y), (new Vector2(x, y) * Constants.TILESIZE + size/2));
+                    }
+
+                    output.worldObjectShape.Add(new ObjectShape(stubWallBlock,shape, Objects.BlockType.WALL));
+
+                }
 
 
 
+            }
+        }
 
+        return output;
     }
 }
