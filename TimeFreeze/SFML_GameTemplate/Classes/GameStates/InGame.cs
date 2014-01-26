@@ -494,6 +494,7 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[1]);
         else
             targets.ElementAt(2).Draw(buttonSprites[0]);
+
         targets.ElementAt(2).Draw(buttonSprites[2]);
         targets.ElementAt(2).Draw(levelName);
         if (timeFreezeNum != 0)
@@ -510,7 +511,7 @@ class InGame : IGameState
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
 
-        Console.WriteLine(tutArrowSprite.Position);
+        //Console.WriteLine(tutArrowSprite.Position);
 
         
     }
