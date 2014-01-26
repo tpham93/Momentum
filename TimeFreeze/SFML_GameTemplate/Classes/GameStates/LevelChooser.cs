@@ -59,7 +59,11 @@ class LevelChooser : IGameState
     {
 
         if (Input.isClicked(Keyboard.Key.Escape))
+        {
+            Assets.nock.Play();
             return EGameState.MainMenu;
+
+        }
 
         for (int i = 0; i < shownLevelName.Length; i++)//Text t in shownLevelName)
         {
@@ -71,6 +75,7 @@ class LevelChooser : IGameState
 
                 if (Input.leftClicked())
                 {
+                    Assets.nock.Play();
                     changeToLevel();
                     return EGameState.InGame;
                 }
