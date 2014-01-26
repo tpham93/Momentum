@@ -62,12 +62,15 @@ class MainMenu : IGameState
                     switch (current)
                     {
                         case 0:
+                            Assets.nock.Play();
                             return EGameState.LevelChooser;
 
                         case 1:
+                            Assets.nock.Play();
                             return EGameState.Credits;
                             
                         case 2:
+                            Assets.nock.Play();
                             return EGameState.None;
                     }
                 }
@@ -79,22 +82,32 @@ class MainMenu : IGameState
 
 
         if (Input.isClicked(Keyboard.Key.S))
+        {
             current = (current + 1) % 3;
+            Assets.nock.Play();
+        }
 
         if (Input.isClicked(Keyboard.Key.W))
+        {
             current = (current + 2) % 3;
+            Assets.nock.Play();
+        }
         
 
         if(Input.isClicked(Keyboard.Key.Return))
             switch (current)
             {
-                case 0: 
+                case 0:
+                    Assets.nock.Play();
                     return EGameState.LevelChooser;
+                    
 
-                case 1: 
+                case 1:
+                    Assets.nock.Play();
                     return EGameState.Credits;
 
-                case 2: 
+                case 2:
+                    Assets.nock.Play();
                     return EGameState.None;
             }
 

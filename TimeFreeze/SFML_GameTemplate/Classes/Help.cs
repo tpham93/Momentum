@@ -52,4 +52,15 @@ public static class Help
     {
         return new Color(c.R, c.G , c.B, (byte)(c.A * t));
     }
+
+    public static float length(Vector2f v)
+    {
+        return (float)Math.Sqrt(v.X * v.X + v.Y + v.Y);
+    }
+
+    public static Vector2f normalized(Vector2f v)
+    {
+        float leng = length(v);
+        return new Vector2f(v.X / leng, v.Y / leng);
+    }
 }

@@ -1,5 +1,5 @@
 uniform sampler2D texSampler;
-uniform float time;
+//uniform float time;
 
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
@@ -11,12 +11,12 @@ void main(void)
 	vec2 pos = vec2(gl_TexCoord[0]);
 	vec4 Color = vec4(0,0,0,0);
 
-	if(rand(pos) < 0.12)
-		Color = texture2D(texSampler, pos +  vec2(  rand(pos) * sin(time), cos(time)));
+//	if(rand(pos) < 0.12)
+//		Color = texture2D(texSampler, pos +  vec2(  rand(pos) * sin(time), cos(time)));
 
-	else
+	//else
+		//Color = texture2D(texSampler, pos);
 		Color = texture2D(texSampler, pos);
-		
 
 	float help = dot(Color.rgb, vec3(0.3, 0.59, 0.11));
 

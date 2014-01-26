@@ -88,10 +88,15 @@ class InGame : IGameState
     private int timeFreezeNum = 0;
     private Text timeFrTxt = new Text("", Assets.font);
 
+    private bool playWinSound = false;
+
     public static LevelID levelId;
 
     Sprite arrowSprite = new Sprite();
     Sprite tutArrowSprite = new Sprite();
+
+    private Text tutText1 = new Text("Click on the button above or press space", Assets.font);
+    
 
     bool drawArrow = false;
 
@@ -117,7 +122,7 @@ class InGame : IGameState
     public InGame()
     {
 
-        
+        tutText1.Position = new Vector2f(160, 530);
         
         hasWon = false;
         random = new Random();
@@ -144,10 +149,10 @@ class InGame : IGameState
         lvT[2] = "Aplause aplause";
         lvT[3] = "You cheated, didn't you?";
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
-        lvT[5] = "Your mother would be proud of you";
+        lvT[5] = "Your Mother would be proud of you";
         lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
         lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
-        lvT[8] = "Time Freeze: Soon to be a major motion picture (in 3D)";
+        lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
 
         return lvT;
@@ -156,6 +161,8 @@ class InGame : IGameState
 
     public void Initialize()
     {
+
+        playWinSound = false;
 
         if ((int)levelId >0) tutState = 9001;
         tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
@@ -276,9 +283,16 @@ class InGame : IGameState
         performPopUp(gameTime);
         if (hasWon)
         {
+            if (!playWinSound)
+            {
+                playWinSound = true;
+                Assets.sucessSound.Play();
+
+            }
+            
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = "Hurray \nLevel Geschafft \n" + levelText[(int)levelId] ;
+            levelDone.DisplayedString = "Hurray \nLevel complete \n" + levelText[(int)levelId] ;
         }
 
         if (helpTime >= 5)
@@ -288,22 +302,36 @@ class InGame : IGameState
             levelId++;
             helpTime = 0;
             Initialize();
-            
-
+           
         }
         
         if (Input.isClicked(Keyboard.Key.G))
         {
+            Assets.nock.Play();
             timeFreezeNum++;
         }
 
         if (Input.isClicked(Keyboard.Key.P))
+        {
+            Assets.nock.Play();
             isPaused = !isPaused;
+
+        }
 
         if (Input.isClicked(Keyboard.Key.Space))
             if (timeFreezeNum > 0 && !isLevelFreezed)
             {
+                if (tutState == 0)
+                {
+                    tutState++;
+                    popUpTime = 0;
+                    popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
+                    popUpBonusTime = 2;
+                    tutArrowSprite.Position = new Vector2f(69, 305);
+                    popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                }
                 timeFreezeNum--;
+                Assets.nock.Play();
                 isLevelFreezed = true;
             }
             else if (isLevelFreezed)
@@ -314,10 +342,16 @@ class InGame : IGameState
 
         //Mouse pause Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 35)
+        {
             isPaused = !isPaused;
+            Assets.nock.Play();
+        }
         //Mouse reset
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 32 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 35)
+        {
             Initialize();
+            Assets.nock.Play();
+        }
         //Mouse timefreeze Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 96 - 30 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 64 - 30 && Input.currentMousePos.Y < 35)
         {
@@ -325,10 +359,13 @@ class InGame : IGameState
             {
                 timeFreezeNum--;
                 isLevelFreezed = true;
+                Assets.nock.Play();
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
+                Assets.nock.Play();
             }
             if (tutState == 0)
             {
@@ -347,6 +384,7 @@ class InGame : IGameState
         {
             isLevelDark = false;
             isLevelFreezed = false;
+            Assets.nock.Play();
             return EGameState.MainMenu;
         }
         if (!isPaused)
@@ -449,6 +487,11 @@ class InGame : IGameState
                         switch(e.eventType)
                         {
                             case GameEventType.Win:
+
+                                if(!hasWon)
+                                    for (int k = 0; k < 25; k++)
+                                        particles.Add(new SparkleParticle(shapeI.Position));
+
                                 hasWon = true;
                                 break;
                         }
@@ -473,6 +516,7 @@ class InGame : IGameState
                         popUp.DisplayedString=("Ball selected");
                         popUp.Position = selectedObject.Position;
                         popUpTime = 0;
+                        Assets.nock.Play();
                         isSelected = true;
                         if (tutState == 1)
                         {
@@ -492,6 +536,7 @@ class InGame : IGameState
                 Console.Out.WriteLine("velocity set");
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
+                drawArrow = false;
             }
         }
 
@@ -547,7 +592,7 @@ class InGame : IGameState
         {
             Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
             Vector2 speedI = new Vector2(objectsI.Velocity);
-
+			Assets.hitSound.Play();
             Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
             float speedValueI = speedI.Length();
 
@@ -623,6 +668,7 @@ class InGame : IGameState
             targets.ElementAt(2).Draw(buttonSprites[1]);
         else
             targets.ElementAt(2).Draw(buttonSprites[0]);
+
         targets.ElementAt(2).Draw(buttonSprites[2]);
         targets.ElementAt(2).Draw(levelName);
         if (timeFreezeNum != 0)
@@ -639,8 +685,19 @@ class InGame : IGameState
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
 
-        if(!(tutState>9000))
+        //Console.WriteLine(tutArrowSprite.Position);
+
+        if (!(tutState > 9000))
+        {
             targets.ElementAt(2).Draw(tutArrowSprite);
+
+            if (tutState == 0)
+            {
+                targets.ElementAt(2).Draw(tutText1);
+
+            }
+
+        }
 
         
 

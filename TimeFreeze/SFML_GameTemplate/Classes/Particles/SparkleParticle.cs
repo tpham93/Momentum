@@ -12,7 +12,7 @@ public class SparkleParticle : AbstractParticle
 
     Sprite lightSprite;
 
-    static Color[] colArr = {Color.Red, Color.Yellow, Color.Green, Color.Magenta, Color.White, Color.Cyan };
+    static Color[] colArr = {Color.Yellow, Color.Green, Color.Magenta, Color.White, Color.Cyan };
 
     int colIndex;
 
@@ -39,14 +39,22 @@ public class SparkleParticle : AbstractParticle
 
     public SparkleParticle(Vector2f startPos)
     {
+        initStuff();
         this.sprite.Position = startPos;
 
 
-        Vector2f help = new Vector2f();
+        Vector2f help = new Vector2f(   startPos.X + (float)Math.Sin((Math.PI * 2) * InGame.random.NextDouble()), 
+                                        startPos.Y + (float)Math.Cos((Math.PI * 2) * InGame.random.NextDouble()));
 
+        this.direction = help - startPos;
+
+        this.direction = Help.normalized(this.direction);
+
+        this.speed = 3 * (float)InGame.random.NextDouble();
+
+//        lightSprite.Scale = new Vector2f(20.0f, 20.0f);
+  //      this.sprite.Scale = new Vector2f(20.0f, 20.0f);
       //  this.direction = new Vector2f() - startPos;
-
-
     }
 
     private void initStuff()
@@ -60,8 +68,6 @@ public class SparkleParticle : AbstractParticle
 
         this.sprite = new Sprite(Assets.sparkle);
         this.sprite.Origin = new Vector2f(32, 32);
-
-
 
         this.lifetime = 3.0 * InGame.random.NextDouble();
         this.maxLifeTime = 3.0 * InGame.random.NextDouble();
