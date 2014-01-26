@@ -258,7 +258,7 @@
     <Content Include="Content\Shader\LightShaderFragment.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sounds\HitSound2.wav">
+    <Content Include="Content\Sounds\HitSound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sounds\nock.wav">
