@@ -65,6 +65,7 @@ class InGame : IGameState
     List<AbstractParticle> particles;
 
     private Level level;
+    static int tutState = 0;
     Sprite[] floor;
     public bool acc;
 
@@ -73,6 +74,11 @@ class InGame : IGameState
     Sprite menubarSprite;
     Text popUp = new Text("", Assets.font);
     float popUpTime = 0;
+    float popUpBonusTime = 0;
+
+    float tutAniTime = 0;
+    
+    bool up = true;
 
     Texture[] buttons;
     Sprite[] buttonSprites;
@@ -111,7 +117,7 @@ class InGame : IGameState
     public InGame()
     {
 
-
+        
         
         hasWon = false;
         random = new Random();
@@ -146,9 +152,9 @@ class InGame : IGameState
     public void Initialize()
     {
 
-
+        if ((int)levelId >0) tutState = 9001;
         tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
-        tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 30, 100);
+        tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 40, 65);
 
         worldObjects = new List<Objects>();
         level = new Level();
@@ -217,25 +223,51 @@ class InGame : IGameState
 
     private void performPopUp(GameTime gameTime)
     {
-        
-        if(popUpTime<2)
+
+        if (popUpTime < 2 + popUpBonusTime)
+        {
             popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
             popUp.Position += new Vector2f(0, -0.5f);
-            popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255-(255/((3-popUpTime)/3))));
+            popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255 - (255 / ((2 + popUpBonusTime - popUpTime) / (2 + popUpBonusTime)))));
+            
+        }
 
-
-        if (popUpTime >= 2)
+        else if (popUpTime >= 2)
         {
+            popUpBonusTime = 0;
             popUp.DisplayedString = "";
 
 
         }
     }
 
+    private void performTut(GameTime time)
+    {
+        
+
+                if (tutAniTime < 400 && up)
+                {
+                    tutAniTime += 10;
+                    tutArrowSprite.Position += new Vector2f(0, -0.5f);
+                }
+                else if (tutAniTime >= 400 && up==true)
+                    up = false;
+                else if (tutAniTime < 0)
+                    up = true;
+                else
+                {
+                    tutAniTime -= 10;
+                    tutArrowSprite.Position -= new Vector2f(0, -0.5f);
+                }
+              
+
+    }
+
     public EGameState Update(GameTime gameTime, RenderWindow window)
 
 
     {
+        performTut(gameTime);
         performPopUp(gameTime);
         if (hasWon)
         {
@@ -283,6 +315,7 @@ class InGame : IGameState
             Initialize();
         //Mouse timefreeze Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 96 - 30 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 64 - 30 && Input.currentMousePos.Y < 35)
+        {
             if (timeFreezeNum > 0 && !isLevelFreezed)
             {
                 timeFreezeNum--;
@@ -292,6 +325,18 @@ class InGame : IGameState
             {
                 isLevelFreezed = false;
             }
+            if (tutState == 0)
+            {
+                tutState++;
+                popUpTime = 0;
+                popUp.Position = tutArrowSprite.Position - new Vector2f(70,-10);
+                popUpBonusTime = 2;
+                tutArrowSprite.Position = new Vector2f(69, 305);
+                popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+
+            }
+
+        }
 
         if (Input.isClicked(Keyboard.Key.Escape))
         {
@@ -424,6 +469,11 @@ class InGame : IGameState
                         popUp.Position = selectedObject.Position;
                         popUpTime = 0;
                         isSelected = true;
+                        if (tutState == 1)
+                        {
+                            tutState++;
+                            tutArrowSprite.Position = new Vector2f(639, 345);
+                        }
                         break;
                     }
                 }
@@ -580,11 +630,14 @@ class InGame : IGameState
         if(drawArrow)
             targets.ElementAt(2).Draw(arrowSprite);
 
-        targets.ElementAt(2).Draw(tutArrowSprite);
+        
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
 
-        Console.WriteLine(tutArrowSprite.Position);
+        if(!(tutState>9000))
+            targets.ElementAt(2).Draw(tutArrowSprite);
+
+        
 
         
     }
