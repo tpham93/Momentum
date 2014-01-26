@@ -40,8 +40,8 @@ public abstract class Game
         window.Closed += closeHandler;
         window.MouseWheelMoved += mouseWheelHandler;
         
-       // window.SetVerticalSyncEnabled(false);
-      //  window.SetFramerateLimit(60);
+        //window.SetVerticalSyncEnabled(false);
+        window.SetFramerateLimit(60);
 
         contentManager = new ContentManager();
         gameTime = new GameTime();
