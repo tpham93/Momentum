@@ -53,6 +53,8 @@ using SFML.Window;
                         baseLevelStatic.Add(new Wall2(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
                     else if ((Assets.colorGoal).Equals(baseLevelImage.GetPixel(x, y)))
                         baseLevelStatic.Add(new Goal(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
+                    else if ((Assets.colorAccelerator).Equals(baseLevelImage.GetPixel(x, y)))
+                        baseLevelStatic.Add(new Accelerator(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2)));
                     else if ((Assets.colorLightStone).Equals(baseLevelImage.GetPixel(x, y)))
                     {
                         baseLevelStatic.Add(new LightBlock(new Vector2f(Assets.worldOffSet.X + (x * Assets.baseBlockSize.X) + Constants.TILESIZE / 2, Assets.worldOffSet.Y + (y * Assets.baseBlockSize.Y) + Constants.TILESIZE / 2), false, lightCount));

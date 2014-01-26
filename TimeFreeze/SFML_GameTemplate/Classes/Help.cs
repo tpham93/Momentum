@@ -33,4 +33,23 @@ public static class Help
     {
         return v1.X * v2.X + v1.Y * v2.Y;
     }
+    public static float toRadian(float degree)
+    {
+        return degree * ((float)Math.PI / 180.0f);
+    }
+
+    public static float toDegree(float radian)
+    {
+        return radian * (180.0f / (float)Math.PI);
+    }
+
+    public static Color multiply(Color color, float t)
+    {
+        return new Color((byte)(color.R * t), (byte)(color.G * t), (byte)(color.B * t), (byte)(color.A * t));
+    }
+
+    public static Color fade(Color c, float t)
+    {
+        return new Color(c.R, c.G , c.B, (byte)(c.A * t));
+    }
 }

@@ -45,7 +45,7 @@ class TimeFreezeGame : Game
 
         Input.init(window, keys);
 
-        Assets.font = new Font("Content/Font/PRIMELEC.ttf");
+     //   Assets.font = 
         Objects.loadContent();
         ShaderManager.initialize();
 

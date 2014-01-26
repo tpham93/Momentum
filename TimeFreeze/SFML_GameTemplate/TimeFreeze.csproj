@@ -82,6 +82,7 @@
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\Help.cs" />
     <Compile Include="Classes\IGameState.cs" />
+    <Compile Include="Classes\Level\BlockObjects\Accelerator.cs" />
     <Compile Include="Classes\Level\BlockObjects\Ball.cs" />
     <Compile Include="Classes\Level\BlockObjects\Goal.cs" />
     <Compile Include="Classes\Level\BlockObjects\Hourglass.cs" />
@@ -175,10 +176,16 @@
     <Content Include="Content\Ingame\play.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Items\basicArrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Items\hourglass_large.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Items\hourglass_small.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Items\tutArrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Level\map0.png">

@@ -16,6 +16,7 @@ class InGame : IGameState
         Win,
         Hourglass,
         X_Ray,
+        Accelerate,
     }
 
     struct Event
@@ -24,6 +25,7 @@ class InGame : IGameState
         public Objects objectI;
         public Objects objectJ;
         public bool handleCollision;
+        
 
         public Event(Objects objectI, Objects objectJ)
         {
@@ -43,6 +45,11 @@ class InGame : IGameState
             {
                 return GameEventType.Win;
             }
+            if (isPair(o1, o2, Objects.BlockType.BALL, Objects.BlockType.ACCELERATOR))
+            {
+                return GameEventType.Accelerate;
+            }
+
 
             return GameEventType.None;
         }
@@ -58,11 +65,20 @@ class InGame : IGameState
     List<AbstractParticle> particles;
 
     private Level level;
+    static int tutState = 0;
     Sprite[] floor;
+    public bool acc;
 
 
     Texture menubarTexture;
     Sprite menubarSprite;
+    Text popUp = new Text("", Assets.font);
+    float popUpTime = 0;
+    float popUpBonusTime = 0;
+
+    float tutAniTime = 0;
+    
+    bool up = true;
 
     Texture[] buttons;
     Sprite[] buttonSprites;
@@ -74,7 +90,12 @@ class InGame : IGameState
 
     public static LevelID levelId;
 
-    RenderStates currentRenderState = ShaderManager.getRenderState(EShader.None);
+    Sprite arrowSprite = new Sprite();
+    Sprite tutArrowSprite = new Sprite();
+
+    bool drawArrow = false;
+
+   // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
 
 
     private int[,] floorMap;
@@ -84,18 +105,23 @@ class InGame : IGameState
     public static bool isLevelFreezed = false;
     private bool hasWon;
 
+    String[] levelText;
+    private bool isSelected = false;
+
 
     private Objects selectedObject;
 
     Text levelDone;
 
 
-
-
     public InGame()
     {
+
+        
+        
         hasWon = false;
         random = new Random();
+        levelText = setStrings();
         floorMap = new int[Constants.WINDOWWIDTH / 16, Constants.WINDOWHEIGHT / 16];
         for (int x = 0; x < Constants.WINDOWWIDTH / 16; x++)
         {
@@ -104,10 +130,32 @@ class InGame : IGameState
                 floorMap[x, y] = random.Next(3);
             }
         }
+
+        arrowSprite = new Sprite(Assets.easyArrow);
+        arrowSprite.Origin = new Vector2f(0,32);
+
+    }
+
+    private String[] setStrings()
+    {
+        String[] lvT = new String[5];
+        lvT[1] = "Da bist du ja quasi schon durch";
+        lvT[0] = "Du bist ganz OK";
+        lvT[2] = "Aplaus Aplaus";
+        lvT[3] = "Du hast doch gecheated";
+        lvT[4] = "Absturz in \n3 \n2 \n1";
+
+        return lvT;
+
     }
 
     public void Initialize()
     {
+
+        if ((int)levelId >0) tutState = 9001;
+        tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
+        tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 40, 65);
+
         worldObjects = new List<Objects>();
         level = new Level();
 
@@ -117,10 +165,12 @@ class InGame : IGameState
         worldObjectsMovable = lvlData.movableObj;
         timeFreezeNum = lvlData.freezeNum;
 
+        acc = false;
+
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
 
-        isLevelDark = false;//level.IsLevelDark;
+        isLevelDark = true;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
@@ -171,15 +221,59 @@ class InGame : IGameState
 
     double helpTime = 0;
 
+    private void performPopUp(GameTime gameTime)
+    {
+
+        if (popUpTime < 2 + popUpBonusTime)
+        {
+            popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
+            popUp.Position += new Vector2f(0, -0.5f);
+            popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255 - (255 / ((2 + popUpBonusTime - popUpTime) / (2 + popUpBonusTime)))));
+            
+        }
+
+        else if (popUpTime >= 2)
+        {
+            popUpBonusTime = 0;
+            popUp.DisplayedString = "";
+
+
+        }
+    }
+
+    private void performTut(GameTime time)
+    {
+        
+
+                if (tutAniTime < 400 && up)
+                {
+                    tutAniTime += 10;
+                    tutArrowSprite.Position += new Vector2f(0, -0.5f);
+                }
+                else if (tutAniTime >= 400 && up==true)
+                    up = false;
+                else if (tutAniTime < 0)
+                    up = true;
+                else
+                {
+                    tutAniTime -= 10;
+                    tutArrowSprite.Position -= new Vector2f(0, -0.5f);
+                }
+              
+
+    }
+
     public EGameState Update(GameTime gameTime, RenderWindow window)
 
 
     {
+        performTut(gameTime);
+        performPopUp(gameTime);
         if (hasWon)
         {
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = " Hurray \n Level Geschafft \n Du bist ganz okay!";
+            levelDone.DisplayedString = "Hurray \nLevel Geschafft \n" + levelText[(int)levelId] ;
         }
 
         if (helpTime >= 5)
@@ -209,6 +303,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
             }
 
@@ -220,6 +315,7 @@ class InGame : IGameState
             Initialize();
         //Mouse timefreeze Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 96 - 30 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 64 - 30 && Input.currentMousePos.Y < 35)
+        {
             if (timeFreezeNum > 0 && !isLevelFreezed)
             {
                 timeFreezeNum--;
@@ -229,10 +325,25 @@ class InGame : IGameState
             {
                 isLevelFreezed = false;
             }
+            if (tutState == 0)
+            {
+                tutState++;
+                popUpTime = 0;
+                popUp.Position = tutArrowSprite.Position - new Vector2f(70,-10);
+                popUpBonusTime = 2;
+                tutArrowSprite.Position = new Vector2f(69, 305);
+                popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+
+            }
+
+        }
 
         if (Input.isClicked(Keyboard.Key.Escape))
+        {
+            isLevelDark = false;
+            isLevelFreezed = false;
             return EGameState.MainMenu;
-
+        }
         if (!isPaused)
         {
             updateGame(gameTime, window);
@@ -246,6 +357,14 @@ class InGame : IGameState
     {
         if (!isLevelFreezed)
         {
+            for (int i = 0; i < particles.Count; i++)
+            {
+                particles[i].update(gameTime);
+
+                if (particles[i].lifetime <= 0)
+                    particles.Remove(particles[i]);
+            }
+
             for (int i = 0; i < worldObjectsMovable.Count; ++i)
             {
                 worldObjectsMovable[i].update(gameTime);
@@ -286,6 +405,26 @@ class InGame : IGameState
                                 }
                                 break;
 
+                            case GameEventType.Accelerate:
+                                if (worldObjectsMovable[i].getType() == Objects.BlockType.ACCELERATOR)
+                                {
+                                    acc = true;
+                                    Accelerator a = (Accelerator)worldObjectsMovable[i];
+                                    
+
+                                    worldObjectsMovable.RemoveAt(i);
+                                    --i;
+                                    --j;
+                                }
+                                else if (worldObjectsMovable[j].getType() == Objects.BlockType.HOURGLAS)
+                                {
+                                    Hourglass h = (Hourglass)worldObjectsMovable[j];
+                                    timeFreezeNum += h.getNum();
+                                    worldObjectsMovable.RemoveAt(j);
+                                }
+                                break;
+
+
                         }
                     }
                 }
@@ -321,7 +460,20 @@ class InGame : IGameState
                     if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
                     {
                         selectedObject = worldObjectsMovable[i];
+
+
+                        drawArrow = true;
+
                         Console.Out.WriteLine("Selected");
+                        popUp.DisplayedString=("Ball selected");
+                        popUp.Position = selectedObject.Position;
+                        popUpTime = 0;
+                        isSelected = true;
+                        if (tutState == 1)
+                        {
+                            tutState++;
+                            tutArrowSprite.Position = new Vector2f(639, 345);
+                        }
                         break;
                     }
                 }
@@ -331,19 +483,20 @@ class InGame : IGameState
                 Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
                 float length = velocity.Length();
                 velocity /= length;
-
+               
                 Console.Out.WriteLine("velocity set");
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
             }
         }
 
-        for (int i = 0; i < particles.Count; i++)
-        {
-            particles[i].update(gameTime);
 
-            if (particles[i].lifetime <= 0)
-                particles.Remove(particles[i]);
+
+        if (selectedObject != null)
+        {
+            arrowSprite.Position = selectedObject.Position;
+            arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
+            arrowSprite.Rotation += Help.toDegree((float)Math.PI);
         }
 
         return EGameState.InGame;
@@ -357,30 +510,61 @@ class InGame : IGameState
         //kollision
         Shape2DSAT.handleCollision(iData, shapeI, shapeJ);
 
-        Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
-        Vector2 speedI = new Vector2(objectsI.Velocity); 
 
-        Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
-        float speedValueI = speedI.Length();
-
-
-        for (int i = 0; i < InGame.random.Next(5,10); i++)
+        if (acc)
         {
-            particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+            Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+            Vector2 speedI = new Vector2(objectsI.Velocity);
+
+            Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+            float speedValueI = speedI.Length();
+
+            speedI /= speedValueI;
+            Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+            objectsI.Velocity = speedValueI * 2f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+
+
+            Vector2 speedJ = new Vector2(objectsJ.Velocity);
+            float speedValueJ = speedJ.Length();
+            speedI /= speedValueJ;
+            Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
+            objectsJ.Velocity = speedValueJ * 2f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+
+
+
+
+
+
+
         }
 
+        else
+        {
+            Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
+            Vector2 speedI = new Vector2(objectsI.Velocity);
+
+            Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
+            float speedValueI = speedI.Length();
 
 
-        speedI /= speedValueI;
-        Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
-        objectsI.Velocity = speedValueI * 0.6f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+            for (int i = 0; i < InGame.random.Next(5, 10); i++)
+            {
+                particles.Add(new SparkleParticle(shapeI.Position, -dir, Help.toVec2f(speedI), speedValueI));
+            }
 
 
-        Vector2 speedJ = new Vector2(objectsJ.Velocity);
-        float speedValueJ = speedJ.Length();
-        speedI /= speedValueJ;
-        Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
-        objectsJ.Velocity = speedValueJ * 0.6f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+
+            speedI /= speedValueI;
+            Vector2 newSpeedI = speedI - 2 * Vector2.Dot(speedI, iData.Mtv) * iData.Mtv;
+            objectsI.Velocity = speedValueI * 0.6f * new Vector2f(newSpeedI.X, newSpeedI.Y);
+
+
+            Vector2 speedJ = new Vector2(objectsJ.Velocity);
+            float speedValueJ = speedJ.Length();
+            speedI /= speedValueJ;
+            Vector2 newSpeedJ = speedI - 2 * Vector2.Dot(speedJ, -iData.Mtv) * -iData.Mtv;
+            objectsJ.Velocity = speedValueJ * 0.6f * new Vector2f(newSpeedJ.X, newSpeedJ.Y);
+        }
     }
 
     public void Draw(GameTime gameTime, List<RenderTexture> targets)
@@ -396,17 +580,17 @@ class InGame : IGameState
                 if (floorMap[x, y] == 0)
                 {
                     floor[0].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[0], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[0]);
                 }
                 else if (floorMap[x, y] == 1)
                 {
                     floor[1].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[1], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[1]);
                 }
                 else
                 {
                     floor[2].Position = new SFML.Window.Vector2f(x * 16, y * 16);
-                    targets.ElementAt(0).Draw(floor[2], currentRenderState);
+                    targets.ElementAt(0).Draw(floor[2]);
                 }
             }
         }
@@ -415,15 +599,17 @@ class InGame : IGameState
 
         foreach (Objects obj in worldObjects)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
         foreach (Objects obj in worldObjectsMovable)
         {
-            obj.draw(targets, currentRenderState, gameTime);
+            obj.draw(targets, gameTime);
         }
 
         foreach (AbstractParticle p in particles)
             p.draw(gameTime, targets);
+
+
 
         //Draw menubar
         targets.ElementAt(2).Draw(menubarSprite);
@@ -441,6 +627,18 @@ class InGame : IGameState
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
 
-        targets.ElementAt(0).Draw(levelDone, currentRenderState);
+        if(drawArrow)
+            targets.ElementAt(2).Draw(arrowSprite);
+
+        
+        targets.ElementAt(2).Draw(levelDone);
+        targets.ElementAt(2).Draw(popUp);
+
+        if(!(tutState>9000))
+            targets.ElementAt(2).Draw(tutArrowSprite);
+
+        
+
+        
     }
 }

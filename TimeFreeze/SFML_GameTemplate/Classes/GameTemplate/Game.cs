@@ -21,12 +21,12 @@ public abstract class Game
 
     static int wheelDelta;
 
-    public Sprite lightSprite;
 
     private RenderTexture finalTexture;
 
     public Game(int width, int height, String title)
     {
+        Assets.font = new Font("Content/Font/PRIMELEC.ttf");
 
         renderTargets = new List<RenderTexture>();
         renderTargets.Add(new RenderTexture((uint)width,(uint)height));
@@ -40,7 +40,7 @@ public abstract class Game
         window.Closed += closeHandler;
         window.MouseWheelMoved += mouseWheelHandler;
         
-        window.SetVerticalSyncEnabled(false);
+        //window.SetVerticalSyncEnabled(false);
         window.SetFramerateLimit(60);
 
         contentManager = new ContentManager();
@@ -63,13 +63,7 @@ public abstract class Game
         gameTime.Start();
         loadContent(contentManager);
 
-        
-        lightSprite = new Sprite();
-        lightSprite.Texture = Assets.lightCircle;
-        lightSprite.Scale = new Vector2f(5, 5);
-        lightSprite.Origin = new Vector2f(32, 32);
-        lightSprite.Position = new Vector2f(400, 300);
-        lightSprite.Color = Color.Red;
+   
 
 
         while (window.IsOpen())
@@ -97,10 +91,7 @@ public abstract class Game
 
 
             finalTexture.Clear();
-
-
             draw(gameTime, renderTargets);
-            renderTargets[1].Draw(lightSprite);
 
             foreach (RenderTexture texture in renderTargets)
                 texture.Display();
