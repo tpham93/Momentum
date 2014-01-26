@@ -88,6 +88,8 @@ class InGame : IGameState
     private int timeFreezeNum = 0;
     private Text timeFrTxt = new Text("", Assets.font);
 
+    private bool playWinSound = false;
+
     public static LevelID levelId;
 
     Sprite arrowSprite = new Sprite();
@@ -138,12 +140,17 @@ class InGame : IGameState
 
     private String[] setStrings()
     {
-        String[] lvT = new String[5];
-        lvT[1] = "Da bist du ja quasi schon durch";
-        lvT[0] = "Du bist ganz OK";
-        lvT[2] = "Aplaus Aplaus";
-        lvT[3] = "Du hast doch gecheated";
-        lvT[4] = "Absturz in \n3 \n2 \n1";
+        String[] lvT = new String[10];
+        lvT[0] = "You're just quite below average";
+        lvT[1] = "We're practically done here";
+        lvT[2] = "Aplause aplause";
+        lvT[3] = "You cheated, didn't you?";
+        lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
+        lvT[5] = "Your Mother would be proud of you";
+        lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
+        lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
+        lvT[8] = "Absturz in \n3 \n2 \n1";
+        lvT[9] = "Absturz in \n3 \n2 \n1";
 
         return lvT;
 
@@ -151,6 +158,8 @@ class InGame : IGameState
 
     public void Initialize()
     {
+
+        playWinSound = false;
 
         if ((int)levelId >0) tutState = 9001;
         tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
@@ -271,9 +280,16 @@ class InGame : IGameState
         performPopUp(gameTime);
         if (hasWon)
         {
+            if (!playWinSound)
+            {
+                playWinSound = true;
+                Assets.sucessSound.Play();
+
+            }
+            
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = "Hurray \nLevel Geschafft \n" + levelText[(int)levelId] ;
+            levelDone.DisplayedString = "Hurray \nLevel complete \n" + levelText[(int)levelId] ;
         }
 
         if (helpTime >= 5)
@@ -288,16 +304,22 @@ class InGame : IGameState
         
         if (Input.isClicked(Keyboard.Key.G))
         {
+            Assets.nock.Play();
             timeFreezeNum++;
         }
 
         if (Input.isClicked(Keyboard.Key.P))
+        {
+            Assets.nock.Play();
             isPaused = !isPaused;
+
+        }
 
         if (Input.isClicked(Keyboard.Key.Space))
             if (timeFreezeNum > 0 && !isLevelFreezed)
             {
                 timeFreezeNum--;
+                Assets.nock.Play();
                 isLevelFreezed = true;
             }
             else if (isLevelFreezed)
@@ -308,10 +330,16 @@ class InGame : IGameState
 
         //Mouse pause Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 64 - 15 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 32 - 15 && Input.currentMousePos.Y < 35)
+        {
             isPaused = !isPaused;
+            Assets.nock.Play();
+        }
         //Mouse reset
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 32 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 5 && Input.currentMousePos.Y < 35)
+        {
             Initialize();
+            Assets.nock.Play();
+        }
         //Mouse timefreeze Game
         if (Input.leftClicked() && Input.currentMousePos.X > Constants.WINDOWWIDTH - 96 - 30 && Input.currentMousePos.X < Constants.WINDOWWIDTH - 64 - 30 && Input.currentMousePos.Y < 35)
         {
@@ -319,11 +347,13 @@ class InGame : IGameState
             {
                 timeFreezeNum--;
                 isLevelFreezed = true;
+                Assets.nock.Play();
             }
             else if (isLevelFreezed)
             {
                 drawArrow = false;
                 isLevelFreezed = false;
+                Assets.nock.Play();
             }
             if (tutState == 0)
             {
@@ -342,6 +372,7 @@ class InGame : IGameState
         {
             isLevelDark = false;
             isLevelFreezed = false;
+            Assets.nock.Play();
             return EGameState.MainMenu;
         }
         if (!isPaused)
@@ -473,6 +504,7 @@ class InGame : IGameState
                         popUp.DisplayedString=("Ball selected");
                         popUp.Position = selectedObject.Position;
                         popUpTime = 0;
+                        Assets.nock.Play();
                         isSelected = true;
                         if (tutState == 1)
                         {
@@ -490,6 +522,7 @@ class InGame : IGameState
                 velocity /= length;
                
                 Console.Out.WriteLine("velocity set");
+                isLevelFreezed = false;
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
             }
