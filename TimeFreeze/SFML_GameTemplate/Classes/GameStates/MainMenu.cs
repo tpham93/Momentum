@@ -22,6 +22,9 @@ class MainMenu : IGameState
 
     public void Initialize()
     {
+        Assets.Ambient.Loop = true;
+        Assets.Ambient.Play();
+
         buttonTexts[0] = new Text("Start", Assets.font);
         buttonTexts[0].Color = Color.Red;
         buttonTexts[0].Position = new Vector2f(Constants.WINDOWWIDTH / 2 - buttonTexts[0].GetGlobalBounds().Width / 2, 120);

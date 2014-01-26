@@ -17,12 +17,16 @@ class TimeFreezeGame : Game
     Text infoText;
     float fps;
 
-    public static bool drawFps = true;
+    public static bool drawFps = false;
 
 
     public TimeFreezeGame()
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
+        Assets.hitSound.Volume = 200f;
+
+        Console.WriteLine(Assets.hitSound.Volume);
+
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.Escape);
         keys.Add(Keyboard.Key.W);

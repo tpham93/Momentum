@@ -97,6 +97,7 @@ class InGame : IGameState
 
     private Text tutText = new Text("Click on the button above or press space", Assets.font);
 
+    UiClock clock;
 
     bool drawArrow = false;
     bool failTimeStart = false;
@@ -126,6 +127,9 @@ class InGame : IGameState
     {
 
         tutText.Position = new Vector2f(160, 530);
+        clock = new UiClock();
+
+        tutText1.Position = new Vector2f(160, 530);
 
         failTimeStart = false;
 
@@ -153,9 +157,9 @@ class InGame : IGameState
         lvT[2] = "Aplause aplause";
         lvT[3] = "You cheated, didn't you?";
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
-        lvT[5] = "Your Mother would be proud of you";
-        lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
-        lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
+        lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
+        lvT[6] = "Your Mother would be proud of you";
+        lvT[7] = "Get the Momentum season pass NOW for just 19,99$";
         lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
 
@@ -360,11 +364,7 @@ class InGame : IGameState
 
         }
 
-        if (Input.isClicked(Keyboard.Key.G))
-        {
-            Assets.nock.Play();
-            timeFreezeNum++;
-        }
+        
 
         if (Input.isClicked(Keyboard.Key.P))
         {
@@ -385,7 +385,7 @@ class InGame : IGameState
                     popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                     popUpBonusTime = 2;
                     tutArrowSprite.Position = new Vector2f(69, 305);
-                    popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                    popUp.DisplayedString = "Yeah,\nyou can\ncontrol time";
                 }
                 if (tutState == 2)
                 {
@@ -447,7 +447,7 @@ class InGame : IGameState
                 popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                 popUpBonusTime = 2;
                 tutArrowSprite.Position = new Vector2f(69, 305);
-                popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                popUp.DisplayedString = "Yeah,\nyou can\ncontrol time";
 
             }
 
@@ -464,15 +464,23 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
+
+        clock.update(gameTime);
+
+
+
+
+
         return EGameState.InGame;
     }
 
     public EGameState updateGame(GameTime gameTime, RenderWindow window)
     {
-
-        
         if (!isLevelFreezed)
         {
+
+
+
             for (int i = 0; i < particles.Count; i++)
             {
                 particles[i].update(gameTime);
@@ -593,7 +601,7 @@ class InGame : IGameState
 
                             drawArrow = true;
 
-                            Console.Out.WriteLine("Selected");
+                            //Console.Out.WriteLine("Selected");
                             popUp.DisplayedString = ("Ball selected");
                             popUp.Position = selectedObject.Position;
                             popUpTime = 0;
@@ -616,14 +624,13 @@ class InGame : IGameState
                     float length = velocity.Length();
                     velocity /= length;
 
-                    tutText.Position = new Vector2f(90, 530);
+                    selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
                     tutAniTime = 0;
                     tutText.DisplayedString = ("Click on the button above or press space to continue");
 
                     Console.Out.WriteLine("velocity set to " + length / 30);
-                    selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
                     selectedObject = null;
-                    drawArrow = false;
+                   // drawArrow = false;
                 }
             }
             }
@@ -772,6 +779,8 @@ class InGame : IGameState
 
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
+
+        clock.draw(targets, gameTime);
 
         //Console.WriteLine(tutArrowSprite.Position);
 
