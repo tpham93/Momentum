@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 public abstract class Game
 {
@@ -23,6 +24,8 @@ public abstract class Game
 
 
     private RenderTexture finalTexture;
+
+    static byte[] icon;
 
     public Game(int width, int height, String title)
     {
@@ -45,6 +48,17 @@ public abstract class Game
         //window.SetVerticalSyncEnabled(false);
         window.SetFramerateLimit(60);
 
+        /*
+
+         * System.Drawing.Icon icon = new System.Drawing.Icon("Game.ico");
+                MemoryStream ms = new MemoryStream();
+                icon.Save(ms);
+                byte[] data = ms.ToArray();
+                Render.SetIcon((uint)icon.Width, (uint)icon.Height, data);
+                icon.Dispose();
+                ms.Close();
+         * 
+         * */
         contentManager = new ContentManager();
         gameTime = new GameTime();
     }
