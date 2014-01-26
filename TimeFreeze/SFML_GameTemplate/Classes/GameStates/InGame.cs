@@ -154,9 +154,8 @@ class InGame : IGameState
         tutText.Position = new Vector2f(160, 530);
         clock = new UiClock();
 
-        //tutText1.Position = new Vector2f(160, 530);
 
-        failTimeStart = false;
+        tutText.Position = new Vector2f(160, 530);        failTimeStart = false;
 
         hasWon = false;
         random = new Random();
@@ -184,7 +183,7 @@ class InGame : IGameState
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n1";
         lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
         lvT[6] = "Your Mother would be proud of you";
-        lvT[7] = "Get the Momentum season pass NOW for just 19,99$";
+        lvT[7] = "You can create your own level";
         lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
 
@@ -348,7 +347,7 @@ class InGame : IGameState
             {
                 levelDone.DisplayedString = "";
                 tutText.Position = new Vector2f(50, 530);
-                tutText.DisplayedString = ("Click at the buttons above to reset or press enter to join Level 2");
+                tutText.DisplayedString = ("Click at the buttons above to reset or press -ENTER- to join level 2");
                 tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 45, 65);
                 tutState++;
 
