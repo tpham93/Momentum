@@ -20,6 +20,11 @@ public static class Assets
     public static Sound sucessSound = new Sound(new SoundBuffer("Content/Sounds/succes.wav"));
     public static Sound nock = new Sound(new SoundBuffer("Content/Sounds/nock.wav"));
 
+    public static Texture clockBody = new Texture("Content/Ingame/clockBody.png");
+    public static Texture watchHandMin = new Texture("Content/Ingame/watchHandRed.png");
+    public static Texture watchHandSec =  new Texture("Content/Ingame/watchHandBlack.png");
+    public static Texture clockBodyInner = new Texture("Content/Ingame/bodyInner.png");
+
     public static Color colorFloor = new Color(105, 105, 105);
     public static Color colorWall = new Color(0, 0, 255);
     public static Color colorWall2 = new Color(0, 0, 100);

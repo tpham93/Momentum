@@ -96,7 +96,8 @@ class InGame : IGameState
     Sprite tutArrowSprite = new Sprite();
 
     private Text tutText1 = new Text("Click on the button above or press space", Assets.font);
-    
+
+    UiClock clock;
 
     bool drawArrow = false;
 
@@ -121,6 +122,8 @@ class InGame : IGameState
 
     public InGame()
     {
+
+        clock = new UiClock();
 
         tutText1.Position = new Vector2f(160, 530);
         
@@ -392,14 +395,21 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
+        clock.update(gameTime);
+
 
         return EGameState.InGame;
     }
 
     public EGameState updateGame(GameTime gameTime, RenderWindow window)
     {
+
+
         if (!isLevelFreezed)
         {
+
+
+
             for (int i = 0; i < particles.Count; i++)
             {
                 particles[i].update(gameTime);
@@ -684,6 +694,8 @@ class InGame : IGameState
         
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
+
+        clock.draw(targets, gameTime);
 
         //Console.WriteLine(tutArrowSprite.Position);
 
