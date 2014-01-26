@@ -138,12 +138,17 @@ class InGame : IGameState
 
     private String[] setStrings()
     {
-        String[] lvT = new String[5];
-        lvT[1] = "Da bist du ja quasi schon durch";
-        lvT[0] = "Du bist ganz OK";
-        lvT[2] = "Aplaus Aplaus";
-        lvT[3] = "Du hast doch gecheated";
-        lvT[4] = "Absturz in \n3 \n2 \n1";
+        String[] lvT = new String[10];
+        lvT[0] = "You're just quite below average";
+        lvT[1] = "We're practically done here";
+        lvT[2] = "Aplause aplause";
+        lvT[3] = "You cheated, didn't you?";
+        lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
+        lvT[5] = "Your Mother would be proud of you";
+        lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
+        lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
+        lvT[8] = "Absturz in \n3 \n2 \n1";
+        lvT[9] = "Absturz in \n3 \n2 \n1";
 
         return lvT;
 
