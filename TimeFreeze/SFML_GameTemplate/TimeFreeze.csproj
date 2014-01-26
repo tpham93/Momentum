@@ -7,8 +7,8 @@
     <ProjectGuid>{3EF771F3-B485-4B0C-A699-8FF52619B56C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFML_GameTemplate</RootNamespace>
-    <AssemblyName>SFML_GameTemplate</AssemblyName>
+    <RootNamespace>Momentum</RootNamespace>
+    <AssemblyName>Momentum</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -199,9 +199,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Items\hourglass_large.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Items\hourglass_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Items\tutArrow.png">

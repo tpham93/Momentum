@@ -14,6 +14,9 @@ class LevelChooser : IGameState
     Text[] levelName;
     Text[] shownLevelName;
 
+    List<AbstractParticle> particles = new List<AbstractParticle>();
+    Sprite mouseLight;
+
     public LevelChooser()
     {
         //lade den Level-Ordner 
@@ -47,6 +50,9 @@ class LevelChooser : IGameState
 
     public void Initialize()
     {
+        mouseLight = new Sprite(Assets.lightCircle);
+        mouseLight.Scale = new Vector2f(8.0f, 8.0f);
+        mouseLight.Origin = new Vector2f(32, 32);
         
     }
 
@@ -100,7 +106,32 @@ class LevelChooser : IGameState
             return EGameState.InGame;
         }
         changeColor(gameTime);
-        
+
+
+
+        particles.Add(new SparkleParticle(new Vector2f((float)InGame.random.NextDouble() * Constants.WINDOWWIDTH,
+                                                            (float)InGame.random.NextDouble() * Constants.WINDOWHEIGHT)));
+
+        //   particles.Add(new SparkleParticle(new Vector2f((float)(Constants.WINDOWWIDTH / 3 + InGame.random.NextDouble() * 2 * Constants.WINDOWWIDTH / 3), Constants.WINDOWHEIGHT / 4)));
+
+        mouseLight.Position = new Vector2f(Input.currentMousePos.X, Input.currentMousePos.Y);
+
+        float scaleHelp = (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2);
+
+        mouseLight.Color = Help.lerp(Color.White, Assets.AcaOrange, scaleHelp);
+
+        scaleHelp = 8.0f + scaleHelp * 4.0f;
+
+        mouseLight.Scale = new Vector2f(scaleHelp, scaleHelp);
+
+
+        for (int i = 0; i < particles.Count; i++)
+        {
+            particles[i].update(gameTime);
+
+            if (particles[i].lifetime <= 0)
+                particles.Remove(particles[i]);
+        }
 
         return EGameState.LevelChooser;
     }
@@ -124,6 +155,11 @@ class LevelChooser : IGameState
     {
         foreach (Text t in shownLevelName)
             targets.ElementAt(0).Draw(t);
+
+        foreach (AbstractParticle p in particles)
+            p.draw(gameTime, targets);
+
+        targets[1].Draw(mouseLight);
     }
 
     private void changeToLevel()

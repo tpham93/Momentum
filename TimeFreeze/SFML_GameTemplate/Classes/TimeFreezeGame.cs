@@ -23,7 +23,6 @@ class TimeFreezeGame : Game
     public TimeFreezeGame()
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
-        Assets.hitSound.Volume = 200f;
 
         Console.WriteLine(Assets.hitSound.Volume);
 
