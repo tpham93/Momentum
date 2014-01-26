@@ -99,6 +99,7 @@ class InGame : IGameState
 
 
     bool drawArrow = false;
+    bool failTimeStart = false;
 
     // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
 
@@ -109,6 +110,8 @@ class InGame : IGameState
     public static bool isLevelDark = false;
     public static bool isLevelFreezed = false;
     private bool hasWon;
+
+    float tutFailTime;
 
     String[] levelText;
     private bool isSelected = false;
@@ -123,6 +126,8 @@ class InGame : IGameState
     {
 
         tutText.Position = new Vector2f(160, 530);
+
+        failTimeStart = false;
 
         hasWon = false;
         random = new Random();
@@ -160,15 +165,26 @@ class InGame : IGameState
 
     public void Initialize()
     {
-
+        failTimeStart = false;
+        tutFailTime = 0;
         playWinSound = false;
+        if ((int)levelId == 0)
+        {
+            tutState = 0;
+            tutText = new Text("Click on the button above or press space", Assets.font);
+            tutText.Position = new Vector2f(160, 530);
+            helpTime = 0;
 
+        }
         if ((int)levelId > 0) tutState = 9001;
         tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0, 0, 50, 50));
         tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 40, 65);
 
         worldObjects = new List<Objects>();
         level = new Level();
+        hasWon = false;
+
+        
 
         Level.Leveldata lvlData = level.generateLevel(levelId);
 
@@ -235,6 +251,27 @@ class InGame : IGameState
     private void performPopUp(GameTime gameTime)
     {
 
+        if (failTimeStart) tutFailTime += (float)gameTime.ElapsedTime.TotalMilliseconds;
+        if (tutFailTime > 3000 && !hasWon && failTimeStart)
+        {
+            tutText.Position = new Vector2f(160, 530);
+            tutText.DisplayedString = ("Click at the buttons above to reset level");
+            tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 45, 65);
+            failTimeStart = false;
+
+        }
+        if (hasWon && !failTimeStart)
+        {
+            tutText.Position = new Vector2f(400, 530);
+            tutText.DisplayedString = ("");
+            tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 45, 65);
+            failTimeStart = true;
+
+        }
+        if ((int)levelId == 3 && hasWon && !failTimeStart)
+        {
+
+        }
         if (popUpTime < 2 + popUpBonusTime)
         {
             popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
@@ -270,6 +307,24 @@ class InGame : IGameState
             tutAniTime -= 10;
             tutArrowSprite.Position -= new Vector2f(0, -0.5f);
         }
+        if (helpTime > 5)
+        {
+            if (tutState == 2)
+            {
+                levelDone.DisplayedString = "";
+                tutText.Position = new Vector2f(50, 530);
+                tutText.DisplayedString = ("Click at the buttons above to reset or press enter to join Level 2");
+                tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 45, 65);
+                tutState++;
+
+
+            }
+            if(Input.isClicked(Keyboard.Key.Return))
+            {
+                tutState =9001;
+            }
+
+        }
 
 
     }
@@ -291,8 +346,11 @@ class InGame : IGameState
             levelDone.Position += new Vector2f(0, -0.5f);
             levelDone.DisplayedString = "Hurray \nLevel complete \n" + levelText[(int)levelId];
         }
-
         if (helpTime >= 5)
+        {
+            levelDone.DisplayedString = "";
+        }
+        if ((helpTime >= 5 ) && tutState >9000)
         {
             hasWon = false;
             levelDone.Position = new Vector2f(100, 400);
@@ -320,8 +378,8 @@ class InGame : IGameState
             {
                 if (tutState == 0)
                 {
-                    tutText.Position = new Vector2f(80, 530);
-                    tutText.DisplayedString = ("Click on the ball and release to set the direction and velocity");
+                    tutText.Position = new Vector2f(50, 530);
+                    tutText.DisplayedString = ("Click on the ball, drag and release to set the direction and velocity");
                     tutState++;
                     popUpTime = 0;
                     popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
@@ -331,10 +389,10 @@ class InGame : IGameState
                 }
                 if (tutState == 2)
                 {
-
+                    
                     tutState++;
-                    tutText.Position = new Vector2f(80, 530);
-                    tutText.DisplayedString = ("Click on the ball and release to set the direction and velocity");
+                    tutText.Position = new Vector2f(50, 530);
+                    tutText.DisplayedString = ("Click on the ball, drag and release to set the direction and velocity");
                 }
                 timeFreezeNum--;
                 Assets.nock.Play();
@@ -342,8 +400,11 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                
+                failTimeStart = true;
                 drawArrow = false;
                 isLevelFreezed = false;
+                
             }
 
         //Mouse pause Game
@@ -372,12 +433,16 @@ class InGame : IGameState
                 drawArrow = false;
                 isLevelFreezed = false;
                 Assets.nock.Play();
+                if (tutState == 3 && tutState < 9000 && !hasWon)
+                {
+                    failTimeStart = true;
+                }
             }
             if (tutState == 0)
             {
                 tutState++;
-                tutText.Position = new Vector2f(80, 530);
-                tutText.DisplayedString = ("Click on the ball and release to set the direction and velocity");
+                tutText.Position = new Vector2f(50, 530);
+                tutText.DisplayedString = ("Click on the ball, drag and release to set the direction and velocity");
                 popUpTime = 0;
                 popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                 popUpBonusTime = 2;
@@ -404,6 +469,8 @@ class InGame : IGameState
 
     public EGameState updateGame(GameTime gameTime, RenderWindow window)
     {
+
+        
         if (!isLevelFreezed)
         {
             for (int i = 0; i < particles.Count; i++)
@@ -526,19 +593,20 @@ class InGame : IGameState
 
                             drawArrow = true;
 
-                        Console.Out.WriteLine("Selected");
-                        popUp.DisplayedString=("Ball selected");
-                        popUp.Position = selectedObject.Position;
-                        popUpTime = 0;
-                        Assets.nock.Play();
-                        isSelected = true;
-                        if (tutState == 1)
-                        {
-                            
-                            tutState++;
-                            tutText.Position = new Vector2f(80, 530);
-                            tutText.DisplayedString = ("Click on the ball and release to set the direction and velocity");
-                            tutArrowSprite.Position = new Vector2f(639, 345);
+                            Console.Out.WriteLine("Selected");
+                            popUp.DisplayedString = ("Ball selected");
+                            popUp.Position = selectedObject.Position;
+                            popUpTime = 0;
+                            Assets.nock.Play();
+                            isSelected = true;
+                            if (tutState == 1)
+                            {
+
+                                tutState++;
+                                tutText.Position = new Vector2f(80, 530);
+                                tutText.DisplayedString = ("Click on the ball, drag and release to set the direction and velocity");
+                                tutArrowSprite.Position = new Vector2f(639, 345);
+                            }
                         }
                     }
                 }
@@ -548,8 +616,12 @@ class InGame : IGameState
                     float length = velocity.Length();
                     velocity /= length;
 
-                    Console.Out.WriteLine("velocity set to " + length/30);
-                    selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length,Constants.MAXVELOCITY)/30;
+                    tutText.Position = new Vector2f(90, 530);
+                    tutAniTime = 0;
+                    tutText.DisplayedString = ("Click on the button above or press space to continue");
+
+                    Console.Out.WriteLine("velocity set to " + length / 30);
+                    selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
                     selectedObject = null;
                     drawArrow = false;
                 }
@@ -707,7 +779,7 @@ class InGame : IGameState
         {
             targets.ElementAt(2).Draw(tutArrowSprite);
 
-            if (tutState == 0 || tutState == 1 || tutState == 2)
+            if (tutState == 0 || tutState == 1 || tutState == 2 || tutState ==3)
             {
                 targets.ElementAt(2).Draw(tutText);
 
