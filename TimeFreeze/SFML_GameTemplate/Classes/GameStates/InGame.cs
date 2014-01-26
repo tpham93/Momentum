@@ -153,7 +153,7 @@ class InGame : IGameState
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
         lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
         lvT[6] = "Your Mother would be proud of you";
-        lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
+        lvT[7] = "Get the Momentum season pass NOW for just 19,99$";
         lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
 
@@ -305,11 +305,7 @@ class InGame : IGameState
 
         }
 
-        if (Input.isClicked(Keyboard.Key.G))
-        {
-            Assets.nock.Play();
-            timeFreezeNum++;
-        }
+        
 
         if (Input.isClicked(Keyboard.Key.P))
         {
@@ -328,7 +324,7 @@ class InGame : IGameState
                     popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                     popUpBonusTime = 2;
                     tutArrowSprite.Position = new Vector2f(69, 305);
-                    popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                    popUp.DisplayedString = "Yeah,\nyou can\ncontrol time";
                 }
                 timeFreezeNum--;
                 Assets.nock.Play();
@@ -374,7 +370,7 @@ class InGame : IGameState
                 popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                 popUpBonusTime = 2;
                 tutArrowSprite.Position = new Vector2f(69, 305);
-                popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
+                popUp.DisplayedString = "Yeah,\nyou can\ncontrol time";
 
             }
 
@@ -391,13 +387,13 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
-<<<<<<< .mine
+
         clock.update(gameTime);
 
-=======
 
 
->>>>>>> .theirs
+
+
 
         return EGameState.InGame;
     }
@@ -531,7 +527,7 @@ class InGame : IGameState
 
                             drawArrow = true;
 
-                            Console.Out.WriteLine("Selected");
+                            //Console.Out.WriteLine("Selected");
                             popUp.DisplayedString = ("Ball selected");
                             popUp.Position = selectedObject.Position;
                             popUpTime = 0;
@@ -553,7 +549,7 @@ class InGame : IGameState
                     velocity /= length;
 
                     selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
-                    Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
+                    //Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
                     selectedObject = null;
                     drawArrow = false;
                 }
