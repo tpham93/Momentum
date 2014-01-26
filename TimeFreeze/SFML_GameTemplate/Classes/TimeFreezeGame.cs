@@ -17,7 +17,7 @@ class TimeFreezeGame : Game
     Text infoText;
     float fps;
 
-    public static bool drawFps = true;
+    public static bool drawFps = false;
 
 
     public TimeFreezeGame()
