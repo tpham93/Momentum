@@ -149,8 +149,8 @@ class InGame : IGameState
         lvT[2] = "Aplause aplause";
         lvT[3] = "You cheated, didn't you?";
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
-        lvT[5] = "Your Mother would be proud of you";
-        lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
+        lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
+        lvT[6] = "Your Mother would be proud of you";
         lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
         lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
@@ -696,11 +696,6 @@ class InGame : IGameState
                 targets.ElementAt(2).Draw(tutText1);
 
             }
-
-        }
-
-        
-
-        
+        }     
     }
 }

@@ -19,6 +19,7 @@ public static class Assets
     public static Sound hitSound = new Sound(new SoundBuffer("Content/Sounds/HitSound2.wav"));
     public static Sound sucessSound = new Sound(new SoundBuffer("Content/Sounds/succes.wav"));
     public static Sound nock = new Sound(new SoundBuffer("Content/Sounds/nock.wav"));
+    public static Music Ambient = new Music(("Content/Sounds/Peace of Mind cut.ogg"));
 
     public static Color colorFloor = new Color(105, 105, 105);
     public static Color colorWall = new Color(0, 0, 255);
