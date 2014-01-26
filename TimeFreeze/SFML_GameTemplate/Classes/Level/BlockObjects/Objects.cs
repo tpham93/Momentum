@@ -75,6 +75,7 @@ using SFML.Window;
 
         public enum BlockType
         {
+            None,
             BALL,
             GOAL,
             HOURGLAS,
