@@ -347,7 +347,7 @@ class InGame : IGameState
             {
                 levelDone.DisplayedString = "";
                 tutText.Position = new Vector2f(50, 530);
-                tutText.DisplayedString = ("Click at the buttons above to reset or press enter to join Level 2");
+                tutText.DisplayedString = ("Click at the buttons above to reset or press -ENTER- to join level 2");
                 tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 45, 65);
                 tutState++;
 
