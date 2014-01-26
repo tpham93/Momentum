@@ -525,6 +525,7 @@ class InGame : IGameState
                 isLevelFreezed = false;
                 selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
                 selectedObject = null;
+                drawArrow = false;
             }
         }
 
