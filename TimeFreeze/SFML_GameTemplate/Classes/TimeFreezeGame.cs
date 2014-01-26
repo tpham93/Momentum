@@ -23,6 +23,10 @@ class TimeFreezeGame : Game
     public TimeFreezeGame()
         : base(Constants.WINDOWWIDTH, Constants.WINDOWHEIGHT, Constants.WINDOWNAME)
     {
+        Assets.hitSound.Volume = 200f;
+
+        Console.WriteLine(Assets.hitSound.Volume);
+
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.Escape);
         keys.Add(Keyboard.Key.W);

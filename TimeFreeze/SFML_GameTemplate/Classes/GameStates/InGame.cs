@@ -121,6 +121,7 @@ class InGame : IGameState
 
     private Text tutText1 = new Text("Click on the button above or press space", Assets.font);
 
+    UiClock clock;
 
     bool drawArrow = false;
 
@@ -145,6 +146,8 @@ class InGame : IGameState
 
     public InGame()
     {
+
+        clock = new UiClock();
 
         tutText1.Position = new Vector2f(160, 530);
 
@@ -172,8 +175,8 @@ class InGame : IGameState
         lvT[2] = "Aplause aplause";
         lvT[3] = "You cheated, didn't you?";
         lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
-        lvT[5] = "Your Mother would be proud of you";
-        lvT[6] = "Personal data is being uploaded to Acagamics e.V.";
+        lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
+        lvT[6] = "Your Mother would be proud of you";
         lvT[7] = "Get the Time Freeze season pass NOW for just 19,99$";
         lvT[8] = "Absturz in \n3 \n2 \n1";
         lvT[9] = "Absturz in \n3 \n2 \n1";
@@ -417,13 +420,21 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
+        clock.update(gameTime);
+
+
         return EGameState.InGame;
     }
 
     public EGameState updateGame(GameTime gameTime, RenderWindow window)
     {
+
+
         if (!isLevelFreezed)
         {
+
+
+
             for (int i = 0; i < particles.Count; i++)
             {
                 particles[i].update(gameTime);
@@ -567,7 +578,7 @@ class InGame : IGameState
                     selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
                     Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
                     selectedObject = null;
-                    drawArrow = false;
+                   // drawArrow = false;
                 }
             }
         }
@@ -708,6 +719,8 @@ class InGame : IGameState
 
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
+
+        clock.draw(targets, gameTime);
 
         //Console.WriteLine(tutArrowSprite.Position);
 
