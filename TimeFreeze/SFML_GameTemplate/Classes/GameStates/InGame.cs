@@ -303,7 +303,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
-                drawArrow = false;
+                
                 isLevelFreezed = false;
             }
 
@@ -323,6 +323,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
+                drawArrow = false;
                 isLevelFreezed = false;
             }
             if (tutState == 0)
@@ -635,13 +636,10 @@ class InGame : IGameState
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
 
-<<<<<<< .mine
         //Console.WriteLine(tutArrowSprite.Position);
 
-=======
         if(!(tutState>9000))
             targets.ElementAt(2).Draw(tutArrowSprite);
->>>>>>> .theirs
 
         
 
