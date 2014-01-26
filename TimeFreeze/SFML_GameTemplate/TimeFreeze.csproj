@@ -118,6 +118,9 @@
     <None Include="Content\Font\PRIMELEP.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Sounds\Peace of Mind cut.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Block\accelerator.png">

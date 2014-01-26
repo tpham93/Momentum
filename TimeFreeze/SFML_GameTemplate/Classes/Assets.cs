@@ -19,6 +19,7 @@ public static class Assets
     public static Sound hitSound = new Sound(new SoundBuffer("Content/Sounds/HitSound.wav"));
     public static Sound sucessSound = new Sound(new SoundBuffer("Content/Sounds/succes.wav"));
     public static Sound nock = new Sound(new SoundBuffer("Content/Sounds/nock.wav"));
+    public static Music Ambient = new Music(("Content/Sounds/Peace of Mind cut.ogg"));
 
     public static Texture clockBody = new Texture("Content/Ingame/clockBody.png");
     public static Texture watchHandMin = new Texture("Content/Ingame/watchHandRed.png");
