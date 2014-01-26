@@ -181,7 +181,7 @@ class InGame : IGameState
         levelDone = new Text("", Assets.font);
         levelDone.Position = new Vector2f(100, 400);
 
-        isLevelDark = false;//level.IsLevelDark;
+        isLevelDark = true;//level.IsLevelDark;
 
 
         floor = new Sprite[3];
