@@ -19,11 +19,11 @@ public static class ShaderManager
     
     public static void initialize()
     {
-        grayscaleShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH +  "GrayScaleShader.txt");
+        grayscaleShader = new Shader(null, Constants.SHADERPATH + "GrayScaleShader.txt");
         grayscaleRenderStates = new RenderStates(grayscaleShader);
         grayscaleRenderStates.BlendMode = BlendMode.Alpha;
 
-        lightShader = new Shader(Constants.SHADERPATH + "IdleVertexShader.txt", Constants.SHADERPATH + "LightShaderFragment.txt");
+        lightShader = new Shader(null, Constants.SHADERPATH + "LightShaderFragment.txt");
         lightRenderStates = new RenderStates(lightShader);
         lightRenderStates.BlendMode = BlendMode.Add;
     }
