@@ -16,7 +16,7 @@ public static class Assets
     public static Texture sparkle = new Texture("Content/Lights/sparkle.png");
     public static Texture easyArrow = new Texture("Content/Items/basicArrow.png");
 
-    public static Sound hitSound = new Sound(new SoundBuffer("Content/Sounds/HitSound2.wav"));
+    public static Sound hitSound = new Sound(new SoundBuffer("Content/Sounds/HitSound.wav"));
     public static Sound sucessSound = new Sound(new SoundBuffer("Content/Sounds/succes.wav"));
     public static Sound nock = new Sound(new SoundBuffer("Content/Sounds/nock.wav"));
 

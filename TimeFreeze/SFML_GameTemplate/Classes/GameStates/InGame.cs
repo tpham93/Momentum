@@ -391,13 +391,8 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
-<<<<<<< .mine
         clock.update(gameTime);
 
-=======
-
-
->>>>>>> .theirs
 
         return EGameState.InGame;
     }
@@ -555,7 +550,7 @@ class InGame : IGameState
                     selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
                     Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
                     selectedObject = null;
-                    drawArrow = false;
+                   // drawArrow = false;
                 }
             }
         }
