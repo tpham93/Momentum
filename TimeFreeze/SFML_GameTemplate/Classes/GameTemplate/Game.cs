@@ -104,10 +104,10 @@ public abstract class Game
             
             finalTexture.Display();
 
-            if (InGame.isLevelFreezed && Math.Sin(gameTime.TotalTime.TotalMilliseconds*2) > 0.1)
+            if (InGame.isLevelFreezed)
             {
                 RenderStates s = ShaderManager.getRenderState(EShader.Grayscale);
-                s.Shader.SetParameter("time", (float)gameTime.TotalTime.TotalMilliseconds / 2);
+               // s.Shader.SetParameter("time", (float)gameTime.TotalTime.TotalMilliseconds / 2);
                 window.Draw(new Sprite(finalTexture.Texture), s);
             }
             else

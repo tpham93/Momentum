@@ -11,11 +11,9 @@ public enum EShader {None, Grayscale, Dark};
 public static class ShaderManager
 {
     private static RenderStates grayscaleRenderStates;
-    private static RenderStates doNothingRenderStates;
     private static RenderStates lightRenderStates;
 
     private static Shader grayscaleShader;
-    private static Shader doNothingShader;
     private static Shader lightShader;
 
     

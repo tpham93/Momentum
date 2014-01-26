@@ -283,8 +283,7 @@ class InGame : IGameState
             levelId++;
             helpTime = 0;
             Initialize();
-            
-
+           
         }
         
         if (Input.isClicked(Keyboard.Key.G))
@@ -303,7 +302,7 @@ class InGame : IGameState
             }
             else if (isLevelFreezed)
             {
-                
+                drawArrow = false;
                 isLevelFreezed = false;
             }
 
@@ -445,6 +444,11 @@ class InGame : IGameState
                         switch(e.eventType)
                         {
                             case GameEventType.Win:
+
+                                if(!hasWon)
+                                    for (int k = 0; k < 25; k++)
+                                        particles.Add(new SparkleParticle(shapeI.Position));
+
                                 hasWon = true;
                                 break;
                         }
