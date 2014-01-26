@@ -17,5 +17,6 @@ public static class Constants
 
     public const    int TILESIZE        = 16;
 
-    public const    float MAXVELOCITY   = 300;
+    public const float MAXVELOCITY      = 200;
+    public const float MINVELOCITY      = 30;
 }

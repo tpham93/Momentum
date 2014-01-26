@@ -331,10 +331,10 @@ class InGame : IGameState
             levelDone.Position = new Vector2f(100, 400);
             levelId++;
 
-            //if (new DirectoryInfo(Constants.LEVELPATH).GetFiles().Length / 2 < (int)levelId+1)
-            //{
-            //    return EGameState.MainMenu;
-            //}
+            if (new DirectoryInfo(Constants.LEVELPATH).GetFiles().Length / 2 < (int)levelId + 1)
+            {
+                return EGameState.MainMenu;
+            }
 
             helpTime = 0;
             Initialize();
@@ -583,6 +583,15 @@ class InGame : IGameState
                     velocity /= length;
 
                     selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
+
+                    Vector2 v = new Vector2(selectedObject.Velocity);
+                    if (v != Vector2.Zero && v.LengthSquared() < (Constants.MINVELOCITY * Constants.MINVELOCITY / 90))
+                    {
+                        v = Vector2.Normalize(v);
+                        v *= Constants.MINVELOCITY / 30;
+                        selectedObject.Velocity = new Vector2f(v.X, v.Y);
+                    }
+
                     //Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
                     selectedObject = null;
                    // drawArrow = false;
@@ -796,6 +805,9 @@ class InGame : IGameState
                     {
                         ++size_y;
                     }
+
+                    size_x = Math.Max(size_x - 1, 1);
+                    size_y = Math.Max(size_y - 1, 1);
 
                     if (size_x > size_y)
                     {
