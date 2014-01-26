@@ -181,7 +181,7 @@ class InGame : IGameState
         lvT[1] = "We're practically done here";
         lvT[2] = "Aplause aplause";
         lvT[3] = "You cheated, didn't you?";
-        lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n\n1";
+        lvT[4] = "Computer will crash in \n3 \n\n\n2 \n\n1";
         lvT[5] = "Personal data is being uploaded to Acagamics e.V."; 
         lvT[6] = "Your Mother would be proud of you";
         lvT[7] = "Get the Momentum season pass NOW for just 19,99$";
