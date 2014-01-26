@@ -95,9 +95,9 @@ class Credits : IGameState
     {
         targets[2].Draw(cr);
         targets[0].Draw(aca);
-        targets[0].Draw(srcHeader);
-        targets[0].Draw(sources);
-        targets[0].Draw(credits);
+        targets[2].Draw(srcHeader);
+        targets[2].Draw(sources);
+        targets[2].Draw(credits);
         targets[0].Draw(logo);
 
         foreach (AbstractParticle p in particles)
