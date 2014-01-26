@@ -25,7 +25,7 @@ class InGame : IGameState
         public Objects objectI;
         public Objects objectJ;
         public bool handleCollision;
-        
+
 
         public Event(Objects objectI, Objects objectJ)
         {
@@ -77,7 +77,7 @@ class InGame : IGameState
     float popUpBonusTime = 0;
 
     float tutAniTime = 0;
-    
+
     bool up = true;
 
     Texture[] buttons;
@@ -101,7 +101,7 @@ class InGame : IGameState
 
     bool drawArrow = false;
 
-   // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
+    // RenderStates currentRenderState = RenderStates.Default;//ShaderManager.getRenderState(EShader.None);
 
 
     private int[,] floorMap;
@@ -126,7 +126,7 @@ class InGame : IGameState
         clock = new UiClock();
 
         tutText1.Position = new Vector2f(160, 530);
-        
+
         hasWon = false;
         random = new Random();
         levelText = setStrings();
@@ -140,8 +140,7 @@ class InGame : IGameState
         }
 
         arrowSprite = new Sprite(Assets.easyArrow);
-        arrowSprite.Origin = new Vector2f(0,32);
-
+        arrowSprite.Origin = new Vector2f(0, 32);
     }
 
     private String[] setStrings()
@@ -167,8 +166,8 @@ class InGame : IGameState
 
         playWinSound = false;
 
-        if ((int)levelId >0) tutState = 9001;
-        tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0,0,50,50));
+        if ((int)levelId > 0) tutState = 9001;
+        tutArrowSprite = new Sprite(new Texture("Content/Items/tutArrow.png"), new IntRect(0, 0, 50, 50));
         tutArrowSprite.Position = new Vector2f(Constants.WINDOWWIDTH - 96 - 40, 65);
 
         worldObjects = new List<Objects>();
@@ -244,7 +243,7 @@ class InGame : IGameState
             popUpTime += (float)gameTime.ElapsedTime.TotalSeconds;
             popUp.Position += new Vector2f(0, -0.5f);
             popUp.Color = new Color(popUp.Color.R, popUp.Color.G, popUp.Color.B, (byte)(255 - (255 / ((2 + popUpBonusTime - popUpTime) / (2 + popUpBonusTime)))));
-            
+
         }
 
         else if (popUpTime >= 2)
@@ -258,29 +257,27 @@ class InGame : IGameState
 
     private void performTut(GameTime time)
     {
-        
 
-                if (tutAniTime < 400 && up)
-                {
-                    tutAniTime += 10;
-                    tutArrowSprite.Position += new Vector2f(0, -0.5f);
-                }
-                else if (tutAniTime >= 400 && up==true)
-                    up = false;
-                else if (tutAniTime < 0)
-                    up = true;
-                else
-                {
-                    tutAniTime -= 10;
-                    tutArrowSprite.Position -= new Vector2f(0, -0.5f);
-                }
-              
+
+        if (tutAniTime < 400 && up)
+        {
+            tutAniTime += 10;
+            tutArrowSprite.Position += new Vector2f(0, -0.5f);
+        }
+        else if (tutAniTime >= 400 && up == true)
+            up = false;
+        else if (tutAniTime < 0)
+            up = true;
+        else
+        {
+            tutAniTime -= 10;
+            tutArrowSprite.Position -= new Vector2f(0, -0.5f);
+        }
+
 
     }
 
     public EGameState Update(GameTime gameTime, RenderWindow window)
-
-
     {
         performTut(gameTime);
         performPopUp(gameTime);
@@ -292,10 +289,10 @@ class InGame : IGameState
                 Assets.sucessSound.Play();
 
             }
-            
+
             helpTime += gameTime.ElapsedTime.TotalSeconds;
             levelDone.Position += new Vector2f(0, -0.5f);
-            levelDone.DisplayedString = "Hurray \nLevel complete \n" + levelText[(int)levelId] ;
+            levelDone.DisplayedString = "Hurray \nLevel complete \n" + levelText[(int)levelId];
         }
 
         if (helpTime >= 5)
@@ -305,9 +302,9 @@ class InGame : IGameState
             levelId++;
             helpTime = 0;
             Initialize();
-           
+
         }
-        
+
         if (Input.isClicked(Keyboard.Key.G))
         {
             Assets.nock.Play();
@@ -374,7 +371,7 @@ class InGame : IGameState
             {
                 tutState++;
                 popUpTime = 0;
-                popUp.Position = tutArrowSprite.Position - new Vector2f(70,-10);
+                popUp.Position = tutArrowSprite.Position - new Vector2f(70, -10);
                 popUpBonusTime = 2;
                 tutArrowSprite.Position = new Vector2f(69, 305);
                 popUp.DisplayedString = "Yeay,\nyou can\ncontrol time";
@@ -382,7 +379,6 @@ class InGame : IGameState
             }
 
         }
-
         if (Input.isClicked(Keyboard.Key.Escape))
         {
             isLevelDark = false;
@@ -395,8 +391,13 @@ class InGame : IGameState
             updateGame(gameTime, window);
         }
 
+<<<<<<< .mine
         clock.update(gameTime);
 
+=======
+
+
+>>>>>>> .theirs
 
         return EGameState.InGame;
     }
@@ -436,7 +437,10 @@ class InGame : IGameState
                     {
                         Event e = new Event(worldObjectsMovable[i], worldObjectsMovable[j]);
                         if (e.handleCollision)
+                        {
                             handleCollision(worldObjectsMovable[i], worldObjectsMovable[j], iData);
+                            break;
+                        }
 
                         switch (e.eventType)
                         {
@@ -463,7 +467,7 @@ class InGame : IGameState
                                 {
                                     acc = true;
                                     Accelerator a = (Accelerator)worldObjectsMovable[i];
-                                    
+
 
                                     worldObjectsMovable.RemoveAt(i);
                                     --i;
@@ -483,7 +487,7 @@ class InGame : IGameState
                 }
 
 
-                for (int j = i+1; j < worldObjects.Count; ++j)
+                for (int j = i + 1; j < worldObjects.Count; ++j)
                 {
                     Shape2DSAT shapeJ = worldObjects[j].Shape;
                     IntersectData iData = shapeI.intersects(shapeJ);
@@ -492,13 +496,16 @@ class InGame : IGameState
                     {
                         Event e = new Event(worldObjectsMovable[i], worldObjects[j]);
                         if (e.handleCollision)
+                        {
                             handleCollision(worldObjectsMovable[i], worldObjects[j], iData);
+                            break;
+                        }
 
-                        switch(e.eventType)
+                        switch (e.eventType)
                         {
                             case GameEventType.Win:
 
-                                if(!hasWon)
+                                if (!hasWon)
                                     for (int k = 0; k < 25; k++)
                                         particles.Add(new SparkleParticle(shapeI.Position));
 
@@ -509,52 +516,55 @@ class InGame : IGameState
                 }
             }
         }
-        else if (isLevelFreezed && Input.leftClicked())
+        else if (isLevelFreezed)
         {
-            if (selectedObject == null)
+            //if (Input.leftPressed())
             {
-                for (int i = 0; i < worldObjectsMovable.Count; ++i)
+                if (Input.leftClicked() && selectedObject == null)
                 {
-                    if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
+                    for (int i = 0; i < worldObjectsMovable.Count; ++i)
                     {
-                        selectedObject = worldObjectsMovable[i];
-
-
-                        drawArrow = true;
-
-                        Console.Out.WriteLine("Selected");
-                        popUp.DisplayedString=("Ball selected");
-                        popUp.Position = selectedObject.Position;
-                        popUpTime = 0;
-                        Assets.nock.Play();
-                        isSelected = true;
-                        if (tutState == 1)
+                        if (worldObjectsMovable[i].Shape.contains(Input.currentMousePos))
                         {
-                            tutState++;
-                            tutArrowSprite.Position = new Vector2f(639, 345);
+                            selectedObject = worldObjectsMovable[i];
+
+
+                            drawArrow = true;
+
+                            Console.Out.WriteLine("Selected");
+                            popUp.DisplayedString = ("Ball selected");
+                            popUp.Position = selectedObject.Position;
+                            popUpTime = 0;
+                            Assets.nock.Play();
+                            isSelected = true;
+                            if (tutState == 1)
+                            {
+                                tutState++;
+                                tutArrowSprite.Position = new Vector2f(639, 345);
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
-            }
-            else
-            {
-                Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
-                float length = velocity.Length();
-                velocity /= length;
-               
-                Console.Out.WriteLine("velocity set");
-                selectedObject.Velocity = new Vector2f(velocity.X * 5, velocity.Y * 5);
-                selectedObject = null;
-                drawArrow = false;
+                else if (Input.leftReleased() && selectedObject != null)
+                {
+                    Vector2 velocity = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
+                    float length = velocity.Length();
+                    velocity /= length;
+
+                    selectedObject.Velocity = new Vector2f(velocity.X, velocity.Y) * Math.Min(length, Constants.MAXVELOCITY) / 30;
+                    Console.Out.WriteLine("velocity set to " + new Vector2(selectedObject.Velocity).Length());
+                    selectedObject = null;
+                    drawArrow = false;
+                }
             }
         }
-
-
 
         if (selectedObject != null)
         {
             arrowSprite.Position = selectedObject.Position;
+            Vector2 direction = new Vector2(Input.currentMousePos.X - selectedObject.Position.X, Input.currentMousePos.Y - selectedObject.Position.Y);
+            arrowSprite.Scale = new Vector2f(Math.Min(direction.Length() / (99 + arrowSprite.Origin.X), Constants.MAXVELOCITY / (99 + arrowSprite.Origin.X)), 1);
             arrowSprite.Rotation = Help.toDegree((float)(Math.Atan2(selectedObject.Position.Y - Input.currentMousePos.Y, selectedObject.Position.X - Input.currentMousePos.X)));
             arrowSprite.Rotation += Help.toDegree((float)Math.PI);
         }
@@ -602,7 +612,7 @@ class InGame : IGameState
         {
             Vector2f dir = new Vector2f(iData.Mtv.X, iData.Mtv.Y);
             Vector2 speedI = new Vector2(objectsI.Velocity);
-			Assets.hitSound.Play();
+            Assets.hitSound.Play();
             Vector2f speedHelp = new Vector2f(speedI.X, speedI.Y);
             float speedValueI = speedI.Length();
 
@@ -688,10 +698,10 @@ class InGame : IGameState
         timeFrTxt.DisplayedString = timeFreezeNum.ToString();
         targets.ElementAt(2).Draw(timeFrTxt);
 
-        if(drawArrow)
+        if (drawArrow)
             targets.ElementAt(2).Draw(arrowSprite);
 
-        
+
         targets.ElementAt(2).Draw(levelDone);
         targets.ElementAt(2).Draw(popUp);
 
@@ -711,8 +721,8 @@ class InGame : IGameState
 
         }
 
-        
 
-        
+
+
     }
 }
