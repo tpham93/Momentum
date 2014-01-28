@@ -838,6 +838,7 @@ class InGame : IGameState
     {
         LevelShapeData output = new LevelShapeData();
 
+        bool[,] blocksOriginal = new bool[Constants.WINDOWWIDTH / Constants.TILESIZE, Constants.WINDOWHEIGHT / Constants.TILESIZE];
         bool[,] blocks = new bool[Constants.WINDOWWIDTH / Constants.TILESIZE, Constants.WINDOWHEIGHT / Constants.TILESIZE];
 
         output.worldMoveableObjectShape = new List<ObjectShape>();
@@ -853,12 +854,14 @@ class InGame : IGameState
             Vector2f pos = (worldObjects[i].Position - (new Vector2f(Constants.TILESIZE,Constants.TILESIZE)/2f)) / Constants.TILESIZE;
             if (worldObjects[i].getType() != Objects.BlockType.WALL && worldObjects[i].getType() != Objects.BlockType.LIGHTBLOCK)
             {
-                output.worldObjectShape.Add(new ObjectShape(worldObjects[i],worldObjects[i].Shape, worldObjects[i].getType()));
+                output.worldObjectShape.Add(new ObjectShape(worldObjects[i], worldObjects[i].Shape, worldObjects[i].getType()));
                 blocks[(int)pos.X, (int)pos.Y] = false;
+                blocksOriginal[(int)pos.X, (int)pos.Y] = false;
             }
             else
             {
                 blocks[(int)pos.X, (int)pos.Y] = true;
+                blocksOriginal[(int)pos.X, (int)pos.Y] = true;
             }
         }
 
@@ -878,11 +881,11 @@ class InGame : IGameState
                     int size_x = 0;
                     int size_y = 0;
 
-                    for (int i = x; i <= blocks.GetUpperBound(0) && blocks[i, y]; ++i)
+                    for (int i = x; i <= blocks.GetUpperBound(0) && blocksOriginal[i, y]; ++i)
                     {
                         ++size_x;
                     }
-                    for (int i = y; i <= blocks.GetUpperBound(1) && blocks[x, i];  ++i)
+                    for (int i = y; i <= blocks.GetUpperBound(1) && blocksOriginal[x, i]; ++i)
                     {
                         ++size_y;
                     }
